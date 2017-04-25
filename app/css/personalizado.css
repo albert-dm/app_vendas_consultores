@@ -1,0 +1,156 @@
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+  }
+
+main {
+    flex: 1 0 auto;
+  }
+
+.clicavel{
+    cursor: pointer
+}
+
+.fundoAmarelo{
+    background-color: #FFD44B !important;
+}
+.botaoAmarelo{
+    background-color: #E6B000 !important;
+}
+.botaoVermelho{
+    background-color: red !important;
+}
+.botaoVerde{
+    background-color: green !important;
+}
+.fundoPreto{
+    background-color: #373435 !important;
+}
+.fundoBranco{
+    background-color: white !important;
+}
+.textoAmarelo{
+    color: #FFD44B !important;
+}
+.textoPreto{
+    color: #373435 !important;
+}
+.btn{
+    background-color: #e6b000;
+}
+.btn:hover{
+    background-color: #997500;
+}
+.botaoAlto{
+    bottom: auto !important;
+    right: 10%;
+}
+
+input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea{
+    border-bottom: 1px solid #997500;
+}
+input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
+    border-bottom: 1px solid #e6b000;
+    box-shadow: 0 1px 0 0 #e6b000;
+}
+
+.picker__weekday-display{
+    background-color: #997500;
+}
+.picker__date-display{
+    background-color: #e6b000;
+}
+
+.picker__day.picker__day--today, .picker__close, .picker__today, a{
+    color: #997500;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color: #997500;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+   color: #997500;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+   color: #997500;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+   color: #997500;
+}
+  /* label color */
+   .input-field label {
+     color: #997500;
+   }
+   /* label focus color */
+   .input-field input:focus + label {
+     color: #997500;
+     border-bottom: 1px solid #997500;
+   }
+   /* label underline focus color */
+   .input-field input:focus {
+     border-bottom: 1px solid #997500;
+     box-shadow: 0 1px 0 0 #997500;
+   }
+   /* valid color */
+   .input-field input.valid {
+     border-bottom: 1px solid green;
+     box-shadow: 0 1px 0 0 green;
+   }
+   /* invalid color */
+   .input-field input.invalid {
+     border-bottom: 1px solid red;
+     box-shadow: 0 1px 0 0 red;
+   }
+   /* icon prefix focus color */
+   .input-field .prefix.active {
+     color: #997500;
+   }
+
+#toast-container {
+  top: auto !important;
+  bottom: 10%;
+}
+
+.tabs .tab a{
+    color:#e6b000;
+}
+.tabs .tab a:hover, .tabs .tab a.active{
+    color:#997500
+}
+
+.tabs .indicator{
+    background-color: #997500
+}
+
+.dropdown-content li>a, .dropdown-content li>span{
+    color: #997500;
+}
+
+thead{
+    border-color: #997500;
+}
+
+.venda{    
+    height: 70px;
+    line-height: 70px;
+    bottom: 10%;
+    right: auto !important;
+    left: 45% !important;
+}
+.venda a{    
+    width: 70px !important;
+    height: 70px !important;
+}
+.venda i{
+    font-size: 2.5rem !important;
+    line-height: 70px !important;
+}
+
+.select-wrapper option:first-child{
+    display:none;
+}
+
+.oculto{
+    display:none;
+}

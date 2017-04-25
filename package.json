@@ -1,0 +1,22 @@
+{
+  "name": "minhaambaya",
+  "version": "1.0.0",
+  "description": "Aplicativo Minha Ambaya",
+  "main": "dist/index.html",
+  "scripts": {
+    "test": "teste"
+  },
+  "author": "albert-dm",
+  "license": "ISC",
+  "dependencies": {
+    "angular-barcode": "^2.0.1",
+    "angular-ui-router": "^0.4.2",
+    "jquery-mask-plugin": "^1.14.9",
+    "material-design-icons": "^3.0.1",
+    "ngstorage": "^0.3.11"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/npm/npm.git"
+  }
+}
