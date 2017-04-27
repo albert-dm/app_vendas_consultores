@@ -25,8 +25,8 @@
 		</div>
 	</div>
 	<nav class="uk-navbar fundoAmarelo" ng-if="logado">
-		<a href="#sidebar" data-uk-offcanvas="{mode:'slide'}" class="uk-navbar-toggle uk-visible-small" data-uk-offcanvas></a>
-		<a ui-sref="Início" class="uk-navbar-brand"><img src="img/logo_barra.png" width="70"></img></a>
+		<a href="#sidebar" data-uk-offcanvas="{mode:'slide'}" class="uk-navbar-toggle uk-visible-small"></a>
+		<a ui-sref="Início" class="uk-navbar-brand"><img src="img/logo_barra.png" width="70"/></a>
 		<ul class="uk-navbar-nav uk-hidden-small">			
 			<li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="uk-active"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>
 			<!--<li ng-repeat="link in rotas" ng-class="{'uk-active': link.nome == $route.current.scope.titulo}"><a href="{{link.link}}"><i class="{{link.icone}}"></i> {{link.nome}}</a></li>-->

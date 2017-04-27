@@ -154,3 +154,38 @@ thead{
 .oculto{
     display:none;
 }
+#impressao{
+    display:none;
+}
+
+/* Configuração de impressao de cod de barras */
+
+@media print{
+    body *{
+        visibility:hidden;
+        margin:0;
+        padding:0;
+    }
+    @page { 
+        size:10cm 1.5cm; 
+        margin: 0cm;
+    }
+    #impressao{
+        display: block;
+    }
+    #impressao, #impressao * {
+        visibility: visible;
+    }
+    #impressao {
+        position: absolute;
+        left: 0;
+        top: 0;
+    }
+    #impressao td{
+        text-align: center;
+        width: 2.5cm;
+    }
+    footer, .card-action, nav, .navbar-fixed, #entrada, .card-title, div{
+        display:none;
+    }
+}

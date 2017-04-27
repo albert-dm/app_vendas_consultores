@@ -120,6 +120,17 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
             }
         },
     };
+    var etiquetas = {
+        name: 'Etiquetas',
+        url: '/etiquetas', 
+        controller: '',
+        views: {
+            'Estoque':{
+                templateUrl: 'views/estoque/etiquetas.html',
+                controller: 'EtiquetasController'
+            },
+        },
+    };
     var encomendas = {
         name: 'Encomendas',
         url: '/encomendas', 
@@ -162,6 +173,7 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
     $stateProvider.state(supervisor);
     $stateProvider.state(acertos);
     $stateProvider.state(estoque);
+    $stateProvider.state(etiquetas);
     $stateProvider.state(encomendas);
     $stateProvider.state(relatorios);
 })

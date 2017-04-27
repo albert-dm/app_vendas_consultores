@@ -18,5 +18,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/npm/npm.git"
+  },
+  "devDependencies": {
+    "materialize-css": "^0.98.2"
   }
 }
