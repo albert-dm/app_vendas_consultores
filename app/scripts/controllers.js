@@ -180,17 +180,13 @@ angular.module('ambaya')
                             escapularios++;
                             break;
                     }
-                    if(pecas[tipo].length!=0){
-                        $.grep(pecas[tipo], function(e){                         
-                            if(e.val==valor){
-                                    e.tot++;
-                                    existe=true;
-                                } else{
-                                    existe=false;
-                                }
-                            });
-                    } else
-                        existe = false;
+                    existe = false;
+                    for(n = 0; n<pecas[tipo].length; n++){
+                        if(pecas[tipo][n].val == valor){
+                            pecas[tipo][n].tot++;
+                            existe = true;
+                        }
+                    }
 
                     if(!existe){
                         pecas[tipo].push({"val": valor, "tot": 1});
@@ -951,42 +947,17 @@ angular.module('ambaya')
                 $('#codigo').focus();
             }
             $scope.entrada = function(){
-                var item = $('#item').find(":selected").text();
-                var preco = $('#preco').val();
-                var quantidade = $('#quantidade').val();
-                var codigo = $('#item').find(":selected").val();
-                var hoje = new Date();
-                var mes = hoje.getMonth()+1;
-                var ano = hoje.getFullYear();
-                ano  = ano%100;
-                if(mes<10) {
-                    mes='0'+mes;
-                } 
-                codigo = codigo+mes+ano+preco;
-                var entrada = {
-                    "item": item,
-                    "preco": preco,
-                    "quantidade": quantidade,
-                    "codigo": codigo
-                };
-                $scope.adicionando.push(entrada);
+                $scope.adicionando.push($scope.codigo.toUpperCase());
+                $scope.codigo = ""
             }
             $scope.concluir = function(){
                 //deve existir possibilidade de cancelar última adição
-                var adicionando = [];
-                for(i = 0; i< $scope.adicionando.length; i++){
-                    for(j = 0; j<$scope.adicionando[i].quantidade; j++)
-                        adicionando.push($scope.adicionando[i].codigo);
-                }
-                console.log(adicionando);
-                $scope.adicionando = adicionando;
-                var estoque = $scope.usuario.estoque.concat(adicionando);
+                var estoque = $scope.usuario.estoque.concat($scope.adicionando);
                 estoqueService.atualizaEstoque($scope.usuario._id, estoque).then(
                     function(response){
-                        estoqueService.atualizaHistorico(adicionando);
+                        estoqueService.atualizaHistorico($scope.adicionando);
                         $scope.usuario.estoque = estoque;
                         $scope.pecas = $scope.processaPecas($scope.usuario.estoque);
-                        $scope.imprimir();
                         $scope.adicionando = [];
                         $('#entrada').modal('close');
                     },
@@ -994,40 +965,6 @@ angular.module('ambaya')
                         Materialize.toast("Falha ao acessar o servidor", 5000);
                     }
                 )
-            }
-            $scope.imprimir = function(){
-                var divToPrint=document.getElementById('impressao');
-
-                var newWin=window.open('','Print-Window');
-
-                newWin.document.open();
-
-                newWin.document.write('<html><head><meta name="viewport" content="width=device-width, initial-scale=1.0"><link href="/styles/barras.css" rel="stylesheet"></head><body onload="window.print()">'+divToPrint.innerHTML+'</body></html>');
-
-                newWin.document.close();
-
-                //setTimeout(function(){newWin.close();},10);
-            }
-            $scope.bc = {
-                format: 'CODE128',
-                lineColor: '#000000',
-                width: 1,
-                height: 25,
-                displayValue: true,
-                fontOptions: '',
-                font: 'monospace',
-                textAlign: 'center',
-                textPosition: 'bottom',
-                textMargin: 1,
-                fontSize: 10,
-                background: '#ffffff',
-                margin: 0,
-                marginTop: 0,
-                marginBottom: 0,
-                marginLeft: 0,
-                marginRight: 0,
-                valid: function (valid) {
-                }
             }
 		}])
         .controller('EncomendasEstoqueController',[ '$scope', 'encomendasService', 'consultoresService', 'userService', 'estoqueService', function($scope, encomendasService, consultoresService, userService, estoqueService){
