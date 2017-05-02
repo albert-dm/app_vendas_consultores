@@ -14,7 +14,7 @@ angular.module('ambaya')
         })
         .service('loginService', function($localStorage, $http, $location) {    
                 this.login = function (usuario) {
-                    return $http.post("/users/login", usuario);                    
+                    return $http.post("/login", usuario);                    
                 };
                 this.check = function(){                    
                     return $localStorage.logado;             
@@ -135,4 +135,40 @@ angular.module('ambaya')
                 );
             };
         })
+        .factory('tokenInterceptor', function($q, $window, $location, $localStorage) {
+
+            var interceptor = {};
+
+            interceptor.request = function(config) {
+                // enviar o token na requisição
+                config.headers = config.headers || {};
+                if ($localStorage.token) {
+                    console.log('Enviando token já obtido em cada requisição');
+                    config.headers['x-access-token'] = $localStorage.token;
+                }
+                return config;
+            },
+
+            interceptor.response = function (response) {
+                var token = response.headers('x-access-token');
+                if (token != null) {
+                    $localStorage.token = token;
+                    console.log('Token no session storage: ', token);
+                } 
+                return response;
+            },
+
+            interceptor.responseError = function(rejection) {
+
+                if (rejection != null && rejection.status === 401) {
+                    console.log('Removendo token da sessão')
+                    delete $localStorage.token;
+                    $location.path("/login");
+                } 
+                return $q.reject(rejection);
+            }
+
+        return interceptor;
+
+    })
 ;
