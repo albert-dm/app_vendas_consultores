@@ -48,7 +48,7 @@ angular.module('ambaya')
                         $state.reload();
                     },
                     function(response) {
-                        Materialize.toast("Login inválido", 5000, 'red');
+                        Materialize.toast("Login inválido", 5000, 'notificacaoRuim');
                     }
                 );
                 // $scope.logado = loginService.check();
@@ -85,7 +85,7 @@ angular.module('ambaya')
                 $scope.tipo = $scope.usuario.tipo;
             }else{
                 $scope.tipo = "Login";
-                //é necessário redirecionar para o início aqui.
+                //é necessário notificacaoRuimirecionar para o início aqui.
             }           
             $scope.$state = $state;
 
@@ -276,7 +276,7 @@ angular.module('ambaya')
                         $scope.consultores=response.data;
                     },
                     function(response) {
-                        Materialize.toast("Falha ao carregar Consultores", 5000, 'red');
+                        Materialize.toast("Falha ao carregar Consultores", 5000, 'notificacaoRuim');
                     }
             );
             controladoriaService.supervisores().then(
@@ -284,7 +284,7 @@ angular.module('ambaya')
                         $scope.supervisores=response.data;
                     },
                     function(response) {
-                       Materialize.toast("Falha ao carregar Supervisores", 5000, 'red');
+                       Materialize.toast("Falha ao carregar Supervisores", 5000, 'notificacaoRuim');
                     }
             );
 		}])
@@ -296,7 +296,7 @@ angular.module('ambaya')
                         $scope.total = $scope.consultores.length; 
                     },
                     function(response) {
-                            Materialize.toast("Falha ao carregar Consultores", 5000, 'red');
+                            Materialize.toast("Falha ao carregar Consultores", 5000, 'notificacaoRuim');
                     }
             );
 		}])
@@ -333,7 +333,7 @@ angular.module('ambaya')
                         $scope.total = $scope.supervisores.length; 
                     },
                     function(response) {
-                            Materialize.toast("Falha ao carregar supervisores!", 5000, 'red');
+                            Materialize.toast("Falha ao carregar supervisores!", 5000, 'notificacaoRuim');
                     }
                 );
             };
@@ -380,7 +380,7 @@ angular.module('ambaya')
                         carregaSupervisores();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 );
                 
@@ -419,7 +419,7 @@ angular.module('ambaya')
                         $scope.pecas = $scope.processaPecas($scope.supervisor.estoque);
                     },
                     function(response) {
-                        Materialize.toast("Falha ao carregar dados", 5000, 'red');
+                        Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
                     }
             );
             var carregaConsultores = function(){
@@ -428,7 +428,7 @@ angular.module('ambaya')
                         $scope.consultores = response.data;
                     },
                     function(response) {
-                        Materialize.toast("Falha ao carregar dados", 5000, 'red');
+                        Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
                     }
                 );
             };
@@ -478,7 +478,7 @@ angular.module('ambaya')
                         Materialize.toast("Consultor adicionado com sucesso!", 5000, 'notificacaoBoa');
                     },
                     function(response) {
-                        Materialize.toast("response.err.message", 5000, 'red');
+                        Materialize.toast("response.err.message", 5000, 'notificacaoRuim');
                     }
                 );                
             };         
@@ -489,7 +489,7 @@ angular.module('ambaya')
                         window.history.back();
                     },
                     function(response) {
-                        Materialize.toast("Falha ao excluir", 5000, 'red');
+                        Materialize.toast("Falha ao excluir", 5000, 'notificacaoRuim');
                     }
                 );                
            }
@@ -522,7 +522,7 @@ angular.module('ambaya')
                         window.history.back();
                     },
                     function(response) {
-                        Materialize.toast("Falha ao excluir", 5000, 'red');
+                        Materialize.toast("Falha ao excluir", 5000, 'notificacaoRuim');
                     }
                 );                
             };
@@ -532,7 +532,7 @@ angular.module('ambaya')
                         $scope.consultor.status = "Aprovado";
                     },
                     function(response) {
-                        Materialize.toast("Falha ao atualizar", 5000, 'red');
+                        Materialize.toast("Falha ao atualizar", 5000, 'notificacaoRuim');
                     }
                 );
             };
@@ -542,7 +542,7 @@ angular.module('ambaya')
                         $scope.consultor.status = "Inativo";
                     },
                     function(response) {
-                        Materialize.toast("Falha ao atualizar", 5000, 'red');
+                        Materialize.toast("Falha ao atualizar", 5000, 'notificacaoRuim');
                     }
                 );
             };
@@ -572,12 +572,12 @@ angular.module('ambaya')
                                Materialize.toast("Peças Alocadas", 5000, 'notificacaoBoa');
                            },
                            function(response){
-                               Materialize.toast(response.err.message, 5000, 'red');
+                               Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                    }
                        )
                    },
                    function(response){
-                       Materialize.toast(response.err.message, 5000, 'red');
+                       Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                    }
                )
                 $scope.usuario.estoque = [];
@@ -620,7 +620,7 @@ angular.module('ambaya')
                         $scope.encomendas = response.data;
                     },
                     function(response){
-                        Materialize.toas("Falha ao cerregar dados!", 5000, 'red');
+                        Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
                     }
                 );
            }
@@ -631,7 +631,7 @@ angular.module('ambaya')
                         carregaEncomendas();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 )
             } 
@@ -641,7 +641,7 @@ angular.module('ambaya')
                         carregaEncomendas();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 )
             }        
@@ -671,7 +671,7 @@ angular.module('ambaya')
                         $scope.consultores = consultores;
                     },
                     function(response) {
-                         Materialize.toast("Falha ao carregar consultores", 5000, 'red');
+                         Materialize.toast("Falha ao carregar consultores", 5000, 'notificacaoRuim');
                     }
                 );
            }
@@ -723,7 +723,7 @@ angular.module('ambaya')
                         $scope.total = $scope.consultores.length;
                     },
                     function(response) {
-                         Materialize.toast("Falha ao carregar consultores", 5000, 'red');
+                         Materialize.toast("Falha ao carregar consultores", 5000, 'notificacaoRuim');
                     }
                 );
            }
@@ -767,7 +767,7 @@ angular.module('ambaya')
                         carregaConsultores();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 );                
             };   
@@ -804,7 +804,7 @@ angular.module('ambaya')
                         $scope.encomendas = response.data;
                     },
                     function(response){
-                        Materialize.toas("Falha ao cerregar dados!", 5000, 'red');
+                        Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
                     }
                 );
            }
@@ -814,7 +814,7 @@ angular.module('ambaya')
                     $scope.consultores = response.data;
                 },
                 function(response) {
-                        Materialize.toast("Falha ao carregar consultores", 5000, 'red');
+                        Materialize.toast("Falha ao carregar consultores", 5000, 'notificacaoRuim');
                 }
             );
             
@@ -826,7 +826,7 @@ angular.module('ambaya')
             $scope.novo = function(){
                 encomendasService.nova($scope.form).then(
                     function(response) {
-                        Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'red');
+                        Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'notificacaoRuim');
                         $('#adicionar').modal('close');
                         $scope.form = {
                             "item":"",
@@ -837,7 +837,7 @@ angular.module('ambaya')
                         carregaEncomendas();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 );                
             };
@@ -847,7 +847,7 @@ angular.module('ambaya')
                         carregaEncomendas();
                     },
                     function(response) {
-                        Materialize.toast(response.err.message, 5000, 'red');
+                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                     }
                 )
             }        
@@ -861,7 +861,7 @@ angular.module('ambaya')
                         $scope.supervisor = response.data;
                     },
                     function(response) {
-                            Materialize.toast("Falha ao carregar dados do supervisor!", 5000, 'red');
+                            Materialize.toast("Falha ao carregar dados do supervisor!", 5000, 'notificacaoRuim');
                     }
             );
             $('#venda').modal();
@@ -899,7 +899,7 @@ angular.module('ambaya')
                         }
                     }
                     if (encontrado == false){
-                        Materialize.toast($scope.adicionando[i]+" não encontrado!", 10000, 'red');
+                        Materialize.toast($scope.adicionando[i]+" não encontrado!", 10000, 'notificacaoRuim');
                         vendaok = false;
                     }
                 }
@@ -912,7 +912,7 @@ angular.module('ambaya')
                             $scope.usuario.estoque = estoqueTemp;
                             $scope.usuario.vendido = vendidoTemp;
                             $scope.usuario.totalVendido = totalVendidoTemp;
-                            Materialize.toast("Falha ao realizar venda!", 5000, 'red');
+                            Materialize.toast("Falha ao realizar venda!", 5000, 'notificacaoRuim');
                         }
                     );
                     $('#venda').modal('close');
@@ -922,7 +922,7 @@ angular.module('ambaya')
                     $scope.usuario.estoque = estoqueTemp;
                     $scope.usuario.vendido = vendidoTemp;
                     $scope.usuario.totalVendido = totalVendidoTemp;
-                    Materialize.toast("Falha ao realizar venda!", 5000, 'red');
+                    Materialize.toast("Falha ao realizar venda!", 5000, 'notificacaoRuim');
                 }
             };
 		}])
@@ -945,7 +945,7 @@ angular.module('ambaya')
                     $scope.encomendas = response.data;
                 },
                 function(response){
-                    Materialize.toast("Falha ao carregar dados", 5000, 'red');
+                    Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
                 }
             );
             $scope.codigo = "";
@@ -969,7 +969,7 @@ angular.module('ambaya')
                         $('#entrada').modal('close');
                     },
                     function(response){
-                        Materialize.toast("Falha ao acessar o servidor", 5000, 'red');
+                        Materialize.toast("Falha ao acessar o servidor", 5000, 'notificacaoRuim');
                     }
                 )
             }
@@ -998,7 +998,7 @@ angular.module('ambaya')
                         $('.tooltipped').tooltip({delay: 50});
                     },
                     function(response){
-                        Materialize.toast("Falha ao cerregar dados!", 5000, 'red');
+                        Materialize.toast("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
                     }
                 );
            }
@@ -1059,17 +1059,17 @@ angular.module('ambaya')
                                         carregaEncomendas();
                                     },
                                     function(response) {
-                                        Materialize.toast(response.err.message, 5000, 'red');
+                                        Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                                     }
                                 )
                            },
                            function(response){
-                               Materialize.toast(response.err.message, 5000, 'red');
+                               Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                    }
                        )
                    },
                    function(response){
-                       Materialize.toast(response.err.message, 5000, 'red');
+                       Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
                    }
                )
                 $scope.usuario.estoque = [];
