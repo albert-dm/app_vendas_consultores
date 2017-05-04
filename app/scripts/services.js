@@ -163,6 +163,7 @@ angular.module('ambaya')
                 if (rejection != null && rejection.status === 401) {
                     console.log('Removendo token da sessão')
                     delete $localStorage.token;
+                    $localStorage.logado = false;
                     $location.path("/login");
                 } 
                 return $q.reject(rejection);

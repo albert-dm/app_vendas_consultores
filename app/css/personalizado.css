@@ -31,7 +31,7 @@ main {
     background-color: white !important;
 }
 .textoAmarelo{
-    color: #FFD44B !important;
+    color: #E6B000 !important;
 }
 .textoPreto{
     color: #373435 !important;
@@ -46,7 +46,12 @@ main {
     bottom: auto !important;
     right: 10%;
 }
-
+.notificacaoBoa{
+     color: #E6B000 !important;
+     background: white !important;
+     text-decoration: bold;
+     border: solid 3px #E6B000;
+}
 input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea{
     border-bottom: 1px solid #997500;
 }
