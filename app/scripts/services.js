@@ -143,7 +143,7 @@ angular.module('ambaya')
                 // enviar o token na requisição
                 config.headers = config.headers || {};
                 if ($localStorage.token) {
-                    console.log('Enviando token já obtido em cada requisição');
+                    //console.log('Enviando token já obtido em cada requisição');
                     config.headers['x-access-token'] = $localStorage.token;
                 }
                 return config;
@@ -153,7 +153,7 @@ angular.module('ambaya')
                 var token = response.headers('x-access-token');
                 if (token != null) {
                     $localStorage.token = token;
-                    console.log('Token no session storage: ', token);
+                    //console.log('Token no session storage: ', token);
                 } 
                 return response;
             },
@@ -161,7 +161,7 @@ angular.module('ambaya')
             interceptor.responseError = function(rejection) {
 
                 if (rejection != null && rejection.status === 401) {
-                    console.log('Removendo token da sessão')
+                    //console.log('Removendo token da sessão')
                     delete $localStorage.token;
                     $localStorage.logado = false;
                     $location.path("/login");

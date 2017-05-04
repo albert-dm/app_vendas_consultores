@@ -865,6 +865,7 @@ angular.module('ambaya')
                     }
             );
             $('#venda').modal();
+            $('#modalCamera').modal();
             $scope.modalVenda = function(){
                 $('#venda').modal('open');
                 $('#codigo').focus();
@@ -872,6 +873,39 @@ angular.module('ambaya')
             $scope.entrada = function(){
                 $scope.adicionando.push($scope.codigo.toUpperCase());
                 $scope.codigo = ""
+            }
+            $scope.entradaCamera = function(){
+                $('#venda').modal('close');
+                $('#modalCamera').modal('open');
+                Quagga.init({
+                    inputStream : {
+                    name : "Live",
+                    type : "LiveStream",
+                    target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+                    },
+                    decoder : {
+                    readers : ["code_128_reader"]
+                    }
+                }, function(err) {
+                    if (err) {
+                        console.log(err);
+                        return
+                    }
+                    console.log("Initialization finished. Ready to start");
+                    Quagga.start();
+                });
+                Quagga.onDetected(function(data){
+                    Quagga.stop();
+                    $('#codigo').val(data.codeResult.code);
+                    $('#modalCamera').modal('close');
+                    $('#venda').modal('open');
+                    $('#codigo').focus();
+                });
+            }
+            $scope.fechaCamera = function(){
+                Quagga.stop();
+                $('#modalCamera').modal('close');
+                $('#venda').modal('open');
             }
 			$scope.vender = function(){
                 var estoqueTemp = [];
