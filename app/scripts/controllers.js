@@ -870,6 +870,11 @@ angular.module('ambaya')
                 $('#venda').modal('open');
                 $('#codigo').focus();
             }
+            Quagga.CameraAccess.enumerateVideoDevices()
+            .then(function(devices) {
+                console.log(devices);
+            });
+            
             $scope.entrada = function(){
                 $scope.adicionando.push($scope.codigo.toUpperCase());
                 $scope.codigo = ""

@@ -135,7 +135,7 @@ angular.module('ambaya')
                 );
             };
         })
-        .factory('tokenInterceptor', function($q, $window, $location, $localStorage) {
+        .factory('tokenInterceptor',['$q', '$window', '$location', '$localStorage', function($q, $window, $location, $localStorage, $state) {
 
             var interceptor = {};
 
@@ -161,15 +161,15 @@ angular.module('ambaya')
             interceptor.responseError = function(rejection) {
 
                 if (rejection != null && rejection.status === 401) {
-                    //console.log('Removendo token da sessão')
+                    console.log('Removendo token da sessão')
                     delete $localStorage.token;
-                    $localStorage.logado = false;
-                    $location.path("/login");
+                    $localStorage.logado = false;                    
+                    $window.location.reload();
                 } 
                 return $q.reject(rejection);
             }
 
         return interceptor;
 
-    })
+    }])
 ;

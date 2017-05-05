@@ -9,12 +9,14 @@
   "author": "albert-dm",
   "license": "ISC",
   "dependencies": {
+    "angular-animate": "^1.6.4",
     "angular-barcode": "^2.0.1",
     "angular-ui-router": "^0.4.2",
     "jquery-mask-plugin": "^1.14.9",
     "material-design-icons": "^3.0.1",
     "ngstorage": "^0.3.11",
-    "quagga": "^0.11.6"
+    "quagga": "^0.11.6",
+    "webrtc-adapter": "^3.3.4"
   },
   "repository": {
     "type": "git",
