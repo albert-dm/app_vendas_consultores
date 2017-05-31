@@ -170,6 +170,16 @@ thead{
 }
 
 /* Configuração de impressao de cod de barras */
+video.vsc-initialized{
+    width:100%;
+}
+
+#cameraBotao{
+    position: relative;
+    margin:0;
+    margin-bottom: -100%;
+    padding:0;
+}
 
 @media print{
     body *{

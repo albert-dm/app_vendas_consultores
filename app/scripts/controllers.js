@@ -266,6 +266,9 @@ angular.module('ambaya')
             $scope.extraiCod = function(codigo){
                 return codigo.substr(0,2);
             } 
+            $scope.irPara = function(pagina){
+                $state.go(pagina);
+            }
                 
 		}])
         //Controladoria
@@ -719,6 +722,7 @@ angular.module('ambaya')
                             consultores.totalPecas += $scope.consultores[i].estoque.length;
                         }
                         $scope.valorVendido = consultores.valorVendido;
+                        $scope.totalVendido = consultores.totalVendido;
                         $scope.totalPecas = consultores.totalPecas + consultores.totalVendido; //considerando a soma entre pecas vendidas e guardadas por cada consultor
                         $scope.total = $scope.consultores.length;
                     },
@@ -826,7 +830,7 @@ angular.module('ambaya')
             $scope.novo = function(){
                 encomendasService.nova($scope.form).then(
                     function(response) {
-                        Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'notificacaoRuim');
+                        Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'notificacaoBoa');
                         $('#adicionar').modal('close');
                         $scope.form = {
                             "item":"",
@@ -877,31 +881,39 @@ angular.module('ambaya')
             
             $scope.entrada = function(){
                 $scope.adicionando.push($scope.codigo.toUpperCase());
-                $scope.codigo = ""
+                $scope.codigo = "";
             }
             $scope.entradaCamera = function(){
                 $('#venda').modal('close');
                 $('#modalCamera').modal('open');
                 Quagga.init({
-                    inputStream : {
-                    name : "Live",
-                    type : "LiveStream",
-                    target: document.querySelector('#camera')    // Or '#yourElement' (optional)
-                    },
-                    decoder : {
-                    readers : ["code_128_reader"]
-                    }
-                }, function(err) {
-                    if (err) {
-                        console.log(err);
-                        return
-                    }
-                    console.log("Initialization finished. Ready to start");
-                    Quagga.start();
+                        inputStream : {
+                            name : "Barras",
+                            type : "LiveStream",
+                            target: document.querySelector('#camera')    // Or '#yourElement' (optional)
+                        },
+                        decoder : {
+                            readers : ["code_128_reader"]
+                        },
+                        locator: {
+                            patchSize: "small",
+                            halfSample: false
+                        },
+                        locate: true
+                    }, 
+                    function(err) {
+                        if (err) {
+                            console.log(err);
+                            return
+                        }
+                        console.log("Initialization finished. Ready to start");
+                        Quagga.start();
                 });
                 Quagga.onDetected(function(data){
                     Quagga.stop();
+                    data.codeResult.code = data.codeResult.code.replace(/\s+/g, '');
                     $('#codigo').val(data.codeResult.code);
+                    $scope.codigo = data.codeResult.code;
                     $('#modalCamera').modal('close');
                     $('#venda').modal('open');
                     $('#codigo').focus();
@@ -1138,6 +1150,10 @@ angular.module('ambaya')
             $scope.entradas = [];
             
             $scope.codigo = "";
+            $scope.limpar = function(){
+                $scope.adicionando = [];
+                $scope.entradas = [];
+            }
             $scope.entrada = function(){
                 var item = $('#item').find(":selected").text();
                 var preco = $('#preco').val();
