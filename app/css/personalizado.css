@@ -38,6 +38,7 @@ main {
 }
 .btn{
     background-color: #e6b000;
+    margin-bottom: 5px;
 }
 .btn:hover{
     background-color: #997500;

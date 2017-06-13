@@ -3,7 +3,7 @@
 angular.module('ambaya')
 	
 		//Implementação Ambaya
-		.controller('BaseController',['loginService', '$scope', '$state', '$localStorage', function(loginService, $scope, $state, $localStorage){
+		.controller('BaseController',['userService', 'loginService', '$scope', '$state', '$localStorage', function(userService, loginService, $scope, $state, $localStorage){
 			$(".button-collapse").sideNav({
                 closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
                 draggable: true // Choose whether you can drag to open on touch screens
@@ -81,8 +81,7 @@ angular.module('ambaya')
             $scope.logado = loginService.check();
             if ($scope.logado) {
                 $scope.usuario = loginService.getUser();
-                $scope.rotas= rotas[$scope.usuario.tipo];
-                $scope.tipo = $scope.usuario.tipo;
+                $scope.login();
             }else{
                 $scope.tipo = "Login";
                 //é necessário notificacaoRuimirecionar para o início aqui.
@@ -98,6 +97,7 @@ angular.module('ambaya')
                 vetor.splice(index, 1);
             }
             $scope.processaPecas = function(estoque){
+                console.log(estoque);
                 var pecas = {
                     "aneis":[],
                     "brincosP": [],
@@ -497,9 +497,10 @@ angular.module('ambaya')
                 );                
            }
 		}])
-        .controller('ConsultorController',[ '$scope', 'userService', 'consultoresService', 'estoqueService', '$stateParams', function($scope, userService, consultoresService, estoqueService, $stateParams){
+        .controller('ConsultorController',[ '$scope', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, userService, consultoresService, estoqueService, $stateParams, acertosService){
             $('.tooltipped').tooltip({delay: 50});            
             $('select').material_select();
+            var info;
             var id =  $stateParams.consultorId;
 
             userService.carregaUm(id).then(
@@ -507,6 +508,7 @@ angular.module('ambaya')
                         $scope.consultor = response.data;
                         $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                         $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
+                        $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100 + $scope.consultor.pendente;
                     },
                     function(response) {
                             Materialize.toast("Falha ao carregar dados!", 3000);
@@ -605,7 +607,65 @@ angular.module('ambaya')
             };
             $('#item').on('change', function(){
                 $scope.codigo = $(this).val();
-            })
+            });
+
+            //Realização de acerto
+            $('#pago').on('change', function(){
+                if($scope.pago > $scope.devido){
+                    $scope.pago = $scope.devido;
+                    $('#pago').val($scope.devido.toFixed(2));
+                    Materialize.toast("Valor pago não pode exceder total devido", 5000, "notificacaoRuim");
+                } else if ($scope.pago < 0.9*$scope.devido){
+                    $scope.pago = 0.9*$scope.devido;
+                    $('#pago').val(($scope.devido*0.9).toFixed(2));
+                    Materialize.toast("Valor pago não pode ser menor que 90% do devido!", 5000, "notificacaoRuim");
+                }
+            });
+            $('#acerto').modal();
+            $scope.modalAcerto = function(){
+                $scope.pago = $scope.devido.toFixed(2);
+                $('#pago').val($scope.devido.toFixed(2));
+                $('#acerto').modal('open');
+            };
+            $scope.acerto = function(){
+                $scope.consultor.pendente = $scope.devido - $scope.pago;
+                var info = {
+                            "userNome": $scope.consultor.nome,
+                            "userId": $scope.consultor._id,
+                            "tipo": "Consultor",
+                            "valor": $scope.pago,
+                            "pecas": $scope.consultor.vendido,
+                            "pendente": $scope.consultor.pendente
+                        }
+                $scope.consultor.vendido = [];
+                console.log(info);
+                consultoresService.acerto($scope.consultor).then(
+                    function(response){
+                        acertosService.acerto(info).then(
+                            function(response){
+                                acertosService.atualizaHistorico(info.pecas).then(
+                                    function(){
+                                        $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
+                                        $scope.usuario.totalVendido = $scope.pago;
+                                        $scope.consultor.totalVendido = 0;
+                                        $scope.devido = $scope.devido - $scope.pago;
+                                        $('#acerto').modal('close');
+                                    },
+                                    function(){
+                                        Materialize.toast('Falha ao salvar historico!', 5000, 'notificacaoRuim');
+                                    }
+                                )
+                            },
+                            function(response){
+                                Materialize.toast('Falha ao adicionar acerto!', 5000, 'notificacaoRuim');
+                            }
+                        );
+                    },
+                    function(response){
+                        Materialize.toast('Falha ao atualizar consultor!', 5000, 'notificacaoRuim');
+                    }
+                )
+            };
 		}])
         .controller('EncomendasControladoriaController',[ '$scope', 'encomendasService', 'consultoresService', function($scope, encomendasService, consultoresService){
            $('.tooltipped').tooltip({delay: 50});
@@ -989,7 +1049,7 @@ angular.module('ambaya')
             $('#entrada').modal();
             $('select').material_select();
             $scope.adicionando = [];
-            $scope.encomendas = {};
+            $scope.encomendas = 0;
             $scope.pecas = $scope.processaPecas($scope.usuario.estoque);
             encomendasService.totalAprovado().then(
                 function(response){
@@ -1005,7 +1065,11 @@ angular.module('ambaya')
                 $('#codigo').focus();
             }
             $scope.entrada = function(){
-                $scope.adicionando.push($scope.codigo.toUpperCase());
+                var cod = $scope.extraiCod($scope.codigo.toUpperCase());
+                var cods = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'TZ', 'ES'];
+                if (cods.indexOf(cod) != -1){
+                    $scope.adicionando.push($scope.codigo.toUpperCase());
+                } else Materialize.toast("Código Inválido", 5000, 'notificacaoRuim');
                 $scope.codigo = ""
             }
             $scope.concluir = function(){

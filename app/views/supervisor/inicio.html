@@ -4,7 +4,7 @@
 			<div class="card-content">
 				<span class="card-title">Minha Parte</span>		
 				</br>
-				<h1>{{usuario.porcentagem*consultores.valorVendido/100 | currency: 'R$'}}</h1>                   
+				<h1>{{usuario.porcentagem*usuario.totalVendido/100 | currency: 'R$'}}</h1>                   
 			</div>
 		</div>
 	</div>
@@ -14,7 +14,7 @@
 			<span class="card-title">Próximo Acerto</span>
 				<h1>{{usuario.proxAcerto | date: "d/MM/yy"}}</h1>		
 				<h5>Faltam {{faltamDias(usuario.proxAcerto)}} dias</h5>
-				<h5>Valor devido: {{consultores.valorVendido - (consultores.valorVendido*usuario.porcentagem)/100 - consultores.totalGanho | currency: 'R$'}}</h5>
+				<h5>Valor devido: {{usuario.totalVendido*(100 - usuario.porcentagem - 30)/100 | currency: 'R$'}}</h5>
 			</div>
 		</div>
 	</div>

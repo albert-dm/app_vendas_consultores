@@ -56,18 +56,18 @@ angular.module('ambaya')
         })
         .service('controladoriaService', function($http) {
             this.consultores = function(){
-                return $http.get("users/consultores/num");
+                return $http.get("/users/consultores/num");
             };
             this.supervisores = function(){
-                return $http.get("users/supervisores/num");
+                return $http.get("/users/supervisores/num");
             };
         })
         .service('consultoresService', function($http) {
             this.todos = function(){
-                return $http.get("users/consultores/");
+                return $http.get("/users/consultores/");
             };
             this.porSupervisor = function(id){
-                return $http.get("users/consultores/"+id);
+                return $http.get("/users/consultores/"+id);
             };
             this.aprovar = function(id){
                 return $http.post("/users/atualizar/",
@@ -97,10 +97,22 @@ angular.module('ambaya')
                 }
                 );
             };
+            this.acerto = function(usuario){
+                return $http.post("/users/atualizar/",
+                {
+                        _id: usuario._id,
+                        update: {
+                            pendente: usuario.pendente,
+                            vendido: usuario.vendido,
+                            totalVendido: 0
+                        }
+                }
+                );
+            }
         })
         .service('supervisoresService', function($http) {
             this.todos = function(){
-                return $http.get("users/supervisores/");
+                return $http.get("/users/supervisores/");
             };
         })
         .service('encomendasService', function($http) {
@@ -135,6 +147,18 @@ angular.module('ambaya')
                 );
             };
         })
+        .service('acertosService', function($http){
+            this.acerto = function(info){
+                return $http.post("/acertos/", info);
+            }
+            this.atualizaHistorico = function(vendas){
+                return $http.post("/historico/vendas",
+                {
+                    vendas: vendas
+                }
+                );
+            };
+        })
         .factory('tokenInterceptor',['$q', '$window', '$location', '$localStorage', function($q, $window, $location, $localStorage, $state) {
 
             var interceptor = {};
@@ -164,7 +188,11 @@ angular.module('ambaya')
                     console.log('Removendo token da sessão')
                     delete $localStorage.token;
                     $localStorage.logado = false;                    
-                    $window.location.reload();
+                    //$window.location.reload();
+                    /*if($state.is('Início'))
+                        $state.reload();
+                    else
+                        $state.go('Início');*/
                 } 
                 return $q.reject(rejection);
             }

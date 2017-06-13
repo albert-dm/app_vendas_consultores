@@ -2,7 +2,7 @@
 
 angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider){
-    $httpProvider.interceptors.push('tokenInterceptor');
+    //$httpProvider.interceptors.push('tokenInterceptor');
     $urlRouterProvider.otherwise('inicio');
     var inicio = {
         name: 'Início',
