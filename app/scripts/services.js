@@ -131,11 +131,11 @@ angular.module('ambaya')
             this.excluir = function(id){
                 return $http.delete("/encomendas/"+id);
             };
-            this.atualizarStatus = function(id, status){
+            this.atualizarStatus = function(id, status, enviados){
                 return $http.post("/encomendas/atualizar/",
                 {
                     _id: id,
-                    update: {status: status}
+                    update: {status: status, enviados: enviados}
                 }
                 );
             };

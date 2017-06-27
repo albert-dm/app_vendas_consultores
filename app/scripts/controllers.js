@@ -80,8 +80,19 @@ angular.module('ambaya')
             
             $scope.logado = loginService.check();
             if ($scope.logado) {
+                console.log("logado");
                 $scope.usuario = loginService.getUser();
-                $scope.login();
+                userService.carregaUm($scope.usuario._id).then(
+                    function(response) {
+                        $scope.usuario = response.data;
+                        $scope.rotas= rotas[$scope.usuario.tipo];
+                        $scope.tipo = $scope.usuario.tipo;
+                    },
+                    function(response) {
+                        Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
+                        $scope.sair();
+                    }
+                );
             }else{
                 $scope.tipo = "Login";
                 //é necessário notificacaoRuimirecionar para o início aqui.
@@ -1145,6 +1156,9 @@ angular.module('ambaya')
 					case "Pulseira Masculina":
                         $scope.codigo = ['PM'];
                         break;
+                    case "Tornozeleira":
+                        $scope.codigo = ['TZ'];
+                        break;
 					case "Escapulário":
                         $scope.codigo = ['ES'];
                         break;
@@ -1152,7 +1166,7 @@ angular.module('ambaya')
                         $scope.codigo = [''];
                         break;
 					case "Reposição padrão":
-                        $scope.codigo = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'ES'];
+                        $scope.codigo = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'ES', 'TZ'];
                         break;
                }
                 
@@ -1168,7 +1182,7 @@ angular.module('ambaya')
                    function(response){
                        estoqueService.entradaEstoque($scope.encomendaAtual.donoId, $scope.pecasEnviadas).then(
                            function(response){
-                               encomendasService.atualizarStatus($scope.encomendaAtual._id, "Enviada").then(
+                               encomendasService.atualizarStatus($scope.encomendaAtual._id, "Enviada", $scope.pecasEnviadas).then(
                                     function(response) {
                                         Materialize.toast("Enviada!", 5000, 'notificacaoBoa');
                                         carregaEncomendas();
