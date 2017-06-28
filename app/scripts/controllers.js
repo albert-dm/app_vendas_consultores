@@ -934,6 +934,7 @@ angular.module('ambaya')
         //Consultor
         .controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', function($scope, consultoresService, userService){
             $('.tooltipped').tooltip({delay: 50});
+            $('select').material_select();
             $scope.adicionando = [];
             userService.carregaUm($scope.usuario.supervisor).then(
                     function(response) {
@@ -944,6 +945,7 @@ angular.module('ambaya')
                     }
             );
             $scope.brinde = {};
+            $scope.troca = {};
             carregaBrinde = function(){
                 consultoresService.meuBrinde($scope.usuario._id).then(
                     function(res){
@@ -1017,11 +1019,62 @@ angular.module('ambaya')
                     );                    
                 }
             }
-            $scope.troca = function(){
-                alert($scope.codigoDefeito.toUpperCase()+" "+$scope.codigoNova.toUpperCase());
-                $scope.codigoDefeito = "";
-                $scope.codigoNova = "";
-                $('#troca').modal('close');
+            $scope.trocaPeca = function(){
+                $scope.troca.consultorId = $scope.usuario._id;
+                $scope.troca.consultorNome = $scope.usuario.nome;
+                var estoqueTemp = [];
+                var estoqueTemp = estoqueTemp.concat($scope.usuario.estoque);
+                var encontrado = false;
+                var cod = $scope.troca.pecaNova.toUpperCase();
+                var codDefeito = $scope.troca.pecaDefeito.toUpperCase();
+                var encontrado = false;
+                var precoAdd = $scope.extraiPreco(cod);
+                var codAdd = $scope.extraiCod(cod);
+                for (var j=0; j<$scope.usuario.estoque.length; j++){
+                    if(precoAdd=== $scope.extraiPreco($scope.usuario.estoque[j]) && codAdd === $scope.extraiCod($scope.usuario.estoque[j])){
+                        $scope.deletaElemento($scope.usuario.estoque, j);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (encontrado == false){
+                    Materialize.toast(cod+" não encontrado!", 10000, 'notificacaoRuim');
+                    $scope.usuario.estoque = estoqueTemp;
+                }else{
+                    $scope.troca.saldo = $scope.extraiPreco(cod) - $scope.extraiPreco(codDefeito);
+                    $scope.troca.defeito = $('#defeito').val();
+                    consultoresService.atualizaEstoque($scope.usuario).then(
+                        function(res){
+                            consultoresService.troca($scope.troca).then(
+                                function(res){
+                                    $scope.troca = {};
+                                    $('#troca').modal('close');
+                                    Materialize.toast("Troca registrada com sucesso!", 5000, 'notificacaoBoa');
+                                },
+                                function(res){
+                                    Materialize.toast("Falha ao registrar troca!", 5000, 'notificacaoRuim');
+                                }
+                            );
+                        },
+                        function(res){
+                            $scope.usuario.estoque = estoqueTemp;
+                            Materialize.toast("Falha ao atualizar estoque!", 5000, 'notificacaoRuim');
+                        }
+                    );                    
+                }
+            }
+            $scope.pedeMaleta = function(){
+                consultoresService.pedeMaleta($scope.brinde).then(
+                    function(res){
+                        $scope.codigo = "";
+                        $('#brinde').modal('close');
+                        Materialize.toast("Maleta solicitada com sucesso!", 5000, 'notificacaoBoa');
+                        carregaBrinde();
+                    },
+                    function(res){
+                        Materialize.toast("Falha ao solicitar maleta!", 5000, 'notificacaoRuim');
+                    }
+                );
             }
             $scope.entradaCamera = function(){
                 $('#venda').modal('close');
@@ -1102,6 +1155,25 @@ angular.module('ambaya')
                                 consultoresService.novoBrinde($scope.usuario, "mil").then(
                                     function(res){
                                         carregaBrinde();
+                                    },
+                                    function(res){
+                                        console.log("Falah ao adicionar brinde dos mil reais");
+                                    }
+                                );
+                            }
+                            if(totalVendidoTemp < 1500 && $scope.usuario.totalVendido >= 1500){
+                                consultoresService.minhaMaleta($scope.usuario._id).then(
+                                    function(res){
+                                        if(res.data.length===0){
+                                            consultoresService.novoBrinde($scope.usuario, "maleta").then(
+                                                function(res){
+                                                    carregaBrinde();
+                                                },
+                                                function(res){
+                                                    console.log("Falah ao adicionar brinde de maleta");
+                                                }
+                                            );
+                                        }
                                     }
                                 );
                             }

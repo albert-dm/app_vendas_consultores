@@ -121,6 +121,9 @@ angular.module('ambaya')
             this.meuBrinde = function(id){
                 return $http.get("/brindes/pendente/"+id);
             }
+            this.minhaMaleta = function(id){
+                return $http.get("/brindes/maleta/"+id);
+            }
             this.pegaBrinde = function(brinde, peca){
                 return $http.post("/brindes/atualizar/",
                 {
@@ -128,6 +131,16 @@ angular.module('ambaya')
                         update: {
                             status: "Entregue",
                             peca: peca
+                        }
+                }
+                );
+            }
+            this.pedeMaleta = function(brinde){
+                return $http.post("/brindes/atualizar/",
+                {
+                        _id: brinde._id,
+                        update: {
+                            status: "Solicitada"
                         }
                 }
                 );
@@ -141,6 +154,9 @@ angular.module('ambaya')
                     }
                 }
                 );
+            };
+            this.troca = function(troca){
+                return $http.post("/trocas/", troca);
             };
         })
         .service('supervisoresService', function($http) {
