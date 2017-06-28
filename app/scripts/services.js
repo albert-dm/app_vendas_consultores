@@ -109,6 +109,39 @@ angular.module('ambaya')
                 }
                 );
             }
+            this.novoBrinde = function(usuario, campanha){
+                return $http.post("/brindes/",
+                {
+                        consultorId: usuario._id,
+                        consultorNome: usuario.nome,
+                        campanha: campanha
+                }
+                );
+            }
+            this.meuBrinde = function(id){
+                return $http.get("/brindes/pendente/"+id);
+            }
+            this.pegaBrinde = function(brinde, peca){
+                return $http.post("/brindes/atualizar/",
+                {
+                        _id: brinde._id,
+                        update: {
+                            status: "Entregue",
+                            peca: peca
+                        }
+                }
+                );
+            }
+            this.atualizaEstoque = function(usuario){
+                return $http.post("/users/atualizar/",
+                {
+                    _id: usuario._id,
+                    update: {
+                        estoque: usuario.estoque
+                    }
+                }
+                );
+            };
         })
         .service('supervisoresService', function($http) {
             this.todos = function(){

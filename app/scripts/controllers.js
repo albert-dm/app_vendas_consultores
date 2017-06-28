@@ -617,8 +617,12 @@ angular.module('ambaya')
                 return ($scope.codigo === cod);
             };
             $('#item').on('change', function(){
-                $scope.codigo = $(this).val();
+                var cod = $(this).val();
+                $scope.codigo = cod;
             });
+            $scope.$watch($scope.codigo, function(newVal, oldVal){
+                console.log(newVal);
+            }, true);
 
             //Realização de acerto
             $('#pago').on('change', function(){
@@ -939,10 +943,29 @@ angular.module('ambaya')
                             Materialize.toast("Falha ao carregar dados do supervisor!", 5000, 'notificacaoRuim');
                     }
             );
+            $scope.brinde = {};
+            carregaBrinde = function(){
+                consultoresService.meuBrinde($scope.usuario._id).then(
+                    function(res){
+                        $scope.brinde = res.data[0];
+                    }
+                )
+            }
+            carregaBrinde();
             $('#venda').modal();
             $('#modalCamera').modal();
+            $('#brinde').modal();
+            $('#troca').modal();
             $scope.modalVenda = function(){
                 $('#venda').modal('open');
+                $('#codigo').focus();
+            }
+            $scope.modalBrinde = function(){
+                $('#brinde').modal('open');
+                $('#codigo').focus();
+            }
+            $scope.modalTroca = function(){
+                $('#troca').modal('open');
                 $('#codigo').focus();
             }
             Quagga.CameraAccess.enumerateVideoDevices()
@@ -953,6 +976,52 @@ angular.module('ambaya')
             $scope.entrada = function(){
                 $scope.adicionando.push($scope.codigo.toUpperCase());
                 $scope.codigo = "";
+            }
+            $scope.pegaBrinde = function(){
+                var estoqueTemp = [];
+                var estoqueTemp = estoqueTemp.concat($scope.usuario.estoque);
+                var encontrado = false;
+                var cod = $scope.codigoBrinde.toUpperCase();
+                var encontrado = false;
+                var precoAdd = $scope.extraiPreco(cod);
+                var codAdd = $scope.extraiCod(cod);
+                for (var j=0; j<$scope.usuario.estoque.length; j++){
+                    if(precoAdd=== $scope.extraiPreco($scope.usuario.estoque[j]) && codAdd === $scope.extraiCod($scope.usuario.estoque[j])){
+                        $scope.deletaElemento($scope.usuario.estoque, j);
+                        encontrado = true;
+                        break;
+                    }
+                }
+                if (encontrado == false){
+                    Materialize.toast(cod+" não encontrado!", 10000, 'notificacaoRuim');
+                    $scope.usuario.estoque = estoqueTemp;
+                }else{
+                    consultoresService.atualizaEstoque($scope.usuario).then(
+                        function(res){
+                            consultoresService.pegaBrinde($scope.brinde, cod).then(
+                                function(res){
+                                    $scope.codigo = "";
+                                    $('#brinde').modal('close');
+                                    Materialize.toast("Brinde registrado com sucesso!", 5000, 'notificacaoBoa');
+                                    carregaBrinde();
+                                },
+                                function(res){
+                                    Materialize.toast("Falha ao pegar o brinde!", 5000, 'notificacaoRuim');
+                                }
+                            );
+                        },
+                        function(res){
+                            $scope.usuario.estoque = estoqueTemp;
+                            Materialize.toast("Falha ao atualizar estoque!", 5000, 'notificacaoRuim');
+                        }
+                    );                    
+                }
+            }
+            $scope.troca = function(){
+                alert($scope.codigoDefeito.toUpperCase()+" "+$scope.codigoNova.toUpperCase());
+                $scope.codigoDefeito = "";
+                $scope.codigoNova = "";
+                $('#troca').modal('close');
             }
             $scope.entradaCamera = function(){
                 $('#venda').modal('close');
@@ -1029,6 +1098,14 @@ angular.module('ambaya')
                     consultoresService.venda($scope.usuario).then(
                         function(response){
                             Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
+                            consultoresService.novoBrinde($scope.usuario, "mil").then(
+                                function(res){
+                                    carregaBrinde();
+                                }
+                            );
+                            if(totalVendidoTemp < 1000 && $scope.usuario.totalVendido >= 1000){
+                                $('#mil').show();
+                            }
                         },
                         function(response){
                             $scope.usuario.estoque = estoqueTemp;
