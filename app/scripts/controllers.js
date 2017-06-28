@@ -1098,13 +1098,12 @@ angular.module('ambaya')
                     consultoresService.venda($scope.usuario).then(
                         function(response){
                             Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
-                            consultoresService.novoBrinde($scope.usuario, "mil").then(
-                                function(res){
-                                    carregaBrinde();
-                                }
-                            );
                             if(totalVendidoTemp < 1000 && $scope.usuario.totalVendido >= 1000){
-                                $('#mil').show();
+                                consultoresService.novoBrinde($scope.usuario, "mil").then(
+                                    function(res){
+                                        carregaBrinde();
+                                    }
+                                );
                             }
                         },
                         function(response){
