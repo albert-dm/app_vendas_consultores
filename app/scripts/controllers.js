@@ -13,6 +13,7 @@ angular.module('ambaya')
                     "Consultor": [
                         {nome:"Início", icone:"home"},
                         {nome:"Estoque", icone:"business_center"},
+                        {nome:"Histórico", icone:"history"},
                     ],
                     "Supervisor": [
                         {nome:"Início", icone:"home"},
@@ -458,7 +459,9 @@ angular.module('ambaya')
                 "estoque": [],
                 "vendido": [],
                 "totalVendido": 0,
-                "proxAcerto": Date.now()+45*24*60*60*1000
+                "proxAcerto": Date.now()+45*24*60*60*1000,
+                "tipoTaxa":"Primeiro pagamento", 
+                "taxa": 350
             };
             $('#adicionar').modal();
             $('#excluir').modal();
@@ -486,7 +489,9 @@ angular.module('ambaya')
                             "estoque": [],
                             "vendido": [],
                             "totalVendido": 0,
-                            "proxAcerto": Date.now()+45*24*60*60*1000
+                            "proxAcerto": Date.now()+45*24*60*60*1000,
+                            "tipoTaxa":"Primeiro pagamento", 
+                            "taxa": 350
                         };
                         carregaConsultores();
                         Materialize.toast("Consultor adicionado com sucesso!", 5000, 'notificacaoBoa');
@@ -513,6 +518,9 @@ angular.module('ambaya')
             $('select').material_select();
             var info;
             var id =  $stateParams.consultorId;
+            var tipoTemp;
+            var taxaTemp;
+            var parcelaTemp;
 
             userService.carregaUm(id).then(
                     function(response) {
@@ -520,17 +528,59 @@ angular.module('ambaya')
                         $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                         $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
                         $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100 + $scope.consultor.pendente;
+                         //configuração de taxa
+                        if($scope.consultor.tipoTaxa === "Porcentagem"){
+                            $scope.parcelaTaxa = 0.1*$scope.consultor.totalVendido;
+                        }else{
+                            $scope.parcelaTaxa = 350;
+                        }
+                        if($scope.consultor.taxa <=0)
+                            $scope.parcelaTaxa = 0;
                     },
                     function(response) {
-                            Materialize.toast("Falha ao carregar dados!", 3000);
+                            Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
                     }
             );
 
-            $('#excluir').modal();
+            $('.modal').modal();
             $scope.del = function(){
                 $('#excluir').modal('open');
             }
-
+            $scope.atualizaTaxa = function(){
+                consultoresService.tipoTaxa($scope.consultor).then(
+                    function(res){
+                         Materialize.toast("Tipo selecionado!", 5000, 'notificacaoBoa');
+                    },
+                    function(res){
+                        $scope.consultor.tipoTaxa = tipoTemp;
+                        $scope.consultor.taxa = taxaTemp;
+                        $scope.parcelaTaxa = parcelaTemp;
+                        Materialize.toast("Falha ao slecionar!", 5000, 'notificacaoRuim');
+                    }
+                );
+            }
+            $scope.mudaTaxa = function(){
+                tipoTemp = $scope.consultor.tipoTaxa;
+                taxaTemp = $scope.consultor.taxa;
+                parcelaTemp = $scope.parcelaTaxa;
+                if($scope.consultor.tipoTaxa === "À vista"){
+                    $('#avista').modal('open');
+                }else if($scope.consultor.tipoTaxa === "Porcentagem"){
+                    $scope.consultor.taxa = 370;
+                    $scope.parcelaTaxa = 0.1*$scope.consultor.totalVendido;
+                    $scope.atualizaTaxa();
+                }else{
+                    $scope.consultor.taxa = 350;
+                    $scope.parcelaTaxa = 350;
+                    $scope.atualizaTaxa();
+                }
+            }
+            $scope.confirmaPagamento = function(){
+                $scope.consultor.taxa = 0;
+                $scope.parcelaTaxa = 0;
+                $scope.consultor.tipoTaxa = "Á vista";
+                $scope.atualizaTaxa();
+            }
             $scope.excluir = function(){
                 userService.deletaUm($scope.consultor._id).then(
                     function(response) {
@@ -625,32 +675,20 @@ angular.module('ambaya')
             }, true);
 
             //Realização de acerto
-            $('#pago').on('change', function(){
-                if($scope.pago > $scope.devido){
-                    $scope.pago = $scope.devido;
-                    $('#pago').val($scope.devido.toFixed(2));
-                    Materialize.toast("Valor pago não pode exceder total devido", 5000, "notificacaoRuim");
-                } else if ($scope.pago < 0.9*$scope.devido){
-                    $scope.pago = 0.9*$scope.devido;
-                    $('#pago').val(($scope.devido*0.9).toFixed(2));
-                    Materialize.toast("Valor pago não pode ser menor que 90% do devido!", 5000, "notificacaoRuim");
-                }
-            });
             $('#acerto').modal();
             $scope.modalAcerto = function(){
-                $scope.pago = $scope.devido.toFixed(2);
-                $('#pago').val($scope.devido.toFixed(2));
                 $('#acerto').modal('open');
             };
             $scope.acerto = function(){
-                $scope.consultor.pendente = $scope.devido - $scope.pago;
+                $scope.consultor.taxa = $scope.consultor.taxa - $scope.parcelaTaxa;
+                if($scope.consultor.taxa <1) $scope.consultor.taxa = 0;
                 var info = {
                             "userNome": $scope.consultor.nome,
                             "userId": $scope.consultor._id,
                             "tipo": "Consultor",
-                            "valor": $scope.pago,
+                            "valor": $scope.devido,
                             "pecas": $scope.consultor.vendido,
-                            "pendente": $scope.consultor.pendente
+                            "taxa": $scope.consultor.parcelaTaxa
                         }
                 $scope.consultor.vendido = [];
                 console.log(info);
@@ -661,10 +699,14 @@ angular.module('ambaya')
                                 acertosService.atualizaHistorico(info.pecas).then(
                                     function(){
                                         $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
-                                        $scope.usuario.totalVendido = $scope.pago;
+                                        $scope.usuario.totalVendido += $scope.consultor.totalVendido;
                                         $scope.consultor.totalVendido = 0;
-                                        $scope.devido = $scope.devido - $scope.pago;
                                         $('#acerto').modal('close');
+                                        consultoresService.venda($scope.usuario).then(
+                                            function(res){
+                                                Materialize.toast('Acerto realizado com sucesso!', 5000, 'notificacaoBoa');
+                                            }
+                                        );
                                     },
                                     function(){
                                         Materialize.toast('Falha ao salvar historico!', 5000, 'notificacaoRuim');
@@ -817,7 +859,9 @@ angular.module('ambaya')
                 "estoque": [],
                 "vendido": [],
                 "totalVendido": 0,
-                "proxAcerto": Date.now()+45*24*60*60*1000
+                "proxAcerto": Date.now()+45*24*60*60*1000,
+                "tipoTaxa":"Primeiro pagamento", 
+                "taxa": 350
             };
             $('#adicionar').modal();
             $scope.add = function(){
@@ -840,7 +884,9 @@ angular.module('ambaya')
                             "estoque": [],
                             "vendido": [],
                             "totalVendido": 0,
-                            "proxAcerto": Date.now()+45*24*60*60*1000
+                            "proxAcerto": Date.now()+45*24*60*60*1000,
+                            "tipoTaxa":"Primeiro pagamento", 
+                            "taxa": 350
                         };
                         Materialize.toast("Consultor adicionado com sucesso!", 5000, 'notificacaoBoa');
                         carregaConsultores();
@@ -954,21 +1000,17 @@ angular.module('ambaya')
                 )
             }
             carregaBrinde();
-            $('#venda').modal();
-            $('#modalCamera').modal();
-            $('#brinde').modal();
-            $('#troca').modal();
+            $('.modal').modal();
             $scope.modalVenda = function(){
+                console.log("venda");
                 $('#venda').modal('open');
                 $('#codigo').focus();
             }
             $scope.modalBrinde = function(){
                 $('#brinde').modal('open');
-                $('#codigo').focus();
             }
             $scope.modalTroca = function(){
                 $('#troca').modal('open');
-                $('#codigo').focus();
             }
             Quagga.CameraAccess.enumerateVideoDevices()
             .then(function(devices) {
@@ -1201,6 +1243,25 @@ angular.module('ambaya')
            $scope.geral = {};
            $scope.pecas = $scope.processaPecas($scope.usuario.estoque);
            $scope.vendidas = $scope.processaPecas($scope.usuario.vendido);
+        }])
+        .controller('HistoricoConsultorController',[ '$scope', 'consultoresService', function($scope, consultoresService){
+            $('.tooltipped').tooltip({delay: 50});
+            $scope.acertos = {};
+            $scope.vendidoAno = 0;
+            hoje = new Date();
+            consultoresService.historico($scope.usuario._id).then(                
+                function(res){
+                    $scope.acertos = res.data;
+                    for(i=0; i< $scope.acertos.length; i++){
+                        dia = new Date($scope.acertos[i].createdAt);
+                        if(hoje.getFullYear() === dia.getFullYear())
+                            $scope.vendidoAno+=$scope.acertos[i].valor;
+                    }
+                },
+                function(res){
+                     Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
+                }
+            );
         }])
         //Estoque
         .controller('EstoqueInicioController',[ '$scope', 'estoqueService', 'encomendasService', function($scope, estoqueService, encomendasService){

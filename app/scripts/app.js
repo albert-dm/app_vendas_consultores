@@ -167,6 +167,19 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
             }
         },
     };
+    var historico = {
+        name: 'Histórico',
+        url: '/historico', 
+        views: {
+            'Consultor':{
+                templateUrl: 'views/consultor/historico.html',
+                controller: "HistoricoConsultorController"
+            },
+            'Login':{
+                templateUrl: 'login.html'
+            }
+        },
+    };
     $stateProvider.state(inicio);
     $stateProvider.state(consultores);
     $stateProvider.state(consultor);
@@ -177,5 +190,6 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
     $stateProvider.state(etiquetas);
     $stateProvider.state(encomendas);
     $stateProvider.state(relatorios);
+    $stateProvider.state(historico);
 })
 ;

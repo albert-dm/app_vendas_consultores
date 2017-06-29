@@ -104,6 +104,7 @@ angular.module('ambaya')
                         update: {
                             pendente: usuario.pendente,
                             vendido: usuario.vendido,
+                            taxa: usuario.taxa,
                             totalVendido: 0
                         }
                 }
@@ -158,6 +159,20 @@ angular.module('ambaya')
             this.troca = function(troca){
                 return $http.post("/trocas/", troca);
             };
+            this.historico = function(id){
+                return $http.get("/acertos/usuario/"+id);
+            };
+            this.tipoTaxa = function(usuario){
+                return $http.post("/users/atualizar/",
+                {
+                        _id: usuario._id,
+                        update: {
+                            tipoTaxa: usuario.tipoTaxa,
+                            taxa: usuario.taxa
+                        }
+                }
+                );
+            }
         })
         .service('supervisoresService', function($http) {
             this.todos = function(){

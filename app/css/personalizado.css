@@ -36,6 +36,12 @@ main {
 .textoPreto{
     color: #373435 !important;
 }
+.bordaAmarela{
+    border: solid #997500;
+}
+.bordaBranca{
+    border: solid white;
+}
 .btn{
     background-color: #e6b000;
     margin-bottom: 5px;
@@ -133,6 +139,17 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 
 .tabs .indicator{
     background-color: #997500
+}
+[type=radio]:not(:checked)+label:after, [type=radio]:not(:checked)+label:before{
+    background-color: #997500;
+    border: none;
+}
+[type=radio].with-gap:checked+label:after, [type=radio]:checked+label:after{
+    background-color: white;
+    border-color: #e6b000;
+}
+label{
+    color: black;
 }
 
 .dropdown-content li>a, .dropdown-content li>span{
