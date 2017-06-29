@@ -536,6 +536,8 @@ angular.module('ambaya')
                         }
                         if($scope.consultor.taxa <=0)
                             $scope.parcelaTaxa = 0;
+                        if($scope.consultor.taxa < $scope.parcelaTaxa)
+                            $scope.parcelaTaxa = $scope.consultor.taxa;
                     },
                     function(response) {
                             Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
