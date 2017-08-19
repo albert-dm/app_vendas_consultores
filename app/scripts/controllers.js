@@ -285,6 +285,16 @@ angular.module('ambaya')
             $scope.irPara = function(pagina){
                 $state.go(pagina);
             }
+            $scope.opcoesPecas = [{'val':"AN", 'label':'Anéis'},
+								{'val':"BG", 'label':'Brinco Grande'},
+								{'val':"BP", 'label':'Brinco Pequeno'},
+								{'val':"CF", 'label':'Cordão Feminino'},
+								{'val':"CM", 'label':'Cordão Masculino'},
+								{'val':"PN", 'label':'Pingente'},
+								{'val':"PF", 'label':'Pulseira Feminina'},
+								{'val':"PM", 'label':'Pulseira Masculina'},
+								{'val':"TZ", 'label':'Tornozeleira'},
+								{'val':"ES", 'label':'Escapulário'}];
                 
 		}])
         //Controladoria
@@ -524,7 +534,7 @@ angular.module('ambaya')
         .controller('ConsultorController',[ '$scope', '$state', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, $state, userService, consultoresService, estoqueService, $stateParams, acertosService){
             $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});            
-            $('select').material_select();
+            
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
                 selectYears: 150 // Creates a dropdown of 15 years to control year
@@ -632,12 +642,12 @@ angular.module('ambaya')
 
 
             ////Alocaçao das peças
-            $scope.codigo = "AN";
             $('#enviar').modal();
 
             $scope.modalEncomenda = function(){
                var aux;
-                  
+                //$('select').material_select();
+                $scope.codigo = "AN";
                 $scope.estoqueTemp = [];
                 $scope.pecasEnviadas = [];
                 $scope.estoqueTemp = $scope.estoqueTemp.concat($scope.usuario.estoque);    
