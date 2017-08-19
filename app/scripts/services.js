@@ -11,6 +11,9 @@ angular.module('ambaya')
             this.deletaUm = function(id){
                 return $http.delete("/users/"+id);
             };
+            this.estoqueId = function(){
+                return $http.get("/users/estoqueId");
+            }
         })
         .service('loginService', function($localStorage, $http, $location) {    
                 this.login = function (usuario) {
