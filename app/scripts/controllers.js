@@ -979,7 +979,7 @@ angular.module('ambaya')
             $scope.enviar = function(){
                estoqueService.atualizaEstoque($scope.usuario._id, $scope.estoqueTemp).then(
                    function(response){
-                       estoqueService.atualizaEstoque($scope.estoqueId, $scope.pecasEnviadas).then(
+                       estoqueService.entradaEstoque($scope.estoqueId, $scope.pecasEnviadas).then(
                            function(response){
                                Materialize.toast("Peças Devolvidas", 5000, 'notificacaoBoa');
                            },
