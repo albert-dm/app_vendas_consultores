@@ -742,17 +742,6 @@ angular.module('ambaya')
                 )
             };
 
-            //Mudança de acerto
-            $scope.novaData = {};
-            $scope.modalDataAcerto = function(){
-                $('#dataAcerto').modal('open');
-            }
-            $scope.novoAcerto = function(){
-                //$scope.novaData = Date($scope.novaData);
-                console.log($scope.novaData);
-                $scope.consultor.proxAcerto = $scope.novaData;
-            }
-
             //Edição de consultor
             $scope.modalProxAcerto = function(){
                 $('#editar').modal('open');
