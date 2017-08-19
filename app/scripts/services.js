@@ -102,7 +102,6 @@ angular.module('ambaya')
                 {
                         _id: usuario._id,
                         update: {
-                            pendente: usuario.pendente,
                             vendido: usuario.vendido,
                             taxa: usuario.taxa,
                             totalVendido: 0
@@ -173,6 +172,16 @@ angular.module('ambaya')
                 }
                 );
             }
+            this.atualizaProxAcerto = function(usuario, data){
+                return $http.post("/users/atualizar/",
+                {
+                    _id: usuario._id,
+                    update: {
+                        proxAcerto: data
+                    }
+                }
+                );
+            };
         })
         .service('supervisoresService', function($http) {
             this.todos = function(){

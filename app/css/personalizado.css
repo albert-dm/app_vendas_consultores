@@ -36,6 +36,9 @@ main {
 .textoPreto{
     color: #373435 !important;
 }
+.textoVermelho{
+    color: red !important;
+}
 .bordaAmarela{
     border: solid #997500;
 }
@@ -51,6 +54,7 @@ main {
 }
 .botaoAlto{
     bottom: auto !important;
+    top: 70px !important;
     right: 10%;
 }
 .notificacaoBoa{

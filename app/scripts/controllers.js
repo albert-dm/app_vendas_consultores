@@ -78,11 +78,8 @@ angular.module('ambaya')
                     $state.go('Início');
                 
             };
-            
-            $scope.logado = loginService.check();
-            if ($scope.logado) {
-                console.log("logado");
-                $scope.usuario = loginService.getUser();
+
+            $scope.carregaDados = function() {
                 userService.carregaUm($scope.usuario._id).then(
                     function(response) {
                         $scope.usuario = response.data;
@@ -94,6 +91,13 @@ angular.module('ambaya')
                         $scope.sair();
                     }
                 );
+            }
+            
+            $scope.logado = loginService.check();
+            if ($scope.logado) {
+                console.log("logado");
+                $scope.usuario = loginService.getUser();
+                $scope.carregaDados();
             }else{
                 $scope.tipo = "Login";
                 //é necessário notificacaoRuimirecionar para o início aqui.
@@ -285,6 +289,7 @@ angular.module('ambaya')
 		}])
         //Controladoria
         .controller('ControladoriaInicioController',[ '$scope', 'controladoriaService', function($scope, controladoriaService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             controladoriaService.consultores().then(
                     function(response) {
@@ -304,6 +309,7 @@ angular.module('ambaya')
             );
 		}])
         .controller('ConsultoresControladoriaController',[ '$scope', 'consultoresService', function($scope, consultoresService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             consultoresService.todos().then(
                     function(response) {
@@ -316,6 +322,7 @@ angular.module('ambaya')
             );
 		}])
         .controller('SupervisoresController',[ '$scope', 'supervisoresService', 'userService', function($scope, supervisoresService, userService){
+            $scope.carregaDados();
             //mascaras para formulario
             $('.cep').mask('00000-000');
             $('.cpf').mask('000.000.000-00', {reverse: true});
@@ -402,6 +409,7 @@ angular.module('ambaya')
             };
 		}])
         .controller('SupervisorController',[ '$scope', 'supervisoresService', 'userService', 'consultoresService', '$stateParams', function($scope, supervisoresService, userService, consultoresService, $stateParams){
+            $scope.carregaDados();
             //mascaras para formulario
             $('.cep').mask('00000-000');
             $('.cpf').mask('000.000.000-00', {reverse: true});
@@ -513,9 +521,14 @@ angular.module('ambaya')
                 );                
            }
 		}])
-        .controller('ConsultorController',[ '$scope', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, userService, consultoresService, estoqueService, $stateParams, acertosService){
+        .controller('ConsultorController',[ '$scope', '$state', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, $state, userService, consultoresService, estoqueService, $stateParams, acertosService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});            
             $('select').material_select();
+            $('.datepicker').pickadate({
+                selectMonths: true, // Creates a dropdown to control month
+                selectYears: 150 // Creates a dropdown of 15 years to control year
+            });
             var info;
             var id =  $stateParams.consultorId;
             var tipoTemp;
@@ -528,6 +541,7 @@ angular.module('ambaya')
                         $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                         $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
                         $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100 + $scope.consultor.pendente;
+
                          //configuração de taxa
                         if($scope.consultor.tipoTaxa === "Porcentagem"){
                             $scope.parcelaTaxa = 0.1*$scope.consultor.totalVendido;
@@ -625,17 +639,18 @@ angular.module('ambaya')
                var aux;
                   
                 $scope.estoqueTemp = [];
-                $scope.estoqueTemp = $scope.estoqueTemp.concat($scope.usuario.estoque);    
-                console.log($scope.usuario.estoque);            
                 $scope.pecasEnviadas = [];
+                $scope.estoqueTemp = $scope.estoqueTemp.concat($scope.usuario.estoque);    
+                $scope.pecasEnviadas = $scope.pecasEnviadas.concat($scope.consultor.estoque);    
+                console.log($scope.usuario.estoque);            
                 $('#enviar').modal('open');
             }
             $scope.enviar = function(){
                estoqueService.atualizaEstoque($scope.usuario._id, $scope.estoqueTemp).then(
                    function(response){
-                       estoqueService.entradaEstoque($scope.consultor._id, $scope.pecasEnviadas).then(
+                       estoqueService.atualizaEstoque($scope.consultor._id, $scope.pecasEnviadas).then(
                            function(response){
-                               $scope.consultor.estoque = $scope.consultor.estoque.concat($scope.pecasEnviadas);
+                               $scope.consultor.estoque = $scope.pecasEnviadas
                                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                                Materialize.toast("Peças Alocadas", 5000, 'notificacaoBoa');
                            },
@@ -703,6 +718,7 @@ angular.module('ambaya')
                                         $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
                                         $scope.usuario.totalVendido += $scope.consultor.totalVendido;
                                         $scope.consultor.totalVendido = 0;
+                                        $scope.devido = 0;
                                         $('#acerto').modal('close');
                                         consultoresService.venda($scope.usuario).then(
                                             function(res){
@@ -725,8 +741,39 @@ angular.module('ambaya')
                     }
                 )
             };
+
+            //Mudança de acerto
+            $scope.novaData = {};
+            $scope.modalDataAcerto = function(){
+                $('#dataAcerto').modal('open');
+            }
+            $scope.novoAcerto = function(){
+                //$scope.novaData = Date($scope.novaData);
+                console.log($scope.novaData);
+                $scope.consultor.proxAcerto = $scope.novaData;
+            }
+
+            //Edição de consultor
+            $scope.modalProxAcerto = function(){
+                $('#editar').modal('open');
+            };
+            $scope.novoProxAcerto = function(){
+             consultoresService.atualizaProxAcerto($scope.consultor, $scope.formEdit.proxAcerto.$viewValue).then(
+                    function(response) {
+                        $('#editar').modal('close');
+                        $state.transitionTo($state.current, $stateParams, { 
+                            reload: true, inherit: false, notify: true
+                        });
+                    },
+                    function(response) {
+                            Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
+                    }
+            );
+            }
+        
 		}])
         .controller('EncomendasControladoriaController',[ '$scope', 'encomendasService', 'consultoresService', function($scope, encomendasService, consultoresService){
+           $scope.carregaDados();
            $('.tooltipped').tooltip({delay: 50});
            $(document).ready(function(){
                 $('ul.tabs').tabs();
@@ -770,6 +817,7 @@ angular.module('ambaya')
         }])
         //Supervisor
         .controller('SupervisorInicioController',[ '$scope', 'supervisoresService', 'consultoresService', function($scope, supervisoresService, consultoresService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             $scope.consultores = {};
             carregaConsultores = function(){
@@ -801,6 +849,7 @@ angular.module('ambaya')
             
 		}])
         .controller('ConsultoresSupervisorController',[ '$scope', 'consultoresService', 'userService', function($scope, consultoresService, userService){
+           $scope.carregaDados();
            //mascaras para formulario
             $('.cep').mask('00000-000');
             $('.cpf').mask('000.000.000-00', {reverse: true});
@@ -904,11 +953,13 @@ angular.module('ambaya')
 
 		}])
         .controller('EstoqueSupervisorController',[ '$scope', 'consultoresService', function($scope, consultoresService){
+           $scope.carregaDados();
            $('.tooltipped').tooltip({delay: 50});
            $scope.geral = {};
            $scope.pecas = $scope.processaPecas($scope.usuario.estoque);
         }])
         .controller('EncomendasSupervisorController',[ '$scope', 'encomendasService', 'consultoresService', function($scope, encomendasService, consultoresService){
+           $scope.carregaDados();
            $('.tooltipped').tooltip({delay: 50});
            $scope.form = {
                 "item":"",
@@ -981,6 +1032,7 @@ angular.module('ambaya')
         }])
         //Consultor
         .controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', function($scope, consultoresService, userService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             $('select').material_select();
             $scope.adicionando = [];
@@ -1241,12 +1293,14 @@ angular.module('ambaya')
             };
 		}])
         .controller('EstoqueConsultorController',[ '$scope', 'consultoresService', function($scope, consultoresService){
+           $scope.carregaDados();
            $('.tooltipped').tooltip({delay: 50});
            $scope.geral = {};
            $scope.pecas = $scope.processaPecas($scope.usuario.estoque);
            $scope.vendidas = $scope.processaPecas($scope.usuario.vendido);
         }])
         .controller('HistoricoConsultorController',[ '$scope', 'consultoresService', function($scope, consultoresService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             $scope.acertos = {};
             $scope.vendidoAno = 0;
@@ -1267,6 +1321,7 @@ angular.module('ambaya')
         }])
         //Estoque
         .controller('EstoqueInicioController',[ '$scope', 'estoqueService', 'encomendasService', function($scope, estoqueService, encomendasService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             $('#entrada').modal();
             $('select').material_select();
@@ -1312,6 +1367,7 @@ angular.module('ambaya')
             }
 		}])
         .controller('EncomendasEstoqueController',[ '$scope', 'encomendasService', 'consultoresService', 'userService', 'estoqueService', function($scope, encomendasService, consultoresService, userService, estoqueService){
+           $scope.carregaDados();
            $(document).ready(function(){
                 $('ul.tabs').tabs();
                 $('.collapsible').collapsible();
@@ -1432,6 +1488,7 @@ angular.module('ambaya')
                
         }])
         .controller('EtiquetasController',[ '$scope', 'encomendasService', 'consultoresService', 'userService', 'estoqueService', function($scope, encomendasService, consultoresService, userService, estoqueService){
+            $scope.carregaDados();
             $('.tooltipped').tooltip({delay: 50});
             $('#entrada').modal();
             $('select').material_select();
