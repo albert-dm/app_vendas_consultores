@@ -125,6 +125,7 @@ angular.module('ambaya')
                     "pulseirasM": [],
                     "tornozeleiras": [],
                     "escapularios": [],
+                    "personalizadas": [],
                     "totais":{
                         "aneis":0,
                         "brincosP": 0,
@@ -135,7 +136,8 @@ angular.module('ambaya')
                         "pulseirasF": 0,
                         "pulseirasM": 0,
                         "tornozeleiras": 0,
-                        "escapularios": 0
+                        "escapularios": 0,
+                        "personalizadas": 0
                     }
                 }
                 var aneis = 0;
@@ -148,6 +150,7 @@ angular.module('ambaya')
                 var pulseirasM = 0;
                 var tornozeleiras = 0;
                 var escapularios = 0;
+                var personalizadas = 0;
 
                 for(i=0; i<estoque.length; i++){
                     tipo = estoque[i].substr(0,2);
@@ -195,6 +198,10 @@ angular.module('ambaya')
                             tipo = "escapularios";
                             escapularios++;
                             break;
+                        case "PZ":
+                            tipo = "personalizadas";
+                            personalizadas++;
+                            break;
                     }
                     existe = false;
                     for(n = 0; n<pecas[tipo].length; n++){
@@ -218,7 +225,8 @@ angular.module('ambaya')
                         "pulseirasF": pulseirasF,
                         "pulseirasM": pulseirasM,
                         "tornozeleiras": tornozeleiras,
-                        "escapularios": escapularios
+                        "escapularios": escapularios,
+                        "personalizadas": personalizadas
                     };
                 return pecas;
             };
@@ -274,6 +282,11 @@ angular.module('ambaya')
                     for(j=0; j<pecas.escapularios[i].tot; j++)
                         estoque.push(peca);
                 }
+                for(i=0; i<pecas.personalizadas.length; i++){
+                    peca = "PZxxxx"+pecas.escapularios[i].val;
+                    for(j=0; j<pecas.escapularios[i].tot; j++)
+                        estoque.push(peca);
+                }
                 return estoque;
             }
             $scope.extraiPreco = function(codigo){
@@ -294,7 +307,8 @@ angular.module('ambaya')
 								{'val':"PF", 'label':'Pulseira Feminina'},
 								{'val':"PM", 'label':'Pulseira Masculina'},
 								{'val':"TZ", 'label':'Tornozeleira'},
-								{'val':"ES", 'label':'Escapulário'}];
+								{'val':"ES", 'label':'Escapulário'},
+								{'val':"PZ", 'label':'Personalizada'}];
                 
 		}])
         //Controladoria
@@ -1403,7 +1417,7 @@ angular.module('ambaya')
             }
             $scope.entrada = function(){
                 var cod = $scope.extraiCod($scope.codigo.toUpperCase());
-                var cods = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'TZ', 'ES'];
+                var cods = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'TZ', 'ES', 'PZ'];
                 if (cods.indexOf(cod) != -1){
                     $scope.adicionando.push($scope.codigo.toUpperCase());
                 } else Materialize.toast("Código Inválido", 5000, 'notificacaoRuim');
@@ -1489,11 +1503,11 @@ angular.module('ambaya')
 					case "Escapulário":
                         $scope.codigo = ['ES'];
                         break;
-					case "Personalizado":
-                        $scope.codigo = [''];
+					case "Personalizada":
+                        $scope.codigo = ['PZ'];
                         break;
 					case "Reposição padrão":
-                        $scope.codigo = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'ES', 'TZ'];
+                        $scope.codigo = ['AN', 'BP', 'BG', 'CF', 'CM', 'PN', 'PF', 'PM', 'ES', 'TZ', 'PZ'];
                         break;
                }
                 
