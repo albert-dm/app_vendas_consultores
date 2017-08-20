@@ -786,6 +786,24 @@ angular.module('ambaya')
                     }
             );
             }
+            
+            //histórico
+            $scope.acertos = {};
+            $scope.vendidoAno = 0;
+            hoje = new Date();
+            consultoresService.historico(id).then(                
+                function(res){
+                    $scope.acertos = res.data;
+                    for(i=0; i< $scope.acertos.length; i++){
+                        dia = new Date($scope.acertos[i].createdAt);
+                        if(hoje.getFullYear() === dia.getFullYear())
+                            $scope.vendidoAno+=$scope.acertos[i].valor;
+                    }
+                },
+                function(res){
+                     Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
+                }
+            );
         
 		}])
         .controller('EncomendasControladoriaController',[ '$scope', 'encomendasService', 'consultoresService', function($scope, encomendasService, consultoresService){
