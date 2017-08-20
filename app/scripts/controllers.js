@@ -354,7 +354,8 @@ angular.module('ambaya')
             $('select').material_select();
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
-                selectYears: 150 // Creates a dropdown of 15 years to control year
+                selectYears: 150, // Creates a dropdown of 15 years to control year
+                closeOnSelect: true
             });
             //fim ui config
 
@@ -441,7 +442,8 @@ angular.module('ambaya')
             $('select').material_select();
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
-                selectYears: 150 // Creates a dropdown of 15 years to control year
+                selectYears: 150, // Creates a dropdown of 15 years to control year
+                closeOnSelect: true
             });
             //fim ui config
 
@@ -537,7 +539,8 @@ angular.module('ambaya')
             
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
-                selectYears: 150 // Creates a dropdown of 15 years to control year
+                selectYears: 150, // Creates a dropdown of 15 years to control year
+                closeOnSelect: true
             });
             var info;
             var id =  $stateParams.consultorId;
@@ -870,7 +873,8 @@ angular.module('ambaya')
             $('select').material_select();
             $('.datepicker').pickadate({
                 selectMonths: true, // Creates a dropdown to control month
-                selectYears: 150 // Creates a dropdown of 15 years to control year
+                selectYears: 150, // Creates a dropdown of 15 years to control year
+                closeOnSelect: true
             });
             //fim ui config
            carregaConsultores = function(){
