@@ -1339,13 +1339,13 @@ angular.module('ambaya')
                     consultoresService.venda($scope.usuario).then(
                         function(response){
                             Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
-                            if(totalVendidoTemp < 1000 && $scope.usuario.totalVendido >= 1000){
+                            if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
                                 consultoresService.novoBrinde($scope.usuario, "mil").then(
                                     function(res){
                                         carregaBrinde();
                                     },
                                     function(res){
-                                        console.log("Falah ao adicionar brinde dos mil reais");
+                                        console.log("Falha ao adicionar brinde dos mil reais");
                                     }
                                 );
                             }
