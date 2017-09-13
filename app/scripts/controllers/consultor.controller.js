@@ -21,7 +21,7 @@ angular.module('ambaya')
                 $scope.consultor = response.data;
                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                 $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
-                $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100 + $scope.consultor.pendente;
+                $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100;// + $scope.consultor.pendente;
 
                  //configuração de taxa
                 if($scope.consultor.tipoTaxa === "Porcentagem"){
