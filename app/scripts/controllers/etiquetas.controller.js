@@ -57,7 +57,7 @@ angular.module('ambaya')
         textAlign: 'center',
         textPosition: 'bottom',
         textMargin: 1,
-        fontSize: 10,
+        fontSize: 20,
         background: '#ffffff',
         margin: 0,
         marginTop: 0,
