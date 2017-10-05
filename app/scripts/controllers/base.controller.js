@@ -307,6 +307,9 @@ angular.module('ambaya')
                         {'val':"PM", 'label':'Pulseira Masculina'},
                         {'val':"TZ", 'label':'Tornozeleira'},
                         {'val':"ES", 'label':'Escapulário'},
-                        {'val':"PZ", 'label':'Personalizada'}];
+                        {'val':"PZ", 'label':'Personalizada'}
+    ];
+
+    $scope.meses = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
         
 }]);
