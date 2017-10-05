@@ -151,10 +151,10 @@ angular.module('ambaya')
         var personalizadas = 0;
 
         for(i=0; i<estoque.length; i++){
-            tipo = estoque[i].substr(0,2);
+            tipo = $scope.extraiCod(estoque[i]);
             //mes = peca.splice(2,2);
             //ano = peca.splice(4,2);
-            valor = estoque[i].substr(6,2);
+            valor = $scope.extraiPreco(estoque[i]);
             switch(tipo){
                 case "AN":
                     tipo = "aneis";
@@ -231,64 +231,65 @@ angular.module('ambaya')
     $scope.voltaPecas = function(pecas){
         var estoque = [];
         for(i=0; i<pecas.aneis.length; i++){
-            peca = "ANxxxx"+pecas.aneis[i].val;
+            peca = "ANxxx"+pecas.aneis[i].val;
             for(j=0; j<pecas.aneis[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.brincosP.length; i++){
-            peca = "BPxxxx"+pecas.brincosP[i].val;
+            peca = "BPxxx"+pecas.brincosP[i].val;
             for(j=0; j<pecas.brincosP[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.brincosG.length; i++){
-            peca = "BGxxxx"+pecas.brincosG[i].val;
+            peca = "BGxxx"+pecas.brincosG[i].val;
             for(j=0; j<pecas.brincosG[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.cordoesF.length; i++){
-            peca = "CFxxxx"+pecas.cordoesF[i].val;
+            peca = "CFxxx"+pecas.cordoesF[i].val;
             for(j=0; j<pecas.cordoesF[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.cordoesM.length; i++){
-            peca = "CMxxxx"+pecas.cordoesM[i].val;
+            peca = "CMxxx"+pecas.cordoesM[i].val;
             for(j=0; j<pecas.cordoesM[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pingentes.length; i++){
-            peca = "PNxxxx"+pecas.pingentes[i].val;
+            peca = "PNxxx"+pecas.pingentes[i].val;
             for(j=0; j<pecas.pingentes[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pulseirasF.length; i++){
-            peca = "PFxxxx"+pecas.pulseirasF[i].val;
+            peca = "PFxxx"+pecas.pulseirasF[i].val;
             for(j=0; j<pecas.pulseirasF[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pulseirasM.length; i++){
-            peca = "PMxxxx"+pecas.pulseirasM[i].val;
+            peca = "PMxxx"+pecas.pulseirasM[i].val;
             for(j=0; j<pecas.pulseirasM[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.tornozeleiras.length; i++){
-            peca = "TZxxxx"+pecas.tornozeleiras[i].val;
+            peca = "TZxxx"+pecas.tornozeleiras[i].val;
             for(j=0; j<pecas.tornozeleiras[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.escapularios.length; i++){
-            peca = "ESxxxx"+pecas.escapularios[i].val;
+            peca = "ESxxx"+pecas.escapularios[i].val;
             for(j=0; j<pecas.escapularios[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.personalizadas.length; i++){
-            peca = "PZxxxx"+pecas.escapularios[i].val;
+            peca = "PZxxx"+pecas.escapularios[i].val;
             for(j=0; j<pecas.escapularios[i].tot; j++)
                 estoque.push(peca);
         }
         return estoque;
     }
     $scope.extraiPreco = function(codigo){
-        return codigo.substr(6,2);
+        if(isNaN(codigo.substr(2,1))) return codigo.substr(5,3);
+        else return "0"+codigo.substr(6,2);
     } 
     $scope.extraiCod = function(codigo){
         return codigo.substr(0,2);
