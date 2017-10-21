@@ -56,6 +56,9 @@ angular.module('ambaya')
                 }
                 );
             };
+            this.entradasLog = function(entrada){
+                return $http.get("/historico/pecalog");
+            };
         })
         .service('controladoriaService', function($http) {
             this.consultores = function(){

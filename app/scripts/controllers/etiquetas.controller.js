@@ -26,7 +26,7 @@ angular.module('ambaya')
         mes = $scope.meses[mes];
         if(preco.length==1) preço = "00"+preco;
         else if (preco.length==2) preco = "0"+preco;
-        codigo = codigo+mes+ano+preco;
+        codigo = codigo/* +mes+ano */+preco;
         var entrada = {
             "item": item,
             "preco": preco,
@@ -50,7 +50,7 @@ angular.module('ambaya')
         format: 'CODE128',
         lineColor: '#000000',
         width: 1,
-        height: 20,
+        height: 18,
         displayValue: true,
         fontOptions: '',
         font: 'monospace',

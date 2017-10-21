@@ -231,64 +231,64 @@ angular.module('ambaya')
     $scope.voltaPecas = function(pecas){
         var estoque = [];
         for(i=0; i<pecas.aneis.length; i++){
-            peca = "ANxxx"+pecas.aneis[i].val;
+            peca = "AN"+pecas.aneis[i].val;
             for(j=0; j<pecas.aneis[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.brincosP.length; i++){
-            peca = "BPxxx"+pecas.brincosP[i].val;
+            peca = "BP"+pecas.brincosP[i].val;
             for(j=0; j<pecas.brincosP[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.brincosG.length; i++){
-            peca = "BGxxx"+pecas.brincosG[i].val;
+            peca = "BG"+pecas.brincosG[i].val;
             for(j=0; j<pecas.brincosG[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.cordoesF.length; i++){
-            peca = "CFxxx"+pecas.cordoesF[i].val;
+            peca = "CF"+pecas.cordoesF[i].val;
             for(j=0; j<pecas.cordoesF[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.cordoesM.length; i++){
-            peca = "CMxxx"+pecas.cordoesM[i].val;
+            peca = "CM"+pecas.cordoesM[i].val;
             for(j=0; j<pecas.cordoesM[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pingentes.length; i++){
-            peca = "PNxxx"+pecas.pingentes[i].val;
+            peca = "PN"+pecas.pingentes[i].val;
             for(j=0; j<pecas.pingentes[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pulseirasF.length; i++){
-            peca = "PFxxx"+pecas.pulseirasF[i].val;
+            peca = "PF"+pecas.pulseirasF[i].val;
             for(j=0; j<pecas.pulseirasF[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.pulseirasM.length; i++){
-            peca = "PMxxx"+pecas.pulseirasM[i].val;
+            peca = "PM"+pecas.pulseirasM[i].val;
             for(j=0; j<pecas.pulseirasM[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.tornozeleiras.length; i++){
-            peca = "TZxxx"+pecas.tornozeleiras[i].val;
+            peca = "TZ"+pecas.tornozeleiras[i].val;
             for(j=0; j<pecas.tornozeleiras[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.escapularios.length; i++){
-            peca = "ESxxx"+pecas.escapularios[i].val;
+            peca = "ES"+pecas.escapularios[i].val;
             for(j=0; j<pecas.escapularios[i].tot; j++)
                 estoque.push(peca);
         }
         for(i=0; i<pecas.personalizadas.length; i++){
-            peca = "PZxxx"+pecas.escapularios[i].val;
+            peca = "PZ"+pecas.escapularios[i].val;
             for(j=0; j<pecas.escapularios[i].tot; j++)
                 estoque.push(peca);
         }
         return estoque;
     }
     $scope.extraiPreco = function(codigo){
-        if(isNaN(codigo.substr(2,1))) return codigo.substr(5,3);
+        if(codigo.length == 5) return codigo.substr(2,3);
         else return "0"+codigo.substr(6,2);
     } 
     $scope.extraiCod = function(codigo){
@@ -309,7 +309,5 @@ angular.module('ambaya')
                         {'val':"ES", 'label':'Escapulário'},
                         {'val':"PZ", 'label':'Personalizada'}
     ];
-
-    $scope.meses = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L'];
         
 }]);
