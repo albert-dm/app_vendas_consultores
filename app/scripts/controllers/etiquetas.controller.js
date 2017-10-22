@@ -19,11 +19,6 @@ angular.module('ambaya')
         var preco = $('#preco').val();
         var quantidade = $('#quantidade').val();
         var codigo = $('#item').find(":selected").val();
-        var hoje = new Date();
-        var mes = hoje.getMonth();
-        var ano = hoje.getFullYear();
-        ano  = ano%100;
-        mes = $scope.meses[mes];
         if(preco.length==1) preço = "00"+preco;
         else if (preco.length==2) preco = "0"+preco;
         codigo = codigo/* +mes+ano */+preco;
