@@ -83,10 +83,9 @@
 				<label  for="quantidade">Quantidade</label>
 				<input placeholder="Quantidade" type="number" min="1" ng-model="form.quantidade" name="quantidade" required>
 			</div>
-			<div class="input-field" ng-if="form.item==='Personalizada'">
-				<select ng-model="form.consultor" name="consultor" required>
+			<div class="input-field" ng-show="form.item==='Personalizada'">
+				<select ng-model="form.consultor" ng-options="consultor.nome for consultor in consultores">
 					<option value=""  selected>Selecione o consultor</option>
-					<option ng-repeat="consultor in consultores" value="{{consultor.nome}}">{{consultor.nome}}</option>
 				</select>
 			</div>
 			<div class="input-field" ng-if="form.item==='Personalizada'">
