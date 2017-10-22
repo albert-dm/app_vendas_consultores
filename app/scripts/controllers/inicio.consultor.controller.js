@@ -1,11 +1,25 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', function($scope, consultoresService, userService){
+.controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', 'encomendasService', function($scope, consultoresService, userService, encomendasService){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $scope.adicionando = [];
+    encomendasService.consultor($scope.usuario._id).then(
+            function(response){
+                $scope.encomendas = response.data;
+                $scope.encomendasAprovadas = 0;
+                $scope.encomendasEnviadas = 0;
+                angular.forEach($scope.encomendas, function(encomenda, key) {
+                    if(encomenda.status=='Aprovada') $scope.encomendasAprovadas++;
+                    else if(encomenda.status=='Enviada') $scope.encomendasEnviadas++;
+                });
+            },
+            function(response){
+                Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
+            }
+        );
     userService.carregaUm($scope.usuario.supervisor).then(
             function(response) {
                 $scope.supervisor = response.data;

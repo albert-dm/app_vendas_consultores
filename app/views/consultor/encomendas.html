@@ -6,41 +6,19 @@
 				<div class="row fundoBranco">
 					<div class="col s12">
 						<ul class="tabs">
-							<li class="tab col s4"><a class="clicavel" ng-click="status=['Aprovada', 'Enviada']">Todas</a></li>
-							<li class="tab col s4"><a class="active clicavel" ng-click="status=['Aprovada']" >Aprovadas</a></li>
+							<li class="tab col s4"><a class="active clicavel" ng-click="status=['Aprovada', 'Enviada']">Todas</a></li>
+							<li class="tab col s4"><a class="clicavel" ng-click="status=['Aprovada']" >Aprovadas</a></li>
 							<li class="tab col s4"><a class="clicavel" ng-click="status=['Enviada']">Enviadas</a></li>
 						</ul>
 					</div>
 					<div class="col s12 m3" ng-repeat="encomenda in encomendas | orderBy: '-createdAt' | filter:filtroStatus">
-						<div class="card medium center-align z-depth-5" >
+						<div class="card center-align z-depth-5" >
 							<div class="card-content">
-								<span class="card-title">{{encomenda.item}}<br>
+								<span class="card-title">{{encomenda.detalhes}}<br>
 									<div class="chip tooltipped" ng-class="{'orange': encomenda.status==='Pendente', 'red': encomenda.status==='Cancelada', 'green': encomenda.status==='Aprovada' || encomenda.status==='Enviada'}" >
-										{{encomenda.status}}
+										{{encomenda.status}} <span ng-show="encomenda.status==='Enviada'">({{encomenda.updatedAt | date: "d/MM/yy"}})</span>
 									</div>
 								</span>
-								<h1 ng-if="encomenda.status!=='Enviada'">{{encomenda.quantidade}}</h1>
-								<h1 ng-if="encomenda.status==='Enviada'">{{encomenda.enviados.length}}</h1>
-								<span ng-if="encomenda.detalhes">{{encomenda.detalhes}}<br></span>
-								<div class="chip">
-									<i class="material-icons left">person</i>
-									{{encomenda.donoNome}}
-								</div>
-							</div>
-							<div ng-if="encomenda.status==='Enviada'" class="card-reveal">
-								<span class="card-title grey-text text-darken-4">Peças enviadas<i class="material-icons right">close</i></span>
-								<table class="bordered">
-									<tbody>
-									<tr ng-repeat="cod in encomenda.enviados track by $index">
-										<td>{{cod}}</td>
-									</tr>
-									</tbody>
-								</table>
-							</div>
-							<div class="card-action">
-								<a ng-show="encomenda.status==='Aprovada'"  class="waves-effect waves-light btn btn-small botaoVerde" ng-click="modalEncomenda(encomenda)"><i class="material-icons left">send</i> Enviar</a>
-								<span ng-show="encomenda.status==='Enviada'">Data de envio: {{encomenda.updatedAt | date: "d/MM/yy"}} <a class="activator clicavel"><i class="material-icons right" title="Ver peças">list</i></a></span>
-							</div>
 						</div>
 					</div>
 				</div>
