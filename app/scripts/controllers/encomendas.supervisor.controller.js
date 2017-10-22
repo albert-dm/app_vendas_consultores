@@ -45,6 +45,8 @@ angular.module('ambaya')
          $('#adicionar').modal('open');
      }
      $scope.novo = function(){
+         $scope.form.consultorNome = $scope.form.consultor.nome;
+         $scope.form.consultorId = $scope.form.consultor._id;
          encomendasService.nova($scope.form).then(
              function(response) {
                  Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'notificacaoBoa');
