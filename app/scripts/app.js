@@ -142,10 +142,6 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
         url: '/encomendas', 
         controller: '',
         views: {
-            'Consultor':{
-                templateUrl: 'views/consultor/encomendas.html',
-                 controller: 'EncomendasConsultorController'
-            },
             'Supervisor':{
                 templateUrl: 'views/supervisor/encomendas.html',
                  controller: 'EncomendasSupervisorController'
