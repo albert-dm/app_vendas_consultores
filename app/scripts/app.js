@@ -2,7 +2,7 @@
 
 angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $provide){
-    //$httpProvider.interceptors.push('tokenInterceptor');
+    $httpProvider.interceptors.push('tokenInterceptor');
     $provide.decorator('$locale', ['$delegate', function ($delegate) {
         $delegate.NUMBER_FORMATS.DECIMAL_SEP = ',';
         $delegate.NUMBER_FORMATS.GROUP_SEP = '.';
