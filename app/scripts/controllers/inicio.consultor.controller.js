@@ -197,11 +197,11 @@ angular.module('ambaya')
         $('#venda').modal('open');
     }
     $scope.vendaPersonalizado = function(encomenda){
-        console.log('agora vai');
         $scope.adicionando = encomenda.enviados;
-        encomenda.status = "Entregue";
-        encomendasService.atualizarStatus(encomenda._id, "Entregue");
-        $scope.vender();
+        if($scope.vender()){
+            encomenda.status = "Entregue";
+            encomendasService.atualizarStatus(encomenda._id, "Entregue");
+        };
     }
     $scope.filtroStatus = function(encomenda) {
         return (['Aprovada', 'Enviada', 'Pendente'].indexOf(encomenda.status) !== -1);
@@ -272,10 +272,14 @@ angular.module('ambaya')
                     $scope.usuario.vendido = vendidoTemp;
                     $scope.usuario.totalVendido = totalVendidoTemp;
                     Materialize.toast("Falha ao realizar venda!", 5000, 'notificacaoRuim');
+                    $('#venda').modal('close');
+                    $scope.adicionando = [];
+                    return false;
                 }
             );
             $('#venda').modal('close');
             $scope.adicionando = [];
+            return true;
         }
         else{
             $scope.usuario.estoque = estoqueTemp;
