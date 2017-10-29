@@ -268,10 +268,10 @@ angular.module('ambaya')
                     delete $localStorage.token;
                     $localStorage.logado = false;                    
                     //$window.location.reload();
-                    /*if($state.is('Início'))
+                    if($state.is('Início'))
                         $state.reload();
                     else
-                        $state.go('Início');*/
+                        $state.go('Início');
                 } 
                 return $q.reject(rejection);
             }
