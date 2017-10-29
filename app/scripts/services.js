@@ -28,7 +28,9 @@ angular.module('ambaya')
                     else return false;   
                 };
                 this.logout = function(){
-                    $localStorage.logado = false;
+                    delete $localStorage.token;
+                    delete $localStorage.usuario;
+                    $localStorage.logado = false;  
                     return;
                 };
         })
@@ -266,6 +268,7 @@ angular.module('ambaya')
                 if (rejection != null && rejection.status === 401) {
                     console.log('Removendo token da sessão')
                     delete $localStorage.token;
+                    delete $localStorage.usuario;
                     $localStorage.logado = false;                    
                     //$window.location.reload();
                     if($state.is('Início'))
