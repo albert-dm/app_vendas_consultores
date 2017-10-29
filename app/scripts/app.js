@@ -185,6 +185,16 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
             }
         },
     };
+    var cadastro = {
+        name: 'Cadastro',
+        url: '/cadastro', 
+        views: {
+            'Login':{
+                templateUrl: 'cadastro.html',
+                controller: "CadastroController"
+            }
+        },
+    };
     $stateProvider.state(inicio);
     $stateProvider.state(consultores);
     $stateProvider.state(consultor);
@@ -196,5 +206,6 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
     $stateProvider.state(encomendas);
     $stateProvider.state(relatorios);
     $stateProvider.state(historico);
+    $stateProvider.state(cadastro);
 })
 ;

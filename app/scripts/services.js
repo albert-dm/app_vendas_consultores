@@ -238,6 +238,11 @@ angular.module('ambaya')
                 );
             };
         })
+        .service('apiService', function($http){
+            this.cadastro = function(usuario){
+                return $http.post("/api/cadastro", usuario);
+            };
+        })
         .factory('tokenInterceptor',['$q', '$window', '$location', '$localStorage', function($q, $window, $location, $localStorage, $state) {
 
             var interceptor = {};
