@@ -50,8 +50,13 @@ angular.module('ambaya')
     });
     
     $scope.entrada = function(){
-        $scope.adicionando.push($scope.codigo.toUpperCase());
-        $scope.codigo = "";
+        if($scope.extraiCod($scope.codigo.toUpperCase())!='PZ'){
+            $scope.adicionando.push($scope.codigo.toUpperCase());
+            $scope.codigo = "";
+        } else{
+            Materialize.toast("Use a seção de personalizados!", 10000, 'notificacaoRuim');
+        }
+        
     }
     $scope.pegaBrinde = function(){
         var estoqueTemp = [];
@@ -191,6 +196,16 @@ angular.module('ambaya')
         $('#modalCamera').modal('close');
         $('#venda').modal('open');
     }
+    $scope.vendaPersonalizado = function(encomenda){
+        console.log('agora vai');
+        $scope.adicionando = encomenda.enviados;
+        encomenda.status = "Entregue";
+        encomendasService.atualizarStatus(encomenda._id, "Entregue");
+        $scope.vender();
+    }
+    $scope.filtroStatus = function(encomenda) {
+        return (['Aprovada', 'Enviada', 'Pendente'].indexOf(encomenda.status) !== -1);
+    };
     $scope.vender = function(){
         var estoqueTemp = [];
         var estoqueTemp = estoqueTemp.concat($scope.usuario.estoque);

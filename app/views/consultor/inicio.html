@@ -80,7 +80,9 @@
 										<div class="chip tooltipped">
 											{{encomenda.createdAt | date: "d/MM/yy"}}</span>
 										</div>
+										<button class="btn" ng-click="vendaPersonalizado(encomenda)" ng-disabled="encomenda.status!='Enviada'">Entregar</button>
 									</span>
+								</div>
 							</div>
 						</div>
 					</div>
