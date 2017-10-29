@@ -17,7 +17,7 @@ angular.module('ambaya')
      $scope.filtroStatus = function(encomenda) {
          return ($scope.status.indexOf(encomenda.status) !== -1);
      };
-    $scope.encomendas = {};
+    $scope.encomendas = [];
     carregaEncomendas = function(){
         console.log("carregando");
         encomendasService.supervisor($scope.usuario._id).then(
@@ -45,6 +45,12 @@ angular.module('ambaya')
          $('#adicionar').modal('open');
      }
      $scope.novo = function(){
+         if($scope.form.consultor){
+            $scope.form.consultorNome = $scope.form.consultor.nome;
+            $scope.form.consultorId = $scope.form.consultor._id;
+            delete $scope.form.consultor;
+         }
+
          encomendasService.nova($scope.form).then(
              function(response) {
                  Materialize.toast("Encomenda adicionada com sucesso!", 5000, 'notificacaoBoa');
@@ -53,7 +59,9 @@ angular.module('ambaya')
                      "item":"",
                      "quantidade":"",
                      "donoNome":$scope.usuario.nome,
-                     "donoId": $scope.usuario._id
+                     "donoId": $scope.usuario._id,
+                     "consultorNome": "",
+                     "consultorId": ""
                  };
                  carregaEncomendas();
              },
