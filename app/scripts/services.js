@@ -20,7 +20,7 @@ angular.module('ambaya')
                     return $http.post("/login", usuario);                    
                 };
                 this.check = function(){                    
-                    return $localStorage.logado;             
+                    return $localStorage.logado && $localStorage.user;             
                 };
                 this.getUser = function(){
                     if ($localStorage.logado)

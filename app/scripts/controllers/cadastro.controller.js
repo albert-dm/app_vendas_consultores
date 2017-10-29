@@ -1,7 +1,7 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('CadastroController',[ '$scope', 'userService', function($scope, userService){
+.controller('CadastroController',[ '$scope', 'apiService', function($scope, apiService){
     $scope.carregaDados();
     //mascaras para formulario
     $('.cep').mask('00000-000');
@@ -31,16 +31,6 @@ angular.module('ambaya')
     });
     //fim ui config
 
-    userService.carregaUm(id).then(
-            function(response) {
-                $scope.supervisor = response.data;
-                $scope.pecas = $scope.processaPecas($scope.supervisor.estoque);
-            },
-            function(response) {
-                Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
-            }
-    );
-
     $scope.form = {
         "nome":"",
         "sobrenome":"",
@@ -55,12 +45,24 @@ angular.module('ambaya')
         "taxa": 350
     };
 
-    $scope.novo = function(){
+    var supervisores = {
+        "Daniella": 0,
+        "Robert": 1,
+        "Jéssica": 2
+    }
+
+    $scope.cadastro = function(){
         //TODO escolher o id do supervisor de acordo com a cidade
-        console.log($scope.form);
         $scope.form.username = $scope.form.cpf.replace(".", "").replace(".", "").replace("-", "");
-        $scope.form.password = $scope.form.username;
-        userService.novo($scope.form).then(
+        if(['Ouro Preto', 'Mariana'].indexOf($scope.form.cidade)!=-1){
+            $scope.form.supervisor = supervisores['Daniella'];
+        } else if(['Barbacena', 'Barroso', 'Belo Horizonte', 'Betim', 'Contagem', 'Ibireté', 'Nova Lima', 'Ribeirão das Neves', 'Santa Cruz de Minas', 'São João del Rei'].indexOf($scope.form.cidade)!=-1){
+            $scope.form.supervisor = supervisores['Robert'];            
+        }else if(['Carandaí', 'Senhora dos Remédios'].indexOf($scope.form.cidade)!=-1){
+            $scope.form.supervisor = supervisores['Jéssica'];
+        }
+        console.log($scope.form);
+        /* apiService.cadastro($scope.form).then(
             function(response) {
                 //console.log(response);
                 $('#adicionar').modal('close');
@@ -83,6 +85,6 @@ angular.module('ambaya')
             function(response) {
                 Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
             }
-        );                
+        );          */       
     };         
 }]);
