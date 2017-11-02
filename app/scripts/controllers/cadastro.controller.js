@@ -20,7 +20,7 @@ angular.module('ambaya')
 
     //ui config
     $('.tooltipped').tooltip({delay: 50});
-    $('select').material_select();
+    //$('select').material_select();
     $('.datepicker').pickadate({
         selectMonths: true, // Creates a dropdown to control month
         selectYears: 150, // Creates a dropdown of 15 years to control year
@@ -63,7 +63,8 @@ angular.module('ambaya')
         }else if(['Carandaí', 'Senhora dos Remédios'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Jéssica'];
         }
-        apiService.cadastro($scope.form).then(
+        console.log($scope.form);
+        /* apiService.cadastro($scope.form).then(
             function(response) {
                 //console.log(response);
                 $('#adicionar').modal('close');
@@ -86,6 +87,6 @@ angular.module('ambaya')
             function(response) {
                 Materialize.toast('Falha ao cadastrar!', 5000, 'notificacaoRuim');
             }
-        );                
+        );  */               
     };         
 }]);
