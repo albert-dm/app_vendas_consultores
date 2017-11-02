@@ -1,11 +1,19 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', function($scope, consultoresService, userService){
+.controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', 'encomendasService', function($scope, consultoresService, userService, encomendasService){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});
     $('select').material_select();
     $scope.adicionando = [];
+    encomendasService.consultor($scope.usuario._id).then(
+            function(response){
+                $scope.encomendas = response.data;
+            },
+            function(response){
+                Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
+            }
+        );
     userService.carregaUm($scope.usuario.supervisor).then(
             function(response) {
                 $scope.supervisor = response.data;
@@ -42,8 +50,13 @@ angular.module('ambaya')
     });
     
     $scope.entrada = function(){
-        $scope.adicionando.push($scope.codigo.toUpperCase());
-        $scope.codigo = "";
+        if($scope.extraiCod($scope.codigo.toUpperCase())!='PZ'){
+            $scope.adicionando.push($scope.codigo.toUpperCase());
+            $scope.codigo = "";
+        } else{
+            Materialize.toast("Use a seção de personalizados!", 10000, 'notificacaoRuim');
+        }
+        
     }
     $scope.pegaBrinde = function(){
         var estoqueTemp = [];
@@ -183,6 +196,16 @@ angular.module('ambaya')
         $('#modalCamera').modal('close');
         $('#venda').modal('open');
     }
+    $scope.vendaPersonalizado = function(encomenda){
+        $scope.adicionando = encomenda.enviados;
+        if($scope.vender()){
+            encomenda.status = "Entregue";
+            encomendasService.atualizarStatus(encomenda._id, "Entregue");
+        };
+    }
+    $scope.filtroStatus = function(encomenda) {
+        return (['Aprovada', 'Enviada', 'Pendente'].indexOf(encomenda.status) !== -1);
+    };
     $scope.vender = function(){
         var estoqueTemp = [];
         var estoqueTemp = estoqueTemp.concat($scope.usuario.estoque);
@@ -249,10 +272,14 @@ angular.module('ambaya')
                     $scope.usuario.vendido = vendidoTemp;
                     $scope.usuario.totalVendido = totalVendidoTemp;
                     Materialize.toast("Falha ao realizar venda!", 5000, 'notificacaoRuim');
+                    $('#venda').modal('close');
+                    $scope.adicionando = [];
+                    return false;
                 }
             );
             $('#venda').modal('close');
             $scope.adicionando = [];
+            return true;
         }
         else{
             $scope.usuario.estoque = estoqueTemp;
