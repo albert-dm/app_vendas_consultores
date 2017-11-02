@@ -23,7 +23,7 @@ angular.module('ambaya')
                     return $localStorage.logado && $localStorage.user;             
                 };
                 this.getUser = function(){
-                    if ($localStorage.logado)
+                    if ($localStorage.logado==true)
                     return $localStorage.usuario;   
                     else return false;   
                 };

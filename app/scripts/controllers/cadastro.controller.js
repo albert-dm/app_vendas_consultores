@@ -2,7 +2,6 @@
 
 angular.module('ambaya')
 .controller('CadastroController',[ '$scope', 'apiService', function($scope, apiService){
-    $scope.carregaDados();
     //mascaras para formulario
     $('.cep').mask('00000-000');
     $('.cpf').mask('000.000.000-00', {reverse: true});
@@ -61,8 +60,9 @@ angular.module('ambaya')
         }else if(['Carandaí', 'Senhora dos Remédios'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Jéssica'];
         }
+        $scope.form.supervisor = '595298debb9fd70011760020';
         console.log($scope.form);
-        /* apiService.cadastro($scope.form).then(
+        apiService.cadastro($scope.form).then(
             function(response) {
                 //console.log(response);
                 $('#adicionar').modal('close');
@@ -81,10 +81,11 @@ angular.module('ambaya')
                 };
                 carregaConsultores();
                 Materialize.toast("Cadastro realizado com sucesso!", 5000, 'notificacaoBoa');
+                $scope.irPara('Início');
             },
             function(response) {
                 Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
             }
-        );          */       
+        );                
     };         
 }]);

@@ -62,17 +62,6 @@ angular.module('ambaya')
         
     };
 
-    $scope.logado = loginService.check();
-    if($scope.logado){
-        $scope.usuario = loginService.getUser();;
-        $state.go("Início");
-        $scope.rotas= rotas[$scope.usuario.tipo];
-        $scope.tipo = $scope.usuario.tipo;
-        $scope.logado = true;
-   } else {
-        $scope.logout();
-   }
-
     $scope.carregaDados = function() {
         userService.carregaUm($scope.usuario._id).then(
             function(response) {
@@ -88,12 +77,13 @@ angular.module('ambaya')
     }
     
     $scope.logado = loginService.check();
-    if ($scope.logado) {
+    if ($scope.logado==true) {
         console.log("logado");
         $scope.usuario = loginService.getUser();
         $scope.carregaDados();
     }else{
         $scope.tipo = "Login";
+        $scope.sair();
         //é necessário notificacaoRuimirecionar para o início aqui.
     }           
     $scope.$state = $state;
