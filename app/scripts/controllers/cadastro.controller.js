@@ -79,12 +79,11 @@ angular.module('ambaya')
                     "tipoTaxa":"Primeiro pagamento", 
                     "taxa": 350
                 };
-                carregaConsultores();
-                Materialize.toast("Cadastro realizado com sucesso!", 5000, 'notificacaoBoa');
+                Materialize.toast("Cadastro realizado com sucesso! Use seu CPF para fazer o login.", 10000, 'notificacaoBoa');
                 $scope.irPara('Início');
             },
             function(response) {
-                Materialize.toast(response.err.message, 5000, 'notificacaoRuim');
+                Materialize.toast('Falha ao cadastrar!', 5000, 'notificacaoRuim');
             }
         );                
     };         
