@@ -45,10 +45,13 @@ angular.module('ambaya')
     };
 
     var supervisores = {
-        "Daniella": 0,
-        "Robert": 1,
-        "Jéssica": 2
+        "Daniella": "59fb54992e5869001254bda2",
+        "Robert": "5903791873baad0011167dc0",
+        "Jéssica": "5937495531ba710011e15346"
     }
+
+    $('#modal-video').modal();
+    $('#modal-video').modal('open');
 
     $scope.cadastro = function(){
         //TODO escolher o id do supervisor de acordo com a cidade
@@ -60,8 +63,6 @@ angular.module('ambaya')
         }else if(['Carandaí', 'Senhora dos Remédios'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Jéssica'];
         }
-        $scope.form.supervisor = '595298debb9fd70011760020';
-        console.log($scope.form);
         apiService.cadastro($scope.form).then(
             function(response) {
                 //console.log(response);
