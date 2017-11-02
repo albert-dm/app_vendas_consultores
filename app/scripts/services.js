@@ -30,7 +30,7 @@ angular.module('ambaya')
                 this.logout = function(){
                     delete $localStorage.token;
                     delete $localStorage.usuario;
-                    $localStorage.logado = false;  
+                    delete $localStorage.logado;
                     return;
                 };
         })
