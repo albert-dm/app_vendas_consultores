@@ -50,21 +50,6 @@ angular.module('ambaya')
                 Materialize.toast("Login inválido", 5000, 'notificacaoRuim');
             }
         );
-        // $scope.logado = loginService.check();
-        // if($scope.logado){
-        //     $scope.usuario = loginService.getUser();;
-        //     $state.go("Início");
-        //     $scope.rotas= rotas[$scope.usuario.tipo];
-        //     $scope.tipo = $scope.usuario.tipo;
-        //     $scope.logado = true;
-        // } else {
-        //     UIkit.notify({
-        //         message : "Login Inválido!",
-        //         status  : "danger",
-        //         timeout : 5000,
-        //         pos     : 'bottom-center'
-        //     });
-        // }
     };
     $scope.sair = function(){
         loginService.logout();
@@ -76,6 +61,17 @@ angular.module('ambaya')
             $state.go('Início');
         
     };
+
+    $scope.logado = loginService.check();
+    if($scope.logado){
+        $scope.usuario = loginService.getUser();;
+        $state.go("Início");
+        $scope.rotas= rotas[$scope.usuario.tipo];
+        $scope.tipo = $scope.usuario.tipo;
+        $scope.logado = true;
+   } else {
+        $scope.logout();
+   }
 
     $scope.carregaDados = function() {
         userService.carregaUm($scope.usuario._id).then(
