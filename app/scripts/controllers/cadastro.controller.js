@@ -64,7 +64,7 @@ angular.module('ambaya')
             $scope.form.supervisor = supervisores['Jéssica'];
         }
         console.log($scope.form);
-        /* apiService.cadastro($scope.form).then(
+        apiService.cadastro($scope.form).then(
             function(response) {
                 //console.log(response);
                 $('#adicionar').modal('close');
@@ -87,6 +87,6 @@ angular.module('ambaya')
             function(response) {
                 Materialize.toast('Falha ao cadastrar!', 5000, 'notificacaoRuim');
             }
-        );  */               
+        );                
     };         
 }]);
