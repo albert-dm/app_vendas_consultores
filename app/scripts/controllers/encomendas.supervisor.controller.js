@@ -59,9 +59,7 @@ angular.module('ambaya')
                      "item":"",
                      "quantidade":"",
                      "donoNome":$scope.usuario.nome,
-                     "donoId": $scope.usuario._id,
-                     "consultorNome": "",
-                     "consultorId": ""
+                     "donoId": $scope.usuario._id
                  };
                  carregaEncomendas();
              },
