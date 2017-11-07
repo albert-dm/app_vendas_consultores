@@ -237,7 +237,7 @@ angular.module('ambaya')
             }
         }
         if (vendaok == true){
-            consultoresService.venda($scope.usuario).then(
+            consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
                     Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){

@@ -93,15 +93,17 @@ angular.module('ambaya')
                 }
                 );
             }
-            this.venda = function(usuario){
-                return $http.post("/users/atualizar/",
+            this.venda = function(usuario, pecas, userId){
+                return $http.post("/users/venda/",
                 {
                     _id: usuario._id,
                     update: {
                         estoque: usuario.estoque,
                         vendido: usuario.vendido,
                         totalVendido: usuario.totalVendido,
-                    }
+                    }, 
+                    pecas: pecas,
+                    userId: userId
                 }
                 );
             };
