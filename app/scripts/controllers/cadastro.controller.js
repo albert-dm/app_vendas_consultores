@@ -35,6 +35,7 @@ angular.module('ambaya')
         "sobrenome":"",
         "tipo":"Consultor",
         "supervisor": '',
+        "nascimento": '',
         "porcentagem": 30,
         "estoque": [],
         "vendido": [],
@@ -47,7 +48,8 @@ angular.module('ambaya')
     var supervisores = {
         "Daniella": "59fb54992e5869001254bda2",
         "Robert": "5903791873baad0011167dc0",
-        "Jéssica": "5937495531ba710011e15346"
+        "Jéssica": "5937495531ba710011e15346",
+        "Vicente": "5936ff7e31ba710011e1533c"
     }
 
     $('#modal-video').modal();
@@ -58,10 +60,12 @@ angular.module('ambaya')
         $scope.form.username = $scope.form.cpf.replace(".", "").replace(".", "").replace("-", "");
         if(['Ouro Preto', 'Mariana'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Daniella'];
-        } else if(['Barbacena', 'Barroso', 'Belo Horizonte', 'Betim', 'Contagem', 'Ibireté', 'Nova Lima', 'Ribeirão das Neves', 'Santa Cruz de Minas', 'São João del Rei'].indexOf($scope.form.cidade)!=-1){
+        } else if(['Barroso', 'Belo Horizonte', 'Betim', 'Contagem', 'Ibireté', 'Nova Lima', 'Ribeirão das Neves', 'Santa Cruz de Minas', 'São João del Rei'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Robert'];            
         }else if(['Carandaí', 'Senhora dos Remédios'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Jéssica'];
+        }else if(['Barbacena'].indexOf($scope.form.cidade)!=-1){
+            $scope.form.supervisor = supervisores['Vicente'];
         }
         console.log($scope.form);
         apiService.cadastro($scope.form).then(
@@ -73,6 +77,7 @@ angular.module('ambaya')
                     "sobrenome":"",
                     "tipo":"Consultor",
                     "supervisor": '',
+                    "nascimento": '',
                     "porcentagem": 30,
                     "estoque": [],
                     "vendido": [],
