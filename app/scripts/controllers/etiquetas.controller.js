@@ -45,7 +45,7 @@ angular.module('ambaya')
         format: 'CODE128',
         lineColor: '#000000',
         width: 1,
-        height: 18,
+        height: 16,
         displayValue: true,
         fontOptions: '',
         font: 'monospace',
