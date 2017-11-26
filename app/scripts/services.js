@@ -230,6 +230,38 @@ angular.module('ambaya')
                 );
             };
         })
+        .service('kitsService', function($http) {
+            this.nova = function(encomenda){
+                return $http.post("/kits/", encomenda);
+            };
+            this.todas = function(){
+                return $http.get("/kits/");
+            };
+            this.supervisor = function(id){
+                return $http.get("/kits/supervisor/"+id);
+            };
+            this.consultor = function(id){
+                return $http.get("/kits/consultor/"+id);
+            };
+            this.excluir = function(id){
+                return $http.delete("/kits/"+id);
+            };
+            this.atualizarStatus = function(id, status, enviados){
+                return $http.post("/kits/atualizar/",
+                {
+                    _id: id,
+                    update: {status: status, enviados: enviados}
+                }
+                );
+            };
+            this.totalAprovado = function(){
+                return $http.post("/kits/total/",
+                {
+                    status: "Aprovada"
+                }
+                );
+            };
+        })
         .service('acertosService', function($http){
             this.acerto = function(info){
                 return $http.post("/acertos/", info);

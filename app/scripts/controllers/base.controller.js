@@ -29,6 +29,7 @@ angular.module('ambaya')
             ],
             "Estoque": [
                 {nome:"Início", icone:"home"},
+                {nome:"Kits", icone:"work"},
                 {nome:"Etiquetas", icone:"local_offer"},
                 {nome:"Encomendas", icone:"loop"},
             ]
