@@ -231,14 +231,11 @@ angular.module('ambaya')
             };
         })
         .service('kitsService', function($http) {
-            this.nova = function(encomenda){
-                return $http.post("/kits/", encomenda);
+            this.novo = function(kit){
+                return $http.post("/kits/", kit);
             };
-            this.todas = function(){
+            this.todos = function(){
                 return $http.get("/kits/");
-            };
-            this.supervisor = function(id){
-                return $http.get("/kits/supervisor/"+id);
             };
             this.consultor = function(id){
                 return $http.get("/kits/consultor/"+id);
@@ -246,7 +243,7 @@ angular.module('ambaya')
             this.excluir = function(id){
                 return $http.delete("/kits/"+id);
             };
-            this.atualizarStatus = function(id, status, enviados){
+            this.atualizaStatus = function(id, status, enviados){
                 return $http.post("/kits/atualizar/",
                 {
                     _id: id,
@@ -254,10 +251,11 @@ angular.module('ambaya')
                 }
                 );
             };
-            this.totalAprovado = function(){
-                return $http.post("/kits/total/",
+            this.atualizaPecas = function(id, pecas){
+                return $http.post("/kits/atualizar/",
                 {
-                    status: "Aprovada"
+                    _id: id,
+                    update: {pecas: pecas}
                 }
                 );
             };
