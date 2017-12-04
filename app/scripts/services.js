@@ -238,16 +238,16 @@ angular.module('ambaya')
                 return $http.get("/kits/");
             };
             this.consultor = function(id){
-                return $http.get("/kits/consultor/"+id);
+                return $http.get("/kits/porConsultora/"+id);
             };
             this.excluir = function(id){
                 return $http.delete("/kits/"+id);
             };
-            this.atualizaStatus = function(id, status, enviados){
+            this.atualizaStatus = function(id, status){
                 return $http.post("/kits/atualizar/",
                 {
                     _id: id,
-                    update: {status: status, enviados: enviados}
+                    update: {status: status}
                 }
                 );
             };

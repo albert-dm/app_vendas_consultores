@@ -1,7 +1,25 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('ConsultorController',[ '$scope', '$state', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, $state, userService, consultoresService, estoqueService, $stateParams, acertosService){
+.controller('ConsultorController',[ 
+    '$scope', 
+    '$state', 
+    'userService', 
+    'consultoresService', 
+    'estoqueService', 
+    '$stateParams', 
+    'acertosService', 
+    'kitsService',
+    function(
+        $scope, 
+        $state,
+        userService,
+        consultoresService, 
+        estoqueService, 
+        $stateParams, 
+        acertosService,
+        kitsService
+    ){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});            
     
@@ -15,6 +33,8 @@ angular.module('ambaya')
     var tipoTemp;
     var taxaTemp;
     var parcelaTemp;
+    $scope.status = ['Entregue', 'Pendente'];
+    $scope.kits = [];
 
     userService.carregaUm(id).then(
             function(response) {
@@ -38,6 +58,23 @@ angular.module('ambaya')
                     Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
             }
     );
+
+    var carregaKits = function(){
+        kitsService.consultor(id).then(
+            function(response) {
+                $scope.kits = response.data;
+            },
+            function(response) {
+                    Materialize.toast("Falha ao carregar kits!", 5000, 'notificacaoRuim');
+            }
+        );
+    }
+
+    carregaKits();
+
+    $scope.filtroStatus = function(kit) {
+        return ($scope.status.indexOf(kit.status) !== -1);
+    };
 
     $('.modal').modal();
     $scope.del = function(){
@@ -258,5 +295,17 @@ angular.module('ambaya')
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
         }
     );
+
+    //kits
+    $scope.enviaKit = function(id){
+        kitsService.atualizaStatus(id, 'Entregue').then(                
+            function(res){
+                carregaKits();
+            },
+            function(res){
+                 Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+            }
+        );
+    };
 
 }]);

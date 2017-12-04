@@ -217,9 +217,9 @@
                             </li>
                             <li class="collection-item">
                                 <form ng-submit="addPeca($event, 'PZ')" class="addPeca row">
-                                    <input class="col s5 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
-                                    <input class="col s5 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
-                                    <input type="submit" class="col s2 btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
+                                    <input class="col s4 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>
+                                    <input class="col s4 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>
+                                    <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>
                                 </form>
                             </li>
                         </ul>
@@ -240,9 +240,19 @@
                 <div class="collection">
                     <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt'">
                         <i class="material-icons circle">work</i>
-                        <span class="title">{{kit.consultora.nome}} - {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
-                        <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button> 
-                        <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button> 
+                        <div class="row">
+                            <div class="col s6">
+                                    <span class="title">{{kit.consultora.nome}} </span>br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
+                                </br>
+                                <div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}" >
+                                    {{kit.status}}
+                                </div>
+                            </div>
+                            <div class="col s6">
+                                <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button> 
+                                <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>  
+                            </div>
+                        </div>  
                     </a>
                 </div>                 
             </div>
