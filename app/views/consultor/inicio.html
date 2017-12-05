@@ -203,8 +203,12 @@
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
 				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal'" required>
 					<option value="" disabled selected>Selecione o item</option>
+					<option value="BP017">Brinco Pequeno de R$17,00</option>
 					<option value="BP023">Brinco Pequeno de R$23,00</option>
-					<option value="AN023">Anel de R$23,00</option>
+					<option value="BP027">Brinco Pequeno de R$27,00</option>
+					<option value="PN017">Pingente de R$17,00</option>
+					<option value="PN023">Pingente de R$23,00</option>
+					<option value="PN027">Pingente de R$27,00</option>
 				</select>
 				<input ng-show="tipoBrinde == 'mil'" placeholder="Código" id="codigoBrinde" type="text" ng-model="codigoBrinde" style="text-transform:uppercase"  pattern="[A-Za-z]{2}[0-9]{3,6}" title="Código inválido" required>
 				<br><button type="submit" class="btn-floating btn-large waves-effect waves-light botaoAmarelo"><i class="material-icons">card_giftcard</i></button>
