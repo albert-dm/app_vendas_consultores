@@ -297,10 +297,17 @@ angular.module('ambaya')
     );
 
     //kits
-    $scope.enviaKit = function(id){
-        kitsService.atualizaStatus(id, 'Entregue').then(                
+    $scope.enviaKit = function(kit){
+        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
             function(res){
-                carregaKits();
+                estoqueService.entradaEstoque($scope.id, kit.pecas).then(
+                    function(res){
+                        carregaKits();
+                        $scope.carregaDados();
+                    }, function(res){
+                        Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+                    }
+                );
             },
             function(res){
                  Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
