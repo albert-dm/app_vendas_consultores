@@ -242,7 +242,6 @@ angular.module('ambaya')
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
-                    Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
                     if(valorVenda>100){
                         Materialize.toast("Venda acime de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
                         consultoresService.novoBrinde($scope.usuario, "natal").then(
