@@ -4,7 +4,7 @@ angular.module('ambaya')
 .controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', 'encomendasService', function($scope, consultoresService, userService, encomendasService){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});
-    $('select').material_select();
+    //$('select').material_select();
     $scope.adicionando = [];
     encomendasService.consultor($scope.usuario._id).then(
             function(response){
@@ -38,7 +38,8 @@ angular.module('ambaya')
         $('#venda').modal('open');
         $('#codigo').focus();
     }
-    $scope.modalBrinde = function(){
+    $scope.modalBrinde = function(tipo){
+        $scope.tipoBrinde = tipo;
         $('#brinde').modal('open');
     }
     $scope.modalTroca = function(){
@@ -213,6 +214,7 @@ angular.module('ambaya')
         var vendidoTemp = vendidoTemp.concat($scope.usuario.vendido);
         var totalVendidoTemp = 0;
         var totalVendidoTemp = totalVendidoTemp+$scope.usuario.totalVendido;
+        var valorVenda = 0;
         var encontrado = false;
         var vendaok = true;
         for(var i=0; i <$scope.adicionando.length; i++){
@@ -225,6 +227,7 @@ angular.module('ambaya')
                     $scope.deletaElemento($scope.usuario.estoque, j);
                     $scope.usuario.totalVendido += Number(precoAdd);
                     console.log($scope.usuario.vendido);
+                    valorVenda = valorVenda + precoAdd;
                     encontrado = true;
                     //Atualiza totalVendido, vendido e estoque e adicionar 
                     //'adicionando' ao historico de vendas -> na venda ou no acerto?
@@ -240,6 +243,17 @@ angular.module('ambaya')
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
                     Materialize.toast("Venda Efetivada", 5000, 'notificacaoBoa');
+                    if(valorVenda>100){
+                        Materialize.toast("Venda acime de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
+                        consultoresService.novoBrinde($scope.usuario, "natal").then(
+                            function(res){
+                                carregaBrinde();
+                            },
+                            function(res){
+                                console.log("Falha ao adicionar brinde dos mil reais");
+                            }
+                        );
+                    }
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
                         consultoresService.novoBrinde($scope.usuario, "mil").then(
                             function(res){
