@@ -251,6 +251,7 @@
                             <div class="col s6">
                                 <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button> 
                                 <button ng-if="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>  
+                                <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="mostraTabelaPecas(kit)"><i class="material-icons" title="Ver peças">assignment</i></button>
                             </div>
                         </div>  
                     </a>
@@ -258,4 +259,11 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="tabelaPecas" class="modal">
+	<div class="modal-content">
+		<h4>Kit - {{kitSelecionado.createdAt | date:'dd/MM/yyyy'}}</h4>
+		<tabela-pecas pecas='kitSelecionado.pecas'></tabela-pecas>
+	</div>
 </div>

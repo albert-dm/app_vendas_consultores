@@ -193,6 +193,32 @@ angular.module('ambaya')
         );
     }
 
+    $('#tabelaPecas').modal();
+    $scope.kitSelecionado = {
+        pecas:[]
+    }
+    $scope.enviaKit = function(kit){
+        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+            function(res){
+                estoqueService.entradaEstoque(id, kit.pecas).then(
+                    function(res){
+                        carregaKits();
+                        $scope.carregaConsultora();
+                    }, function(res){
+                        Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+                    }
+                );
+            },
+            function(res){
+                 Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+            }
+        );
+    };
+    $scope.mostraTabelaPecas = function(kit){
+        $scope.kitSelecionado = kit;
+        $('#tabelaPecas').modal('open');
+    }
+
     $scope.carregaKits();
 
 }]);
