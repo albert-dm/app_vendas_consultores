@@ -1,104 +1,7 @@
-//'use strict';
-
 angular.module('ambaya')
-.controller('BaseController',['userService', 'loginService', '$scope', '$state', '$localStorage', function(userService, loginService, $scope, $state, $localStorage){
-    $(".button-collapse").sideNav({
-        closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
-        draggable: true // Choose whether you can drag to open on touch screens
-    });
-    $scope.usuario = {username: "", password: ""};
-    var rotas = {
-            "Consultor": [
-                {nome:"Início", icone:"home"},
-                {nome:"Estoque", icone:"business_center"},
-                {nome:"Histórico", icone:"history"},
-            ],
-            "Supervisor": [
-                {nome:"Início", icone:"home"},
-                {nome:"Consultores", icone:"people"},
-                {nome:"Estoque", icone:"business_center"},
-                {nome:"Encomendas", icone:"loop"},
-                //{nome:"Acertos", icone:"done_all"},
-            ],
-            "Controladoria": [
-                {nome:"Início", icone:"home"},
-                {nome:"Consultores", icone:"people"},
-                {nome:"Supervisores", icone:"people"},
-                {nome:"Encomendas", icone:"loop"},
-                //{nome:"Relatórios", icone:"assignment"}
-            ],
-            "Estoque": [
-                {nome:"Início", icone:"home"},
-                {nome:"Kits", icone:"work"},
-                {nome:"Etiquetas", icone:"local_offer"},
-                {nome:"Encomendas", icone:"loop"},
-            ]
-    };
-    $scope.login = function(){
-        loginService.login($scope.usuario).then(
-            function(response) {
-                //console.log(response);
-                $localStorage.usuario = response.data.user;
-                $localStorage.token = response.data.token;
-                $localStorage.logado = true;
-                $scope.usuario = response.data.user;
-                $scope.rotas= rotas[$scope.usuario.tipo];
-                $scope.tipo = $scope.usuario.tipo;
-                $scope.logado = true;
-                $state.reload();
-            },
-            function(response) {
-                Materialize.toast("Login inválido", 5000, 'notificacaoRuim');
-            }
-        );
-    };
-    $scope.sair = function(){
-        loginService.logout();
-        $scope.logado = false;
-        $scope.tipo = "Login";
-        if($state.is('Início'))
-            $state.reload();
-        else
-            $state.go('Início');
-        
-    };
-
-    $scope.carregaDados = function() {
-        userService.carregaUm($scope.usuario._id).then(
-            function(response) {
-                $scope.usuario = response.data;
-                $scope.rotas= rotas[$scope.usuario.tipo];
-                $scope.tipo = $scope.usuario.tipo;
-            },
-            function(response) {
-                Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
-                $scope.sair();
-            }
-        );
-    }
-    
-    $scope.logado = loginService.check();
-    if ($scope.logado==true) {
-        console.log("logado");
-        $scope.usuario = loginService.getUser();
-        $scope.carregaDados();
-    }else{
-        $scope.tipo = "Login";
-        $scope.sair();
-        //é necessário notificacaoRuimirecionar para o início aqui.
-    }           
-    $scope.$state = $state;
-
-    //funcoes globais
-    $scope.faltamDias = function(diaFuturo) {
-        diaFuturo = new Date(diaFuturo);
-        return Math.floor((diaFuturo - Date.now())/(24*60*60*1000));
-    }; 
-    $scope.deletaElemento = function(vetor, index){
-        vetor.splice(index, 1);
-    }
-    $scope.processaPecas = function(estoque){
-        //console.log(estoque);
+.service('pecasService', [function(){
+    var pecasService = this;
+    pecasService.processaPecas = function(estoque){
         var pecas = {
             "aneis":[],
             "brincosP": [],
@@ -138,10 +41,10 @@ angular.module('ambaya')
         var personalizadas = 0;
 
         for(i=0; i<estoque.length; i++){
-            tipo = $scope.extraiCod(estoque[i]);
+            tipo = pecasService.extraiCod(estoque[i]);
             //mes = peca.splice(2,2);
             //ano = peca.splice(4,2);
-            valor = $scope.extraiPreco(estoque[i]);
+            valor = pecasService.extraiPreco(estoque[i]);
             switch(tipo){
                 case "AN":
                     tipo = "aneis";
@@ -215,7 +118,8 @@ angular.module('ambaya')
             };
         return pecas;
     };
-    $scope.voltaPecas = function(pecas){
+
+    pecasService.voltaPecas = function(pecas){
         var estoque = [];
         for(i=0; i<pecas.aneis.length; i++){
             peca = "AN"+pecas.aneis[i].val;
@@ -274,17 +178,17 @@ angular.module('ambaya')
         }
         return estoque;
     }
-    $scope.extraiPreco = function(codigo){
+    pecasService.extraiPreco = function(codigo){
         if(codigo.length == 5) return codigo.substr(2,3);
         else return "0"+codigo.substr(6,2);
     } 
-    $scope.extraiCod = function(codigo){
+    pecasService.extraiCod = function(codigo){
         return codigo.substr(0,2);
     } 
-    $scope.irPara = function(pagina){
+    pecasService.irPara = function(pagina){
         $state.go(pagina);
     }
-    $scope.opcoesPecas = [{'val':"AN", 'label':'Anéis'},
+    pecasService.opcoesPecas = [{'val':"AN", 'label':'Anéis'},
                         {'val':"BG", 'label':'Brinco Grande'},
                         {'val':"BP", 'label':'Brinco Pequeno'},
                         {'val':"CF", 'label':'Cordão Feminino'},
@@ -296,5 +200,4 @@ angular.module('ambaya')
                         {'val':"ES", 'label':'Escapulário'},
                         {'val':"PZ", 'label':'Personalizada'}
     ];
-        
-}]);
+}])

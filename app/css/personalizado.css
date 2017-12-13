@@ -191,6 +191,15 @@ thead{
     display:none;
 }
 
+form.addPeca input[type='number']{
+    display:inline;
+    margin:0;
+    padding:0;
+    margin-left: 10px;
+    margin-right: 10px;
+    font-size: 13px;
+}
+
 /* Configuração de impressao de cod de barras */
 video.vsc-initialized{
     width:100%;
@@ -201,6 +210,10 @@ video.vsc-initialized{
     margin:0;
     margin-bottom: -100%;
     padding:0;
+}
+
+ul{
+    overflow: visible;
 }
 
 @media print{

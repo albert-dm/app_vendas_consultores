@@ -1,7 +1,25 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('ConsultorController',[ '$scope', '$state', 'userService', 'consultoresService', 'estoqueService', '$stateParams', 'acertosService', function($scope, $state, userService, consultoresService, estoqueService, $stateParams, acertosService){
+.controller('ConsultorController',[ 
+    '$scope', 
+    '$state', 
+    'userService', 
+    'consultoresService', 
+    'estoqueService', 
+    '$stateParams', 
+    'acertosService', 
+    'kitsService',
+    function(
+        $scope, 
+        $state,
+        userService,
+        consultoresService, 
+        estoqueService, 
+        $stateParams, 
+        acertosService,
+        kitsService
+    ){
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});            
     
@@ -15,8 +33,11 @@ angular.module('ambaya')
     var tipoTemp;
     var taxaTemp;
     var parcelaTemp;
+    $scope.status = ['Entregue', 'Pendente'];
+    $scope.kits = [];
 
-    userService.carregaUm(id).then(
+    $scope.carregaConsultora = function(){
+        userService.carregaUm(id).then(
             function(response) {
                 $scope.consultor = response.data;
                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
@@ -37,7 +58,26 @@ angular.module('ambaya')
             function(response) {
                     Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
             }
-    );
+        );
+    }
+    $scope.carregaConsultora();
+
+    var carregaKits = function(){
+        kitsService.consultor(id).then(
+            function(response) {
+                $scope.kits = response.data;
+            },
+            function(response) {
+                    Materialize.toast("Falha ao carregar kits!", 5000, 'notificacaoRuim');
+            }
+        );
+    }
+
+    carregaKits();
+
+    $scope.filtroStatus = function(kit) {
+        return ($scope.status.indexOf(kit.status) !== -1);
+    };
 
     $('.modal').modal();
     $scope.del = function(){
@@ -258,5 +298,32 @@ angular.module('ambaya')
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
         }
     );
+
+    //kits
+    $('#tabelaPecas').modal();
+    $scope.kitSelecionado = {
+        pecas:[]
+    }
+    $scope.enviaKit = function(kit){
+        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+            function(res){
+                estoqueService.entradaEstoque(id, kit.pecas).then(
+                    function(res){
+                        carregaKits();
+                        $scope.carregaConsultora();
+                    }, function(res){
+                        Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+                    }
+                );
+            },
+            function(res){
+                 Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+            }
+        );
+    };
+    $scope.mostraTabelaPecas = function(kit){
+        $scope.kitSelecionado = kit;
+        $('#tabelaPecas').modal('open');
+    }
 
 }]);

@@ -195,6 +195,17 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
             }
         },
     };
+
+    var kits = {
+        name: 'Kits',
+        url: '/kits', 
+        views: {
+            'Estoque':{
+                templateUrl: 'views/estoque/kits.html',
+                controller: "KitsController"
+            }
+        },
+    };
     $stateProvider.state(inicio);
     $stateProvider.state(consultores);
     $stateProvider.state(consultor);
@@ -207,5 +218,6 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
     $stateProvider.state(relatorios);
     $stateProvider.state(historico);
     $stateProvider.state(cadastro);
+    $stateProvider.state(kits);
 })
 ;
