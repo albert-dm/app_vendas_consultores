@@ -118,7 +118,7 @@
 							<div class="card center-align fundoAmarelo">
 								<div class="card-content">
 									<span class="card-title">Minha parte</span>
-									<h4>{{(usuario.totalVendido * usuario.porcentagem)/100 | currency: 'R$'}}</h4>
+									<h4>{{(usuario.totalVendido - devido - parcelaTaxa) | currency: 'R$'}}</h4>
 								</div>
 							</div>
 						</div>
@@ -126,7 +126,7 @@
 							<div class="card center-align fundoAmarelo">
 								<div class="card-content">
 									<span class="card-title">A pagar</span>
-									<h4>{{usuario.totalVendido - (usuario.totalVendido * usuario.porcentagem)/100| currency: 'R$'}}</h4>
+									<h4>{{devido + parcelaTaxa | currency: 'R$'}}</h4>
 								</div>
 							</div>
 						</div>
