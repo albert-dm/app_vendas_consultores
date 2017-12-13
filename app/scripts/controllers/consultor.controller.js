@@ -36,7 +36,8 @@ angular.module('ambaya')
     $scope.status = ['Entregue', 'Pendente'];
     $scope.kits = [];
 
-    userService.carregaUm(id).then(
+    $scope.carregaConsultora = function(){
+        userService.carregaUm(id).then(
             function(response) {
                 $scope.consultor = response.data;
                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
@@ -57,7 +58,9 @@ angular.module('ambaya')
             function(response) {
                     Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
             }
-    );
+        );
+    }
+    $scope.carregaConsultora();
 
     var carregaKits = function(){
         kitsService.consultor(id).then(
@@ -297,13 +300,17 @@ angular.module('ambaya')
     );
 
     //kits
+    $('#tabelaPecas').modal();
+    $scope.kitSelecionado = {
+        pecas:[]
+    }
     $scope.enviaKit = function(kit){
         kitsService.atualizaStatus(kit._id, 'Entregue').then(                
             function(res){
-                estoqueService.entradaEstoque($scope.id, kit.pecas).then(
+                estoqueService.entradaEstoque(id, kit.pecas).then(
                     function(res){
                         carregaKits();
-                        $scope.carregaDados();
+                        $scope.carregaConsultora();
                     }, function(res){
                         Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
                     }
@@ -314,5 +321,9 @@ angular.module('ambaya')
             }
         );
     };
+    $scope.mostraTabelaPecas = function(kit){
+        $scope.kitSelecionado = kit;
+        $('#tabelaPecas').modal('open');
+    }
 
 }]);

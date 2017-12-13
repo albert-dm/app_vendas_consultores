@@ -242,7 +242,7 @@
                         <i class="material-icons circle">work</i>
                         <div class="row">
                             <div class="col s6">
-                                    <span class="title">{{kit.consultora.nome}} </span>br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
+                                    <span class="title">{{kit.consultora.nome}} </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
                                 </br>
                                 <div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}" >
                                     {{kit.status}}
@@ -250,7 +250,7 @@
                             </div>
                             <div class="col s6">
                                 <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="imprimir(kit)"><i class="material-icons">print</i></button> 
-                                <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>  
+                                <button ng-if="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="editar(kit)"><i class="material-icons">mode_edit</i></button>  
                             </div>
                         </div>  
                     </a>

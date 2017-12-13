@@ -97,6 +97,7 @@
                                         </div>
                                         <div class="col s6">
                                                 <button ng-show="kit.status=='Pendente'" class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="enviaKit(kit)"><i class="material-icons">send</i></button>
+                                                <button class="btn-floating btn waves-effect waves-light botaoAmarelo right" ng-click="mostraTabelaPecas(kit)"><i class="material-icons" title="Ver peças">assignment</i></button>
                                         </div>
                                     </div>
                                 </a>
@@ -368,5 +369,12 @@
 	<div class="modal-footer">
 		<input class="waves-effect waves-green btn-flat" type="submit" form="formEdit" value="Pronto!"/>
 		<a class="modal-close waves-effect waves-red btn-flat" >Cancelar</a>
+	</div>
+</div>
+
+<div id="tabelaPecas" class="modal">
+	<div class="modal-content">
+		<h4>Kit - {{kitSelecionado.createdAt | date:'dd/MM/yyyy'}}</h4>
+		<tabela-pecas pecas='kitSelecionado.pecas'></tabela-pecas>
 	</div>
 </div>
