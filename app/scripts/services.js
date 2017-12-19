@@ -271,6 +271,9 @@ angular.module('ambaya')
                 }
                 );
             };
+            this.todos = function(){
+                return $http.get("/acertos/");
+            }
         })
         .service('apiService', function($http){
             this.cadastro = function(usuario){
