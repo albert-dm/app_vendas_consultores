@@ -258,7 +258,7 @@ angular.module('ambaya')
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
-                    if(valorVenda>100){
+                    /* if(valorVenda>100){
                         Materialize.toast("Venda acime de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
                         consultoresService.novoBrinde($scope.usuario, "natal").then(
                             function(res){
@@ -268,7 +268,7 @@ angular.module('ambaya')
                                 console.log("Falha ao adicionar brinde dos mil reais");
                             }
                         );
-                    }
+                    } */
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
                         consultoresService.novoBrinde($scope.usuario, "mil").then(
                             function(res){
