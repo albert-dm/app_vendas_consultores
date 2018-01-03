@@ -4,13 +4,66 @@
 			<div class="card-content">
 				<span class="card-title">Relatórios</span>
 				<div class="row fundoBranco">
-					<!-- <nvd3 options="chart.options" data="chart.data"></nvd3> -->
-					<tabela-totais-pecas pecas="pecasTotais"></tabela-totais-pecas>
-					<ul class="collection">
-						<li class="collection-item" ng-repeat="(mes, pecas) in acertos">
-							<h3>{{mes}}</h3>
-							<tabela-totais-pecas pecas="pecas"></tabela-totais-pecas>
+					<ul class="collapsible" data-collapsible="accordion">
+						<li>
+							<div class="collapsible-header active"><i class="material-icons">calendar</i>Meses</div>
+							<div class="collapsible-body">
+								<div class="row">
+									<div class="col s12 m3" ng-repeat="mes in meses">
+										<input type="checkbox" class="filled-in" id="filled-in-box" />
+										<label for="filled-in-box">Mês</label>
+									</div>
+								</div>
+							</div>
 						</li>
+						<li>
+							<div class="collapsible-header"><i class="material-icons">person</i>Supervisores</div>
+							<div class="collapsible-body">
+								<div class="row">
+									<div class="col s12 m3" ng-repeat="supervisor in supervisores">
+										<input type="checkbox" class="filled-in" id="filled-in-box" />
+										<label for="filled-in-box">Supervisor</label>
+									</div>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="collapsible-header"><i class="material-icons">person</i>Consultores</div>
+							<div class="collapsible-body">
+								<div class="row">
+									<div class="col s12 m3" ng-repeat="consultor in consultores">
+										<input type="checkbox" class="filled-in" id="filled-in-box" />
+										<label for="filled-in-box">Consultor</label>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+				<div class="row fundoBranco">
+					<!-- <nvd3 options="chart.options" data="chart.data"></nvd3> -->
+					<ul class="collection">
+						<li class="collection-item">
+							<h3>Pecas Totais</h3>
+							<div class="row">
+								<div class="col s12" style="overflow-x:auto">
+									<tabela-totais-pecas pecas="pecasTotais"></tabela-totais-pecas>
+								</div>
+							</div>
+						</li>
+						  <li class="collection-item avatar" ng-repeat="(mes, pecas) in acertos">
+							<i class="material-icons circle">person</i>
+							<div class="row">
+								<div class="col s12"><b>{{mes}}</b></div>
+								<div class="col s12 m2">
+									<p>Próximo Acerto</p>
+								</div>
+								<div class="col s12 m10" style="overflow-x:auto">
+									<tabela-totais-pecas pecas="pecas"></tabela-totais-pecas>
+								</div>
+							</div>						
+							<a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+						  </li>
 					</ul>
 				</div>
 			</div>
