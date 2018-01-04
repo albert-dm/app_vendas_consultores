@@ -200,6 +200,11 @@ form.addPeca input[type='number']{
     font-size: 13px;
 }
 
+[type=checkbox].filled-in:checked+label:after{
+    border-color: #E6B000;
+    background-color: #E6B000;
+}
+
 /* Configuração de impressao de cod de barras */
 video.vsc-initialized{
     width:100%;
