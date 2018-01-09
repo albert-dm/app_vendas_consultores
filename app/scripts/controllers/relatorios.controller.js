@@ -124,15 +124,16 @@ angular.module('ambaya')
             var supervisores = newValue.map(function(supervisor){
                 return supervisor._id;
             });
-            console.log(supervisores);
             $scope.consultoresFiltrados = [];
             for(var i=0; i<$scope.consultores.length; i++){
                 if(supervisores.indexOf($scope.consultores[i].supervisor._id)!=-1)
                 $scope.consultoresFiltrados.push($scope.consultores[i]);
             }
-            for(var j=0; j<$scope.filtroConsultores.length; j++){
-                if(supervisores.indexOf($scope.filtroConsultores[i].supervisor._id)==-1)
-                delete $scope.filtroConsultores[i];
+            var tempFiltro = [].concat($scope.filtroConsultores);
+            $scope.filtroConsultores = [];
+            for(var j=0; j<tempFiltro.length; j++){                
+                if(supervisores.indexOf(tempFiltro[j].supervisor._id)!=-1)
+                    $scope.filtroConsultores.push(tempFiltro[j]);
             }
         }            
     );
