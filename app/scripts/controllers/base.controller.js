@@ -25,7 +25,7 @@ angular.module('ambaya')
                 {nome:"Consultores", icone:"people"},
                 {nome:"Supervisores", icone:"people"},
                 {nome:"Encomendas", icone:"loop"},
-                //{nome:"Relatórios", icone:"assignment"}
+                {nome:"Relatórios", icone:"assignment"}
             ],
             "Estoque": [
                 {nome:"Início", icone:"home"},

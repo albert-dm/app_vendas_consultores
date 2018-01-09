@@ -4,6 +4,7 @@
 <!-- build:css styles/main.css -->
     <link href="./css/mateirial-icon.css" rel="stylesheet">
     <link href="../node_modules/materialize-css/dist/css/materialize.css" rel="stylesheet">
+    <link rel="stylesheet" href="../node_modules/nvd3/build/nv.d3.css">
     <link href="./css/personalizado.css" rel="stylesheet">
     <!--<link href="./css/angularPrint.css" rel="stylesheet">-->
 <!-- endbuild -->
@@ -50,6 +51,10 @@
 	<script src= "js/angular-barcode.js"></script>
 	<!--<script src= "../node_modules/webrtc-adapter/src/js/adapter_core.js"></script>-->
     <script src= "../node_modules/quagga/dist/quagga.min.js"></script>
+    <!-- D3 Charts -->
+    <script src= "../node_modules/d3/d3.js"></script>
+    <script src= "../node_modules/nvd3/build/nv.d3.js"></script>
+    <script src= "../node_modules/angular-nvd3/dist/angular-nvd3.js"></script>
     
 	<!--<script src= "../node_modules/ng-cordova/dist/ng-cordova.min.js"></script>
 	<script src= "../node_modules/cordova/cordova.js"></script>-->
@@ -73,10 +78,13 @@
     <script src="scripts/controllers/supervisor.controller.js"></script>
     <script src="scripts/controllers/supervisores.controller.js"></script>
     <script src="scripts/controllers/cadastro.controller.js"></script>
+    <script src="scripts/controllers/relatorios.controller.js"></script>
     <script src="scripts/controllers/kits.controller.js"></script>
     <script src="scripts/services.js"></script>
     <script src="scripts/services/pecas.service.js"></script>
+    <script src="scripts/services/data.service.js"></script>
     <script src="scripts/directives/tabela-pecas.js"></script>
+    <script src="scripts/directives/tabela-totais-pecas.js"></script>
 <!-- endbuild -->
 </body>
 </html>

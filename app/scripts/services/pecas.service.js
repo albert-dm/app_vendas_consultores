@@ -103,7 +103,7 @@ angular.module('ambaya')
                 pecas[tipo].push({"val": valor, "tot": 1});
             }                        
         }
-        pecas['totais']={
+        pecas.totais={
                 "aneis":aneis,
                 "brincosP": brincosP,
                 "brincosG": brincosG,

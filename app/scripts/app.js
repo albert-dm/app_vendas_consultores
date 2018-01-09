@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
+angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, $provide){
     $httpProvider.interceptors.push('tokenInterceptor');
     $provide.decorator('$locale', ['$delegate', function ($delegate) {
@@ -165,7 +165,8 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode'])
         controller: '',
         views: {
             'Controladoria':{
-                templateUrl: 'views/controladoria/relatorios.html'
+                templateUrl: 'views/controladoria/relatorios.html',
+                controller: 'RelatoriosController'
             },
             'Login':{
                 templateUrl: 'login.html'

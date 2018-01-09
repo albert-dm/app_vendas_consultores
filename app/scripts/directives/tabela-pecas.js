@@ -57,7 +57,6 @@ angular.module('ambaya')
                 '</div>',
         link: function(scope){
             scope.pecas = pecasService.processaPecas(scope.vetorPecas);
-            console.log(scope.vetorPecas);
             scope.$watch('vetorPecas', function(newValue, oldValue) {
                 if (newValue)
                     scope.pecas = pecasService.processaPecas(newValue);
