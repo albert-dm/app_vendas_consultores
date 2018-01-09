@@ -79,6 +79,17 @@ angular.module('ambaya')
         }
     }
 
+    $scope.toggleAllCheck = function(valores, filtro){
+        if(valores.length == filtro.length){
+            filtro.length = 0;
+        } else{
+            filtro.length = 0;
+            for(var i= 0; i<valores.length; i++){
+                filtro.push(valores[i]);
+            }
+        }
+    }
+
     var processaAcertos = function(){
         var processados;
         var consultores = $scope.filtroConsultores.map(function(consultor){
