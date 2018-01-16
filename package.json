@@ -25,6 +25,7 @@
   },
   "devDependencies": {
     "cordova": "^7.0.0",
+    "gulp": "^3.9.1",
     "materialize-css": "^0.98.2"
   }
 }
