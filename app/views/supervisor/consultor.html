@@ -18,7 +18,7 @@
 				<div class="row center-align">
 					<a class="waves-effect waves-light btn" ng-click="modalAcerto()">Realizar acerto</a>
 					<a class="waves-effect waves-light btn" ng-click="modalEncomenda()">Alocar peças</a> 
-					<!--<a class="waves-effect waves-light btn">Verificar venda</a>-->
+                    <a class="waves-effect waves-light btn" ng-click="modalEstorno()">Estorno de venda</a>
 					<!--<a class="waves-effect waves-light btn">Troca de peça</a>-->
 				</div>
                 <div class="row center align" ng-show="consultor.taxa>0">
@@ -376,5 +376,16 @@
 	<div class="modal-content">
 		<h4>Kit - {{kitSelecionado.createdAt | date:'dd/MM/yyyy'}}</h4>
 		<tabela-pecas pecas='kitSelecionado.pecas'></tabela-pecas>
+	</div>
+</div>
+
+<div id="estorno" class="modal">
+	<div class="modal-content">
+		<h4>Estorno de venda</h4>
+		
+    </div>
+    <div class="modal-footer">
+		<input class="waves-effect waves-green btn-flat" type="submit" form="formEstorno" value="Pronto!"/>
+		<a class="modal-close waves-effect waves-red btn-flat" >Cancelar</a>
 	</div>
 </div>

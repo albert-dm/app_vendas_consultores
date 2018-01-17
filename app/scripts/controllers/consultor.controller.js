@@ -326,4 +326,10 @@ angular.module('ambaya')
         $('#tabelaPecas').modal('open');
     }
 
+    //estorno
+    $('#estorno').modal();
+    $scope.modalEstorno = function(){
+        $('#estorno').modal('open');
+    };
+
 }]);
