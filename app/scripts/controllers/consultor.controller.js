@@ -20,6 +20,10 @@ angular.module('ambaya')
         acertosService,
         kitsService
     ){
+    $scope.consultor = {
+        estoque: [],
+        vendido: []
+    }
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});            
     
