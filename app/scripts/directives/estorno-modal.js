@@ -17,12 +17,19 @@ angular.module('ambaya')
                             '</li>'+
                            ' <li class="collection-item">'+
                                 '<form  ng-submit="addPecas($event)" class="addPeca row">'+
-                                    '<select style="display:block" ng-model="pecaEstornoTipo" class="col m3 s12" ng-change="carregaConsultores()" ng-options="item as item.label for item in opcoes" required>'+
-                                            '<option value="" disabled selected>Peça</option>'+
-                                            /* '<option ng-repeat="opcao in opcoes" value="{{opcao.label}}">{{opcao.label}}</option>'+ */
-                                    '</select>'+
-                                    '<input ng-model="pecaEstornoValor" class="col m3 s12 preco" type="number" min=1 max=999 maxlength="10" name="preco" placeholder="Preço" required>'+
-                                    '<input ng-model="pecaEstornoQuantidade" class="col m3 s12 quantidade" type="number" min=1 maxlength="10" name="quantidade" placeholder="Quantidade" required>'+
+                                    '<div class="input-field col m3 s12">'+
+                                        '<select style="display:block" ng-model="pecaEstornoTipo"  ng-change="carregaConsultores()" ng-options="item as item.label for item in opcoes" required>'+
+                                                '<option value="" disabled selected>Peça</option>'+
+                                        '</select>'+
+                                    '</div>'+
+                                    '<div class="input-field col m3 s12">'+
+                                        '<input ng-model="pecaEstornoValor" class="preco" type="number" min=1 max=999 maxlength="10" name="preco" id="pecaPreco" required>'+
+                                        '<label for="pecaPrecoreco">Preço</label>' +
+                                    '</div>'+
+                                    '<div class="input-field col m3 s12">'+
+                                        '<input ng-model="pecaEstornoQuantidade" class="quantidade" type="number" min=1 maxlength="10" name="quantidade" id="pecaQuantidade" required>'+
+                                        '<label for="pecaPrecoreco">Quantidade</label>' +
+                                    '</div>'+
                                    ' <input type="submit" class="btn-floating btn waves-effect waves-light botaoAmarelo right" value="+"></input>'+
                                 '</form>'+
                             '</li>'+
