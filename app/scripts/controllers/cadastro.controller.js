@@ -33,6 +33,7 @@ angular.module('ambaya')
     $scope.form = {
         "nome":"",
         "sobrenome":"",
+        "email":"",
         "tipo":"Consultor",
         "supervisor": '',
         "nascimento": '',
@@ -85,6 +86,7 @@ angular.module('ambaya')
                 $scope.form = {
                     "nome":"",
                     "sobrenome":"",
+                    "email":"email",
                     "tipo":"Consultor",
                     "supervisor": '',
                     "nascimento": '',
