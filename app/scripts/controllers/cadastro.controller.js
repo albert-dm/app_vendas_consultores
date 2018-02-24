@@ -45,6 +45,8 @@ angular.module('ambaya')
         "taxa": 350
     };
 
+    $scope.aceito = false;
+
     var supervisores = {
         "Daniella": "59fb54992e5869001254bda2",
         "Robert": "5903791873baad0011167dc0",
@@ -55,6 +57,11 @@ angular.module('ambaya')
 
     $('#modal-video').modal();
     $('#modal-video').modal('open');
+
+    $('#contrato').modal();
+    $scope.verContrato = function(){
+        $('#contrato').modal('open');
+    }
 
     $scope.cadastro = function(){
         //TODO escolher o id do supervisor de acordo com a cidade
