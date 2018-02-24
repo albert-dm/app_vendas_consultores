@@ -192,6 +192,16 @@ angular.module('ambaya')
                 }
                 );
             };
+            this.atualizaEmail = function(usuario, email){
+                return $http.post("/users/atualizar/",
+                {
+                    _id: usuario._id,
+                    update: {
+                        email: email
+                    }
+                }
+                );
+            };
         })
         .service('supervisoresService', function($http) {
             this.todos = function(){

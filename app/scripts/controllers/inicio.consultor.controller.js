@@ -3,6 +3,10 @@
 angular.module('ambaya')
 .controller('ConsultorInicioController',[ '$scope', 'consultoresService', 'userService', 'encomendasService', function($scope, consultoresService, userService, encomendasService){
     $scope.carregaDados();
+    $scope.novoEmail = "";
+    $scope.novo = {
+        email: ""
+    }
     $('.tooltipped').tooltip({delay: 50});
     //$('select').material_select();
      //configuração de taxa
@@ -317,4 +321,15 @@ angular.module('ambaya')
             Materialize.toast("Falha ao realizar venda!", 5000, 'notificacaoRuim');
         }
     };
+    $scope.cadastraEmail = function(){
+        consultoresService.atualizaEmail($scope.usuario, $scope.novo.email).then(
+            function(res){
+                Materialize.toast("Email cadastrado com sucesso!", 5000, 'notificacaoBoa');
+                $scope.usuario.email = $scope.novo.email;
+            },
+            function(erro){
+                Materialize.toast("Falha ao cadastrar email.", 5000, 'notificacaoRuim');
+            }
+        );
+    }
 }]);
