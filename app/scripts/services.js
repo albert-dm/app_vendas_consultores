@@ -14,6 +14,22 @@ angular.module('ambaya')
             this.estoqueId = function(){
                 return $http.get("/users/estoqueId");
             }
+            this.getRecoveryCode = function(id){
+                return $http.get("/login/new-state/"+id);
+            }
+            this.esqueciSenha = function(login, email){
+                return $http.post("/login/esqueci-senha/",{
+                    login: login,
+                    email: email
+                });
+            }
+            this.novaSenha = function(state, senha){
+                return $http.post("/login/nova-senha/",
+                {
+                    state: state,
+                    senha: senha
+                });
+            }
         })
         .service('loginService', function($localStorage, $http, $location) {    
                 this.login = function (usuario) {

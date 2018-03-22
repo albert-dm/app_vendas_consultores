@@ -326,4 +326,17 @@ angular.module('ambaya')
         $('#tabelaPecas').modal('open');
     }
 
+    //recuperar senha
+    $scope.recoverPassword = function(){
+        userService.getRecoveryCode($scope.usuario._id).then(
+            function(res){
+                console.log(res);
+            },
+            function(error){
+                console.log(error);
+            }
+        )
+        
+    }
+
 }]);

@@ -196,6 +196,26 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
             }
         },
     };
+    var esqueciSenha = {
+        name: 'Esqueci',
+        url: '/esqueci-senha', 
+        views: {
+            'Login':{
+                templateUrl: 'esqueci-senha.html',
+                controller: "EsqueciSenhaController"
+            }
+        },
+    };
+    var recuperarSenha = {
+        name: 'Recuperar',
+        url: '/recuperar-senha/{state}', 
+        views: {
+            'Login':{
+                templateUrl: 'recuperar-senha.html',
+                controller: "RecuperarSenhaController"
+            }
+        },
+    };
 
     var kits = {
         name: 'Kits',
@@ -219,6 +239,8 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
     $stateProvider.state(relatorios);
     $stateProvider.state(historico);
     $stateProvider.state(cadastro);
+    $stateProvider.state(esqueciSenha);
+    $stateProvider.state(recuperarSenha);
     $stateProvider.state(kits);
 })
 ;
