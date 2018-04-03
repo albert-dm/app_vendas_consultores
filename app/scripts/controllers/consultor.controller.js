@@ -20,6 +20,10 @@ angular.module('ambaya')
         acertosService,
         kitsService
     ){
+    $scope.consultor = {
+        estoque: [],
+        vendido: []
+    }
     $scope.carregaDados();
     $('.tooltipped').tooltip({delay: 50});            
     
@@ -338,5 +342,10 @@ angular.module('ambaya')
         )
         
     }
+    //estorno
+    $('#estorno').modal();
+    $scope.modalEstorno = function(){
+        $('#estorno').modal('open');
+    };
 
 }]);

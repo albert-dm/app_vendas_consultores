@@ -123,6 +123,20 @@ angular.module('ambaya')
                 }
                 );
             };
+            this.estorno = function(usuario, pecas, userId){
+                return $http.post("/users/estorno/",
+                {
+                    _id: usuario._id,
+                    update: {
+                        estoque: usuario.estoque,
+                        vendido: usuario.vendido,
+                        totalVendido: usuario.totalVendido,
+                    }, 
+                    pecas: pecas,
+                    userId: userId
+                }
+                );
+            };
             this.acerto = function(usuario){
                 return $http.post("/users/atualizar/",
                 {

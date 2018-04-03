@@ -300,7 +300,7 @@ angular.module('ambaya')
                         );
                     }
                 },
-                function(response){
+                function(err){
                     $scope.usuario.estoque = estoqueTemp;
                     $scope.usuario.vendido = vendidoTemp;
                     $scope.usuario.totalVendido = totalVendidoTemp;

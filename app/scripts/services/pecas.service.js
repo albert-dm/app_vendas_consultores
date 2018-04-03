@@ -188,7 +188,7 @@ angular.module('ambaya')
     pecasService.irPara = function(pagina){
         $state.go(pagina);
     }
-    pecasService.opcoesPecas = [{'val':"AN", 'label':'Anéis'},
+    pecasService.opcoesPecas = [{'val':"AN", 'label':'Anel'},
                         {'val':"BG", 'label':'Brinco Grande'},
                         {'val':"BP", 'label':'Brinco Pequeno'},
                         {'val':"CF", 'label':'Cordão Feminino'},
