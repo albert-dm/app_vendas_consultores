@@ -227,6 +227,11 @@ ul{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+select{
+    display: block;
+    color: #997500;
+    padding: 0;
+}
 
 @media print{
     body *{
