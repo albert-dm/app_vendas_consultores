@@ -36,7 +36,7 @@ angular.module('ambaya')
                     return $http.post("/login", usuario);                    
                 };
                 this.check = function(){                    
-                    return $localStorage.logado && $localStorage.user;             
+                    return $localStorage.logado;             
                 };
                 this.getUser = function(){
                     if ($localStorage.logado==true)
@@ -345,7 +345,7 @@ angular.module('ambaya')
 
             interceptor.responseError = function(rejection) {
 
-                if (rejection != null && rejection.status === 401) {
+                if (rejection != null && (rejection.status === 401 || rejection.status === 403)) {
                     console.log('Removendo token da sessão')
                     delete $localStorage.token;
                     delete $localStorage.usuario;
