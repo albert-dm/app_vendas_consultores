@@ -53,7 +53,8 @@ angular.module('ambaya')
         "Robert": "5903791873baad0011167dc0",
         "Jéssica": "5937495531ba710011e15346",
         "Vicente": "5936ff7e31ba710011e1533c",
-        "Fernanda": "5a2ee9a2c4164f0014e5ea74"
+        "Fernanda": "5a2ee9a2c4164f0014e5ea74",
+        "Gabi": "5ace61291cfbdc0014aae09c"
     }
 
     $('#modal-video').modal();
@@ -77,6 +78,8 @@ angular.module('ambaya')
             $scope.form.supervisor = supervisores['Vicente'];
         }else if(['Rio de Janeiro'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Fernanda'];
+        }else if(['Lafaiete'].indexOf($scope.form.cidade)!=-1){
+            $scope.form.supervisor = supervisores['Gabi'];
         }
         console.log($scope.form);
         apiService.cadastro($scope.form).then(
