@@ -20,11 +20,11 @@ angular.module('ambaya')
 				'<input placeholder="Observações (opcional)" type="text" ng-model="troca.obs">' +
 				'</div>' +
 
-				'<div class="row">' +
+				'<div class="row" ng-show="saldo()">' +
 				'<div class="col s12 m4 offset-m4">' +
 				'<div class="card-panel yellow">' +
 				'<span class="black-text">' +
-				'Necessário pagamento de mais R$10,00' +
+				'Necessário pagamento de mais {{saldo() | currency:"R$"}}' +
 				'</span>' +
 				'</div>' +
 				'</div>' +
@@ -48,6 +48,7 @@ angular.module('ambaya')
 					var encontrado = false;
 					var precoAdd = scope.extraiPreco(cod);
 					var codAdd = scope.extraiCod(cod);
+					scope.troca.saldo = scope.saldo()
 					for (var j=0; j<scope.usuario.estoque.length; j++){
 						if(precoAdd=== scope.extraiPreco(scope.usuario.estoque[j]) && codAdd === scope.extraiCod(scope.usuario.estoque[j])){
 							scope.deletaElemento(scope.usuario.estoque, j);
@@ -59,12 +60,12 @@ angular.module('ambaya')
 						Materialize.toast(cod+" não encontrado!", 10000, 'notificacaoRuim');
 						scope.usuario.estoque = estoqueTemp;
 					}else{
-						scope.troca.saldo = scope.extraiPreco(cod) - scope.extraiPreco(codDefeito);
-						scope.troca.defeito = $('#defeito').val();
+						console.log(scope.troca);
 						consultoresService.atualizaEstoque(scope.usuario).then(
 							function(res){
 								consultoresService.troca(scope.troca).then(
 									function(res){
+										if(scope.troca.saldo) scope.usuario.totalVendido = scope.usuario.totalVendido + scope.troca.saldo;
 										scope.troca = {};
 										$('#troca').modal('close');
 										Materialize.toast("Troca registrada com sucesso!", 5000, 'notificacaoBoa');
@@ -78,10 +79,15 @@ angular.module('ambaya')
 								scope.usuario.estoque = estoqueTemp;
 								Materialize.toast("Falha ao atualizar estoque!", 5000, 'notificacaoRuim');
 							}
-						);                    
+						);                   
 					}
 				}
+				scope.saldo = function(){
+					if(!scope.troca.pecaNova || !scope.troca.pecaDefeito) return "";
+					var saldo = scope.extraiPreco(scope.troca.pecaNova) - scope.extraiPreco(scope.troca.pecaDefeito);
+					return saldo>0 ? saldo : "";
+				} 
 			}
 		}
 	}
-]);
+]);pecaNova
