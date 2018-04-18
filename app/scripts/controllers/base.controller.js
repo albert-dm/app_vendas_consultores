@@ -17,6 +17,7 @@ angular.module('ambaya')
                 {nome:"Início", icone:"home"},
                 {nome:"Consultores", icone:"people"},
                 {nome:"Estoque", icone:"business_center"},
+                {nome:"Kits", icone:"work"},
                 {nome:"Encomendas", icone:"loop"},
                 //{nome:"Acertos", icone:"done_all"},
             ],

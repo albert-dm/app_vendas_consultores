@@ -224,6 +224,10 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
             'Estoque':{
                 templateUrl: 'views/estoque/kits.html',
                 controller: "KitsController"
+            },
+            'Supervisor':{
+                templateUrl: 'views/supervisor/kits.html',
+                controller: "KitsController"
             }
         },
     };
