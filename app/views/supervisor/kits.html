@@ -3,14 +3,15 @@
         <div class="card center-align fundoAmarelo" id="formKit">
             <div class="card-content">
                 <span class="card-title">{{acao}} Kit</span>
-                <div class="chip fundoBranco" ng-show="kitAtual.consultora!=''">Total de Peças: {{kitAtual.pecas.length}}</div>
-                <div class="row" ng-hide="acao=='Atualizar'">
-                    <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()">
+                <div class="chip fundoBranco" ng-show="selectedSupervisor!=''">Total de Peças: {{kitAtual.pecas.length}}</div>
+                <div class="row">
+                    <select style="display:block" ng-model="selectedSupervisor" class="col m6 s12" ng-change="carregaConsultores()" ng-disabled="usuario.tipo=='Supervisor'">
                             <option value="" disabled selected>Selecione o supervisor</option>
                             <option ng-repeat="supervisor in supervisores" value="{{supervisor._id}}">{{supervisor.nome}} - {{supervisor.cidade}}</option>
                     </select>
-                    <select style="display:block" ng-model="kitAtual.consultora" class="col m6 s12" ng-show="consultores.length>0">
+                    <select style="display:block" ng-model="selectedConsultora" class="col m6 s12" ng-show="consultores.length>0">
                             <option value="" disabled selected>Selecione o consultor</option>
+                            <option value="">Nenhum</option>
                             <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
                     </select>
                 </div>
@@ -21,7 +22,7 @@
                         </a>
                     </h4>
                 </div>
-                <div class="row" ng-show="kitAtual.consultora!=''">
+                <div class="row" ng-show="kitAtual.supervisor!=''">
                     <div class="col m5 s12">
                         <ul class="collection with-header">
                             <li class="collection-header"><b>Anéis ({{pecas.totais.aneis || 0}})</b></li>
@@ -238,11 +239,16 @@
             <div class="card-content">
                 <span class="card-title" >Kits</span>
                 <div class="collection">
-                    <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt'">
+                    <a class="textoPreto collection-item avatar" ng-repeat="kit in kits | orderBy:'-createdAt' | filter:usuario._id">
                         <i class="material-icons circle">work</i>
                         <div class="row">
                             <div class="col s6">
-                                    <span class="title">{{kit.consultora.nome}} </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
+                                    <span class="title">
+                                       <span ng-if="kit.consultora.nome">{{kit.consultora.nome}} </span>
+                                       <span ng-if="!kit.consultora.nome"><SEM CONSULTOR> </span>
+                                    </br> {{kit.createdAt | date:'dd/MM/yyyy'}}</span>
+                                </br>
+                                <span>Supervisor: {{kit.supervisor.nome}}</span>
                                 </br>
                                 <div class="chip tooltipped" ng-class="{'orange': kit.status==='Pendente', 'green': kit.status==='Entregue'}" >
                                     {{kit.status}}

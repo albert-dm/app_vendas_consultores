@@ -19,14 +19,12 @@ angular.module('ambaya')
         kitsService
     ){
     $scope.carregaDados();
-    $scope.consultores = [];
-    $scope.selectedSupervisor = "";
-    $scope.selectedConsultor = "";
+    $scope.consultores = [];    
+    $scope.selectedConsultora = "";
     $scope.consultora = "";
     $scope.estoqueTemp = angular.copy($scope.usuario.estoque);
     kitVazio = {
         pecas: [],
-        consultora: "",
         valor: 0
     }
     $scope.kitAtual = angular.copy(kitVazio);
@@ -91,6 +89,11 @@ angular.module('ambaya')
     }
 
     var novoKit = function(){
+        $scope.kitAtual.supervisor = $scope.selectedSupervisor;
+        if($scope.selectedConsultora){
+            $scope.kitAtual.consultora = $scope.selectedConsultora;
+        }
+        console.log($scope.kitAtual);
         kitsService.novo($scope.kitAtual).then(
             function(response){
                 estoqueService.atualizaEstoque($scope.usuario._id, $scope.estoqueTemp).then(
@@ -100,6 +103,8 @@ angular.module('ambaya')
                         $scope.carregaKits();
                         $scope.kitAtual = angular.copy(kitVazio);
                         $scope.pecas = $scope.processaPecas($scope.kitAtual.pecas); 
+                        $scope.selectedSupervisor = "";
+                        $scope.selectedConsultora = "";
                         $location.hash('kitList');
                         $anchorScroll();  
                     },
@@ -134,6 +139,7 @@ angular.module('ambaya')
         $anchorScroll();      
     }
 
+    //TODO: possibilitar mudar consultor e supervisor aqui
     var salvaKit = function(){
         kitsService.atualizaPecas($scope.kitAtual._id, $scope.kitAtual.pecas).then(
             function(response){
@@ -217,6 +223,13 @@ angular.module('ambaya')
     $scope.mostraTabelaPecas = function(kit){
         $scope.kitSelecionado = kit;
         $('#tabelaPecas').modal('open');
+    }
+
+    if($scope.usuario.tipo == "Estoque"){
+        $scope.selectedSupervisor = "";
+    }else if($scope.usuario.tipo == "Supervisor"){
+        $scope.selectedSupervisor = $scope.usuario._id;
+        $scope.carregaConsultores();
     }
 
     $scope.carregaKits();

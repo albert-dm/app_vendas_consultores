@@ -90,4 +90,4 @@ angular.module('ambaya')
 			}
 		}
 	}
-]);pecaNova
+]);
