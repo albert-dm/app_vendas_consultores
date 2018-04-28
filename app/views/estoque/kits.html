@@ -15,13 +15,6 @@
                             <option ng-repeat="consultor in consultores" value="{{consultor._id}}">{{consultor.nome}}</option>
                     </select>
                 </div>
-                <div class="row text-center" ng-show="acao=='Atualizar'">
-                    <h4>{{consultora}} 
-                        <a class='clicavel textoVermelho' ng-click="fecharEdicao()">
-                            <i class="material-icons">highlight_off</i>
-                        </a>
-                    </h4>
-                </div>
                 <div class="row" ng-show="selectedSupervisor!=''">
                     <div class="col m5 s12">
                         <ul class="collection with-header">

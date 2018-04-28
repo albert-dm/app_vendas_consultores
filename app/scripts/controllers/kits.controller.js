@@ -107,6 +107,8 @@ angular.module('ambaya')
                         $scope.selectedConsultora = "";
                         $location.hash('kitList');
                         $anchorScroll();  
+                        //TODO substituir por função q so atualiza o estoque
+                        $scope.carregaDados();
                     },
                     function(error){
                         Materialize.toast(error.data, 5000, 'notificacaoRuim');
@@ -131,8 +133,15 @@ angular.module('ambaya')
     $scope.editar = function(kit){
         $scope.acao = "Atualizar";
         var kitAtualizando = angular.copy(kit);
-        kitAtualizando.consultora = kitAtualizando.consultora._id;
-        $scope.consultora = kit.consultora.nome;
+        if(kitAtualizando.supervisor){
+            kitAtualizando.supervisor = kitAtualizando.supervisor._id;
+            $scope.selectedSupervisor = kitAtualizando.supervisor
+        }        
+        if(kitAtualizando.consultora){
+            kitAtualizando.consultora = kitAtualizando.consultora._id;
+            $scope.selectedConsultora = kitAtualizando.consultora;
+        }        
+        //$scope.consultora = kit.consultora.nome;
         $scope.kitAtual = kitAtualizando;
         $scope.pecas = $scope.processaPecas($scope.kitAtual.pecas);  
         $location.hash('formKit');
@@ -141,7 +150,12 @@ angular.module('ambaya')
 
     //TODO: possibilitar mudar consultor e supervisor aqui
     var salvaKit = function(){
-        kitsService.atualizaPecas($scope.kitAtual._id, $scope.kitAtual.pecas).then(
+        if($scope.selectedConsultora){
+            $scope.kitAtual.consultora = $scope.selectedConsultora;
+        } else {
+            $scope.kitAtual.consultora = null;
+        }
+        kitsService.atualizaKit($scope.kitAtual).then(
             function(response){
                 estoqueService.atualizaEstoque($scope.usuario._id, $scope.estoqueTemp).then(
                     function (response){
@@ -152,6 +166,8 @@ angular.module('ambaya')
                         $scope.kitAtual = angular.copy(kitVazio);
                         $scope.pecas = $scope.processaPecas($scope.kitAtual.pecas); 
                         $location.hash('kitList');
+                        //TODO substituir por função q so atualiza o estoque
+                        $scope.carregaDados();
                         $anchorScroll();  
                     },
                     function(error){
@@ -206,9 +222,8 @@ angular.module('ambaya')
     $scope.enviaKit = function(kit){
         kitsService.atualizaStatus(kit._id, 'Entregue').then(                
             function(res){
-                estoqueService.entradaEstoque(id, kit.pecas).then(
+                estoqueService.entradaEstoque(kit.consultor._id, kit.pecas).then(
                     function(res){
-                        carregaKits();
                         $scope.carregaConsultora();
                     }, function(res){
                         Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
@@ -217,6 +232,24 @@ angular.module('ambaya')
             },
             function(res){
                  Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+            }
+        );
+    };
+    $scope.pegaKit = function(kit){
+        kitsService.atualizaStatus(kit._id, 'Entregue').then(                
+            function(res){
+                estoqueService.entradaEstoque($scope.usuario._id, kit.pecas).then(
+                    function(res){
+                        $scope.carregaKits();
+                        //TODO substituir por função q so atualiza o estoque
+                        $scope.carregaDados();
+                    }, function(res){
+                        Materialize.toast("Falha ao realizar entrega!", 5000, 'notificacaoRuim');
+                    }
+                );
+            },
+            function(res){
+                 Materialize.toast("Falha ao pegar kit!", 5000, 'notificacaoRuim');
             }
         );
     };
