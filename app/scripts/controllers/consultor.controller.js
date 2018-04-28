@@ -328,6 +328,32 @@ angular.module('ambaya')
     $scope.mostraTabelaPecas = function(kit){
         $scope.kitSelecionado = kit;
         $('#tabelaPecas').modal('open');
+    };
+    $scope.recolherPecas = function(){
+        var kit = {
+            status: "Pendente",
+            supervisor: $scope.usuario._id,
+            pecas: $scope.consultor.estoque
+        }
+        kitsService.novo(kit).then(
+            function(response){
+                estoqueService.atualizaEstoque($scope.consultor._id, []).then(
+                    function (response){
+                        Materialize.toast("Peças recolhidas", 5000, 'notificacaoBoa');
+                        $scope.carregaDados();
+                        $scope.carregaConsultora();
+                    },
+                    function(error){
+                        Materialize.toast("Falha ao recolher peças", 5000, 'notificacaoRuim');
+                    }
+                );
+                
+
+            },
+            function(error){
+                Materialize.toast("Falha ao recolher peças", 5000, 'notificacaoRuim');
+            }
+        );
     }
 
     //recuperar senha
