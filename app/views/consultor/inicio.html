@@ -6,7 +6,7 @@
 </div>
 
 <div class="row" ng-show="usuario.status!=='Aprovado'">
-	<div class="col s12 m12">
+	<div class="col s12 m8 offset-m2">
 		<div class="card center-align red">
 			<div class="card-content">
 				<h5>Aguardando aprovação</h5>
@@ -15,7 +15,50 @@
 	</div>
 </div>
 <span ng-if="usuario.status==='Aprovado'">
+	<div class="row">
+		<div class="col s12 m8 offset-m2">
+			<div class="card center-align fundoAmarelo">
+				<div class="card-content">
+					<div class="row">
+						<h1>Fernanda</h1>
+						<strong>Consultor Silver - 25%</strong>
+					</div>
+					<div class="row">
+						<div id="timeline">
+							<div class="dot accomplished" style="left:{{2000*90/3000}}%">
+								<span></span>
+								<date>R$2.500</date>
+							</div>
+							<div class="dot" style="left:90%">
+								<span></span>
+								<date>R$3,000</date>
+							</div>
+							<div class="inside" style="width: {{2000*90/3000}}%"></div>
+						</div>
+					</div>
+					<div class="row marker-container">
+						<div class="speech-bubble textoAmarelo" style="left:{{1000*90/3000}}%">
+							<i class="material-icons">card_giftcard</i>
+							<label>R$1000</label>
+						</div>
+						<div class="speech-bubble textoAmarelo" style="left:{{1500*90/3000}}%">
+							<i class="material-icons">business_center</i>
+							<label>R$1500</label>
+						</div>
+					</div>
+					<div class="row">
+							<div class="chip left score">
+									<i class="material-icons left">card_giftcard</i>
+									<label>12 Brindes de R$1000</label>
+								  </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
 	<!-- diretiva de brinde urgente -->
+
 	<div ng-if="!usuario.email" class="row" id="cadastroEmail">
 		<div class="col s12 m8 offset-m2">
 			<div class="card notificacaoBoa center-align">
@@ -95,7 +138,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m12">
+		<div class="col s12 m8 offset-m2">
 			<div class="card center-align fundoAmarelo" ng-if="usuario.taxa>0">
 				<div class="card-content">
 					<span class="card-title">Taxa de entrada:{{usuario.taxa | currency:'R$'}} ({{usuario.tipoTaxa}})</span>
@@ -104,7 +147,7 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col s12 m12">
+		<div class="col s12 m8 offset-m2">
 			<div class="card center-align fundoAmarelo">
 				<div class="card-content">
 					<span class="card-title">Personalizados</span>
@@ -128,7 +171,7 @@
 </div>
 </div>
 <div class="row">
-	<div class="col s12 m12">
+	<div class="col s12 m8 offset-m2">
 		<div class="card center-align fundoAmarelo">
 			<div class="card-content">
 				<span class="card-title">Vendas</span>

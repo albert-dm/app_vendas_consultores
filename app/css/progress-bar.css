@@ -1,0 +1,74 @@
+  div#timeline {
+    background-color: white;
+    margin-top: 50px;
+    height: 10px;
+    width: 100%;
+    position: relative;
+    box-sizing: content-box;
+    border: solid #997500;
+  }
+  div#timeline .inside {
+    position: absolute;
+    height: 12px;
+    background-color: #997500;
+    width: 0%;
+    margin: -1px;
+    top: 0;
+    left: 0;
+  }
+  div#timeline .dot {
+    z-index: 99;
+    transition: 0.3s ease-in-out;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    top: -15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: white;
+    box-sizing: content-box;
+    border: solid #997500;
+    margin-left: -2px;
+
+  }
+  div#timeline .dot.accomplished {
+    background-color: #997500;
+  }
+  div#timeline .dot:hover {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  div#timeline .dot date {
+    font-family: roboto;
+    font-size: 1.1em;
+    display: block;
+    width: 40px;
+    position: relative;
+    top: -60px;
+    left: 0px;
+    text-align: center;
+  }
+  div#timeline .dot span {
+    display: inline-block;
+    margin-top: 10px;
+    width: 20px;
+    height: 20px;
+    background-color: #fff;
+    position: relative;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  }  
+  
+  
+  .marker-container{
+      position:relative;
+      padding-bottom: 50px;
+  }
+ 
+  @media only screen and (max-device-width: 480px){
+    div#timeline .dot date {
+        font-size: 10px;
+        top: -50px;
+    }
+  }
