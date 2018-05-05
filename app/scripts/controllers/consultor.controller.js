@@ -228,7 +228,7 @@ angular.module('ambaya')
                     "userNome": $scope.consultor.nome,
                     "userId": $scope.consultor._id,
                     "tipo": "Consultor",
-                    "valor": $scope.devido,
+                    "valor": $scope.consultor.totalVendido,
                     "pecas": $scope.consultor.vendido,
                     "taxa": $scope.consultor.parcelaTaxa
                 }
