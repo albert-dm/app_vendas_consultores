@@ -205,7 +205,7 @@ angular.module('ambaya')
                     $scope.deletaElemento($scope.usuario.estoque, j);
                     $scope.usuario.totalVendido += Number(precoAdd);
                     console.log($scope.usuario.vendido);
-                    valorVenda = valorVenda + precoAdd;
+                    valorVenda = Number(valorVenda) + Number(precoAdd);
                     encontrado = true;
                     //Atualiza totalVendido, vendido e estoque e adicionar 
                     //'adicionando' ao historico de vendas -> na venda ou no acerto?
@@ -217,23 +217,15 @@ angular.module('ambaya')
                 vendaok = false;
             }
         }
-        vednaok = false;
-        var quantidade = Math.floor(valorVenda/100);
-                        console.log(quantidade);
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
                     if(valorVenda>100){
                         var quantidade = Math.floor(valorVenda/100);
-                        console.log(quantidade);
-                        Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
-                        
-                       /*  for(var i=0; i<quantidade; i++){
+                        Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');                        
+                        for(var i=0; i<quantidade; i++){
                             $scope.novoBrinde('maes', valorVenda);
                         }
- */
-
-
                     }
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
                         consultoresService.novoBrinde($scope.usuario, "mil").then(
