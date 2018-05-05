@@ -246,7 +246,7 @@
 		<form ng-submit="pegaBrinde()" id="brindeForm">
 			<div class="input-field col m8 s12 offset-m2">
 				<!--<a id="cameraBotao" class="waves-effect waves-teal btn-flat btn-large textoAmarelo right" ng-click="entradaCamera()"><i class="material-icons">camera_alt</i></a>-->
-				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal'" required>
+				<select style="display:block" ng-model="codigoBrinde" name="item" ng-show="tipoBrinde == 'natal' || tipoBrinde == 'maes'" required>
 					<option value="" disabled selected>Selecione o item</option>
 					<option value="BP017">Brinco Pequeno de R$17,00</option>
 					<option value="BP023">Brinco Pequeno de R$23,00</option>
