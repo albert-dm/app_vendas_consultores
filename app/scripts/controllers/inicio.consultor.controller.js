@@ -217,6 +217,9 @@ angular.module('ambaya')
                 vendaok = false;
             }
         }
+        vednaok = false;
+        var quantidade = Math.floor(valorVenda/100);
+                        console.log(quantidade);
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
@@ -225,10 +228,10 @@ angular.module('ambaya')
                         console.log(quantidade);
                         Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
                         
-                        for(var i=0; i<quantidade; i++){
+                       /*  for(var i=0; i<quantidade; i++){
                             $scope.novoBrinde('maes', valorVenda);
                         }
-
+ */
 
 
                     }
