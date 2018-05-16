@@ -220,7 +220,7 @@ angular.module('ambaya')
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
-                    if(valorVenda>100){
+                    if(valorVenda>=100){
                         var quantidade = Math.floor(valorVenda/100);
                         Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');                        
                         for(var i=0; i<quantidade; i++){
