@@ -8,22 +8,6 @@ angular.module('ambaya')
         email: ""
     }
     $('.tooltipped').tooltip({delay: 50});
-    //$('select').material_select();
-     //configuração de taxa
-    var atualizaTaxa = function(){
-        $scope.devido = $scope.usuario.totalVendido - $scope.usuario.totalVendido*$scope.usuario.porcentagem/100;
-        if($scope.usuario.tipoTaxa === "Porcentagem"){
-            $scope.parcelaTaxa = 0.1*$scope.usuario.totalVendido;
-        }else{
-            $scope.parcelaTaxa = 350;
-        }
-        if($scope.usuario.taxa <=0)
-            $scope.parcelaTaxa = 0;
-        if($scope.usuario.taxa < $scope.parcelaTaxa)
-            $scope.parcelaTaxa = $scope.usuario.taxa;
-    }
-
-    atualizaTaxa();
 
     $scope.adicionando = [];
     encomendasService.consultor($scope.usuario._id).then(
