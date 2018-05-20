@@ -149,12 +149,13 @@ angular.module('ambaya')
                 }
                 );
             }
-            this.novoBrinde = function(usuario, campanha){
+            this.novoBrinde = function(usuario, campanha, valorVenda){
                 return $http.post("/brindes/",
                 {
                         consultorId: usuario._id,
                         consultorNome: usuario.nome,
-                        campanha: campanha
+                        campanha: campanha,
+                        valorVenda: valorVenda
                 }
                 );
             }

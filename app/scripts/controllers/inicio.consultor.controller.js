@@ -48,6 +48,8 @@ angular.module('ambaya')
             function(res){
                 $scope.brindes = res.data;
                 $scope.brinde = res.data[0];
+                //verificar aqui o total de brindes do dia das mães pra dar mais um
+                //var brindesMaes = $scope.brinde.filter()
             }
         )
     }
@@ -227,7 +229,7 @@ angular.module('ambaya')
                     $scope.deletaElemento($scope.usuario.estoque, j);
                     $scope.usuario.totalVendido += Number(precoAdd);
                     console.log($scope.usuario.vendido);
-                    valorVenda = valorVenda + precoAdd;
+                    valorVenda = Number(valorVenda) + Number(precoAdd);
                     encontrado = true;
                     //Atualiza totalVendido, vendido e estoque e adicionar 
                     //'adicionando' ao historico de vendas -> na venda ou no acerto?
@@ -242,17 +244,13 @@ angular.module('ambaya')
         if (vendaok == true){
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
-                    /* if(valorVenda>100){
-                        Materialize.toast("Venda acime de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');
-                        consultoresService.novoBrinde($scope.usuario, "natal").then(
-                            function(res){
-                                carregaBrinde();
-                            },
-                            function(res){
-                                console.log("Falha ao adicionar brinde dos mil reais");
-                            }
-                        );
-                    } */
+                    if(valorVenda>=100){
+                        var quantidade = Math.floor(valorVenda/100);
+                        Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');                        
+                        for(var i=0; i<quantidade; i++){
+                            $scope.novoBrinde('maes', valorVenda);
+                        }
+                    }
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
                         consultoresService.novoBrinde($scope.usuario, "mil").then(
                             function(res){
@@ -310,6 +308,17 @@ angular.module('ambaya')
             },
             function(erro){
                 Materialize.toast("Falha ao cadastrar email.", 5000, 'notificacaoRuim');
+            }
+        );
+    }
+    $scope.novoBrinde = function(campanha, valorVenda){
+        consultoresService.novoBrinde($scope.usuario, campanha, valorVenda).then(
+            function(res){
+                Materialize.toast("Novo brinde!", 5000, 'notificacaoBoa');
+                carregaBrinde();
+            },
+            function(res){
+                console.log("Falha ao adicionar brinde de maes");
             }
         );
     }
