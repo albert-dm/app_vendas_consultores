@@ -4,6 +4,8 @@
     border-radius: .4em;
     min-height: 30px;
     width: 30px;
+    -webkit-transition: left 2s; /* Safari */
+    transition: left 2s;
 }
 
 .speech-bubble label {

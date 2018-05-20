@@ -26,11 +26,27 @@ angular.module('ambaya')
                     Materialize.toast("Falha ao carregar dados do supervisor!", 5000, 'notificacaoRuim');
             }
     );
+
+    consultoresService.historico($scope.usuario._id).then(                
+        function(res){
+            $scope.acertos = res.data;
+            $scope.vendidoHistorico = 0;
+            for(i=0; i< $scope.acertos.length; i++){
+                $scope.vendidoHistorico += $scope.acertos[i].valor;
+            }
+            refreshBar();
+        },
+        function(res){
+             Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
+        }
+    );
+
     $scope.brinde = {};
     $scope.troca = {};
     carregaBrinde = function(){
         consultoresService.meuBrinde($scope.usuario._id).then(
             function(res){
+                $scope.brindes = res.data;
                 $scope.brinde = res.data[0];
             }
         )
@@ -41,6 +57,30 @@ angular.module('ambaya')
         console.log("venda");
         $('#venda').modal('open');
         $('#codigo').focus();
+    }
+
+    refreshBar = function(){
+        if($scope.vendidoHistorico + $scope.usuario.totalVendido < 2000){
+            $scope.maxAbsoluto = 2000;
+            $scope.nivelConsultor = "Consultora Iniciante - 20%";
+
+        }else if($scope.vendidoHistorico + $scope.usuario.totalVendido< 4000){
+            $scope.maxAbsoluto = 4000;
+            $scope.nivelConsultor = "Consultora Intermediária - 25%";
+        }
+        else{
+            $scope.maxAbsoluto = 0;
+            $scope.nivelConsultor = "Consultora Top - 30%";
+        }
+        //$scope.maxRelativo = Math.floor(($scope.usuario.totalVendido)/1000)*5000;
+        var anterior = 1000;
+        var aux = 0;
+        $scope.maxRelativo = 1000;
+        while($scope.maxRelativo < $scope.usuario.totalVendido){
+            aux = $scope.maxRelativo;
+            $scope.maxRelativo = $scope.maxRelativo + anterior;
+            anterior = aux;
+        }
     }
     $scope.modalBrinde = function(tipo){
         $scope.tipoBrinde = tipo;
@@ -250,6 +290,7 @@ angular.module('ambaya')
                     return false;
                 }
             );
+            refreshBar();
             $('#venda').modal('close');
             $scope.adicionando = [];
             return true;

@@ -21,36 +21,48 @@
 				<div class="card-content">
 					<div class="row">
 						<h1>{{usuario.nome}}</h1>
-						<strong>Consultor Silver - 25%</strong>
+						<strong>{{nivelConsultor}}</strong>
 					</div>
-					<div class="row">
+					<div class="row" ng-if="maxAbsoluto!=0">
 						<div id="timeline">
-							<div class="dot accomplished" style="left:{{2000*90/3000}}%">
+							<p class="progresso">{{(vendidoHistorico + usuario.totalVendido) + usuario.totalVendido | currency:'R$'}}</p>
+							<div class="dot accomplished" style="left:{{(vendidoHistorico + usuario.totalVendido)*100/maxAbsoluto}}%">
 								<span></span>
-								<date>R$2.500</date>
 							</div>
-							<div class="dot" style="left:90%">
+							<div class="dot" style="left:100%">
 								<span></span>
-								<date>R$3,000</date>
+								<date>{{maxAbsoluto | 'R$'}}</date>
 							</div>
-							<div class="inside" style="width: {{2000*90/3000}}%"></div>
+							<div class="inside" style="width: {{(vendidoHistorico + usuario.totalVendido)*100/maxAbsoluto}}%"></div>
+						</div>
+					</div>
+					<div class="row" ng-if="maxAbsoluto==0">
+						<div id="timeline">
+							<p class="progresso">{{usuario.totalVendido | currency:'R$'}}</p>
+							<div class="dot accomplished" style="left:{{usuario.totalVendido*100/maxRelativo}}%">
+								<span></span>
+							</div>
+							<div class="dot" style="left:100%">
+								<span></span>
+								<date>{{maxRelativo | currency:'R$'}}</date>
+							</div>
+							<div class="inside" style="width: {{usuario.totalVendido*100/maxRelativo}}%"></div>
 						</div>
 					</div>
 					<div class="row marker-container">
-						<div class="speech-bubble textoAmarelo" style="left:{{1000*90/3000}}%">
-							<i class="material-icons">card_giftcard</i>
-							<label>R$1000</label>
-						</div>
-						<div class="speech-bubble textoAmarelo" style="left:{{1500*90/3000}}%">
-							<i class="material-icons">business_center</i>
-							<label>R$1500</label>
-						</div>
+						<span ng-repeat="cBrinde in brindes">
+							{{cbrinde}}
+							<div class="speech-bubble textoAmarelo" style="left:{{1000*90/maxRelativo}}%">
+								<i class="material-icons">{{cBrinde.campanha == 'maleta' ? 'card-giftcard' : 'business_center'}}</i>
+								<label>R$1000</label>
+							</div>
+						</span>
 					</div>
 					<div class="row">
-							<div class="chip left score">
-									<i class="material-icons left">card_giftcard</i>
-									<label>12 Brindes de R$1000</label>
-								  </div>
+						<div class="chip left score">
+							<i class="material-icons left">card_giftcard</i>
+							<label>12 Brindes de R$1000</label>
+						</div>
 					</div>
 				</div>
 			</div>
