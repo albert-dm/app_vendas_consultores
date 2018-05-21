@@ -95,36 +95,36 @@ angular.module('ambaya')
         )
     }
 
-    $scope.calculaValores = function(){
-        $scope.usuario.vendidoHistorico;
-        $scope.usuario.totalVendido;
+    $scope.calculaValores = function(consultor){
+        consultor.vendidoHistorico;
+        consultor.totalVendido;
         var trinta = 0;
         var vinteCinco = 0;
         var vinte = 0;
-        if( $scope.usuario.vendidoHistorico >= 4000){
-            trinta = $scope.usuario.totalVendido * 0.30;
-        } else if($scope.usuario.vendidoHistorico >= 2000){
-            if ($scope.usuario.totalVendido >= 2000) {
-                tinta = ($scope.usuario.totalVendido - 2000)*0.30;
+        if( consultor.vendidoHistorico >= 4000){
+            trinta = consultor.totalVendido * 0.30;
+        } else if(consultor.vendidoHistorico >= 2000){
+            if (consultor.totalVendido >= 2000) {
+                tinta = (consultor.totalVendido - 2000)*0.30;
                 vinteCinco = 2000*0.25;
             } else {
-                vinteCinco = $scope.usuario.totalVendido * 0.25;
+                vinteCinco = consultor.totalVendido * 0.25;
             }
         } else {
-            if ($scope.usuario.totalVendido >= 4000) {
-                trinta = ($scope.usuario.totalVendido - 4000)*0.30;
+            if (consultor.totalVendido >= 4000) {
+                trinta = (consultor.totalVendido - 4000)*0.30;
                 vinteCinco = 2000*0.25;
                 vinte = 2000*0.20;
             }
-            if ($scope.usuario.totalVendido >= 2000) {
-                tinta = ($scope.usuario.totalVendido - 2000)*0.30;
+            if (consultor.totalVendido >= 2000) {
+                tinta = (consultor.totalVendido - 2000)*0.30;
                 vinteCinco = 2000*0.25;
             } else {
-                vinteCinco = $scope.usuario.totalVendido * 0.25;
+                vinteCinco = consultor.totalVendido * 0.25;
             }
         }
-        $scope.usuario.minhaParte = Math.ceil(trinta + vinteCinco +vinte);
-        $scope.usuario.devido = $scope.usuario.totalVendido - $scope.usuario.minhaParte;
+        consultor.minhaParte = Math.ceil(trinta + vinteCinco +vinte);
+        consultor.devido = consultor.totalVendido - consultor.minhaParte;
     }
 
     
