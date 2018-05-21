@@ -35,6 +35,7 @@ angular.module('ambaya')
                 $scope.vendidoHistorico += $scope.acertos[i].valor;
             }
             refreshBar();
+            $scope.calculaValores();
         },
         function(res){
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
@@ -43,17 +44,7 @@ angular.module('ambaya')
 
     $scope.brinde = {};
     $scope.troca = {};
-    carregaBrinde = function(){
-        consultoresService.meuBrinde($scope.usuario._id).then(
-            function(res){
-                $scope.brindes = res.data;
-                $scope.brinde = res.data[0];
-                //verificar aqui o total de brindes do dia das mães pra dar mais um
-                //var brindesMaes = $scope.brinde.filter()
-            }
-        )
-    }
-    carregaBrinde();
+    $scope.carregaBrinde();
     $('.modal').modal();
     $scope.modalVenda = function(){
         console.log("venda");
@@ -64,15 +55,15 @@ angular.module('ambaya')
     refreshBar = function(){
         if($scope.vendidoHistorico + $scope.usuario.totalVendido < 2000){
             $scope.maxAbsoluto = 2000;
-            $scope.nivelConsultor = "Consultora Iniciante - 20%";
+            $scope.nivelConsultor = "Consultora Bronze - 20%";
 
         }else if($scope.vendidoHistorico + $scope.usuario.totalVendido< 4000){
             $scope.maxAbsoluto = 4000;
-            $scope.nivelConsultor = "Consultora Intermediária - 25%";
+            $scope.nivelConsultor = "Consultora Prato - 25%";
         }
         else{
             $scope.maxAbsoluto = 0;
-            $scope.nivelConsultor = "Consultora Top - 30%";
+            $scope.nivelConsultor = "Consultora Ouro - 30%";
         }
         //$scope.maxRelativo = Math.floor(($scope.usuario.totalVendido)/1000)*5000;
         var anterior = 1000;
@@ -131,7 +122,7 @@ angular.module('ambaya')
                             $scope.codigo = "";
                             $('#brinde').modal('close');
                             Materialize.toast("Brinde registrado com sucesso!", 5000, 'notificacaoBoa');
-                            carregaBrinde();
+                            $scope.carregaBrinde();
                         },
                         function(res){
                             Materialize.toast("Falha ao pegar o brinde!", 5000, 'notificacaoRuim');
@@ -151,7 +142,7 @@ angular.module('ambaya')
                 $scope.codigo = "";
                 $('#brinde').modal('close');
                 Materialize.toast("Maleta solicitada com sucesso!", 5000, 'notificacaoBoa');
-                carregaBrinde();
+                $scope.carregaBrinde();
             },
             function(res){
                 Materialize.toast("Falha ao solicitar maleta!", 5000, 'notificacaoRuim');
@@ -217,6 +208,7 @@ angular.module('ambaya')
         var totalVendidoTemp = 0;
         var totalVendidoTemp = totalVendidoTemp+$scope.usuario.totalVendido;
         var valorVenda = 0;
+        var valorAbsoluto = 0;
         var encontrado = false;
         var vendaok = true;
         for(var i=0; i <$scope.adicionando.length; i++){
@@ -242,37 +234,25 @@ angular.module('ambaya')
             }
         }
         if (vendaok == true){
+            valorAbsoluto =  $scope.usuario.totalVendido + $scope.vendidoHistorico;
+            console.log(valorAbsoluto);
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(
                 function(response){
                     if(valorVenda>=100){
                         var quantidade = Math.floor(valorVenda/100);
-                        Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');                        
+                        Materialize.toast("Venda acima de 100,00!("+valorVenda+")", 5000, 'notificacaoBoa');                    
                         for(var i=0; i<quantidade; i++){
-                            $scope.novoBrinde('maes', valorVenda);
+                            $scope.novoBrinde('maes', valorVenda, valorAbsoluto);
                         }
                     }
                     if(Math.floor($scope.usuario.totalVendido/1000) - Math.floor(totalVendidoTemp/1000) > 0){
-                        consultoresService.novoBrinde($scope.usuario, "mil").then(
-                            function(res){
-                                carregaBrinde();
-                            },
-                            function(res){
-                                console.log("Falha ao adicionar brinde dos mil reais");
-                            }
-                        );
+                        $scope.novoBrinde('mil', valorVenda, valorAbsoluto);
                     }
                     if(totalVendidoTemp < 1500 && $scope.usuario.totalVendido >= 1500){
                         consultoresService.minhaMaleta($scope.usuario._id).then(
                             function(res){
                                 if(res.data.length===0){
-                                    consultoresService.novoBrinde($scope.usuario, "maleta").then(
-                                        function(res){
-                                            carregaBrinde();
-                                        },
-                                        function(res){
-                                            console.log("Falah ao adicionar brinde de maleta");
-                                        }
-                                    );
+                                    $scope.novoBrinde('maleta', valorVenda, valorAbsoluto);
                                 }
                             }
                         );
@@ -289,6 +269,7 @@ angular.module('ambaya')
                 }
             );
             refreshBar();
+            $scope.calculaValores();
             $('#venda').modal('close');
             $scope.adicionando = [];
             return true;
@@ -311,11 +292,11 @@ angular.module('ambaya')
             }
         );
     }
-    $scope.novoBrinde = function(campanha, valorVenda){
-        consultoresService.novoBrinde($scope.usuario, campanha, valorVenda).then(
+    $scope.novoBrinde = function(campanha, valorVenda, valorAbsoluto){
+        consultoresService.novoBrinde($scope.usuario, campanha, valorVenda, valorAbsoluto).then(
             function(res){
                 Materialize.toast("Novo brinde!", 5000, 'notificacaoBoa');
-                carregaBrinde();
+                $scope.carregaBrinde();
             },
             function(res){
                 console.log("Falha ao adicionar brinde de maes");

@@ -1,7 +1,7 @@
 //'use strict';
 
 angular.module('ambaya')
-.controller('BaseController',['userService', 'loginService', '$scope', '$state', '$localStorage', function(userService, loginService, $scope, $state, $localStorage){
+.controller('BaseController',['userService', 'consultoresService', 'loginService', '$scope', '$state', '$localStorage', function(userService, consultoresService, loginService, $scope, $state, $localStorage){
     $(".button-collapse").sideNav({
         closeOnClick: true, // Closes side-nav on <a> clicks, useful for Angular/Meteor
         draggable: true // Choose whether you can drag to open on touch screens
@@ -70,6 +70,8 @@ angular.module('ambaya')
                 $scope.usuario = response.data;
                 $scope.rotas= rotas[$scope.usuario.tipo];
                 $scope.tipo = $scope.usuario.tipo;
+
+
             },
             function(response) {
                 Materialize.toast("Falha ao carregar dados", 5000, 'notificacaoRuim');
@@ -77,6 +79,54 @@ angular.module('ambaya')
             }
         );
     }
+
+    $scope.carregaBrinde = function(){
+        consultoresService.meuBrinde($scope.usuario._id).then(
+            function(res){
+                $scope.usuario.brindesEntregues = res.data.filter(function(brinde){
+                    return brinde.status=="Entregue";
+                });
+                $scope.usuario.brindesPendentes = res.data.filter(function(brinde){
+                    return brinde.status=="Pendente";
+                });
+                //verificar aqui o total de brindes do dia das mães pra dar mais um
+                //var brindesMaes = $scope.brinde.filter()
+            }
+        )
+    }
+
+    $scope.calculaValores = function(){
+        $scope.usuario.vendidoHistorico;
+        $scope.usuario.totalVendido;
+        var trinta = 0;
+        var vinteCinco = 0;
+        var vinte = 0;
+        if( $scope.usuario.vendidoHistorico >= 4000){
+            trinta = $scope.usuario.totalVendido * 0.30;
+        } else if($scope.usuario.vendidoHistorico >= 2000){
+            if ($scope.usuario.totalVendido >= 2000) {
+                tinta = ($scope.usuario.totalVendido - 2000)*0.30;
+                vinteCinco = 2000*0.25;
+            } else {
+                vinteCinco = $scope.usuario.totalVendido * 0.25;
+            }
+        } else {
+            if ($scope.usuario.totalVendido >= 4000) {
+                trinta = ($scope.usuario.totalVendido - 4000)*0.30;
+                vinteCinco = 2000*0.25;
+                vinte = 2000*0.20;
+            }
+            if ($scope.usuario.totalVendido >= 2000) {
+                tinta = ($scope.usuario.totalVendido - 2000)*0.30;
+                vinteCinco = 2000*0.25;
+            } else {
+                vinteCinco = $scope.usuario.totalVendido * 0.25;
+            }
+        }
+        $scope.usuario.minhaParte = Math.ceil(trinta + vinteCinco +vinte);
+        $scope.usuario.devido = $scope.usuario.totalVendido - $scope.usuario.minhaParte;
+    }
+
     
     $scope.logado = loginService.check();
     if ($scope.logado==true) {

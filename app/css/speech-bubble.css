@@ -6,9 +6,11 @@
     width: 30px;
     -webkit-transition: left 2s; /* Safari */
     transition: left 2s;
+    animation: scale .2s linear;
 }
 
 .speech-bubble label {
+    display: none;
     position: absolute;
     width: 30px;
     text-align: center;
@@ -38,5 +40,10 @@
   }
 
 .speech-bubble:hover label {
+    display: block;
     top: -27px;
+  }
+
+  @media only screen and (max-device-width: 480px){
+    
   }

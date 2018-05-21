@@ -149,18 +149,19 @@ angular.module('ambaya')
                 }
                 );
             }
-            this.novoBrinde = function(usuario, campanha, valorVenda){
+            this.novoBrinde = function(usuario, campanha, valorVenda, valorAbsoluto){
                 return $http.post("/brindes/",
                 {
                         consultorId: usuario._id,
                         consultorNome: usuario.nome,
                         campanha: campanha,
-                        valorVenda: valorVenda
+                        valorVenda: valorVenda,
+                        valorAbsoluto: valorAbsoluto
                 }
                 );
             }
             this.meuBrinde = function(id){
-                return $http.get("/brindes/pendente/"+id);
+                return $http.get("/brindes/usuario/"+id);
             }
             this.minhaMaleta = function(id){
                 return $http.get("/brindes/maleta/"+id);
