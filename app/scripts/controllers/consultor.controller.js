@@ -35,7 +35,6 @@ angular.module('ambaya')
     var info;
     var id =  $stateParams.consultorId;
     var tipoTemp;
-    var taxaTemp;
     var parcelaTemp;
     $scope.status = ['Entregue', 'Pendente'];
     $scope.kits = [];
@@ -46,18 +45,6 @@ angular.module('ambaya')
                 $scope.consultor = response.data;
                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                 $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
-                $scope.devido = $scope.consultor.totalVendido - $scope.consultor.totalVendido*$scope.consultor.porcentagem/100;// + $scope.consultor.pendente;
-
-                 //configuração de taxa
-                if($scope.consultor.tipoTaxa === "Porcentagem"){
-                    $scope.parcelaTaxa = 0.1*$scope.consultor.totalVendido;
-                }else{
-                    $scope.parcelaTaxa = 350;
-                }
-                if($scope.consultor.taxa <=0)
-                    $scope.parcelaTaxa = 0;
-                if($scope.consultor.taxa < $scope.parcelaTaxa)
-                    $scope.parcelaTaxa = $scope.consultor.taxa;
             },
             function(response) {
                     Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
@@ -86,41 +73,6 @@ angular.module('ambaya')
     $('.modal').modal();
     $scope.del = function(){
         $('#excluir').modal('open');
-    }
-    $scope.atualizaTaxa = function(){
-        consultoresService.tipoTaxa($scope.consultor).then(
-            function(res){
-                 Materialize.toast("Tipo selecionado!", 5000, 'notificacaoBoa');
-            },
-            function(res){
-                $scope.consultor.tipoTaxa = tipoTemp;
-                $scope.consultor.taxa = taxaTemp;
-                $scope.parcelaTaxa = parcelaTemp;
-                Materialize.toast("Falha ao slecionar!", 5000, 'notificacaoRuim');
-            }
-        );
-    }
-    $scope.mudaTaxa = function(){
-        tipoTemp = $scope.consultor.tipoTaxa;
-        taxaTemp = $scope.consultor.taxa;
-        parcelaTemp = $scope.parcelaTaxa;
-        if($scope.consultor.tipoTaxa === "À vista"){
-            $('#avista').modal('open');
-        }else if($scope.consultor.tipoTaxa === "Porcentagem"){
-            $scope.consultor.taxa = 370;
-            $scope.parcelaTaxa = 0.1*$scope.consultor.totalVendido;
-            $scope.atualizaTaxa();
-        }else{
-            $scope.consultor.taxa = 350;
-            $scope.parcelaTaxa = 350;
-            $scope.atualizaTaxa();
-        }
-    }
-    $scope.confirmaPagamento = function(){
-        $scope.consultor.taxa = 0;
-        $scope.parcelaTaxa = 0;
-        $scope.consultor.tipoTaxa = "Á vista";
-        $scope.atualizaTaxa();
     }
     $scope.excluir = function(){
         userService.deletaUm($scope.consultor._id).then(
