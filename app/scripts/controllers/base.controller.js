@@ -95,36 +95,37 @@ angular.module('ambaya')
         )
     }
 
-    $scope.calculaValores = function(consultor){
-        consultor.vendidoHistorico;
-        consultor.totalVendido;
-        var trinta = 0;
-        var vinteCinco = 0;
-        var vinte = 0;
-        if( consultor.vendidoHistorico >= 4000){
-            trinta = consultor.totalVendido * 0.30;
-        } else if(consultor.vendidoHistorico >= 2000){
-            if (consultor.totalVendido >= 2000) {
-                tinta = (consultor.totalVendido - 2000)*0.30;
-                vinteCinco = 2000*0.25;
+    $scope.calculaValores = function(historico, vendido){
+        var valores = {};
+        valores.trinta = 0;
+        valores.vinteCinco = 0;
+        valores.vinte = 0;
+        if( historico >= 4000){
+            valores.trinta = vendido * 0.30;
+        } else if(historico >= 2000){
+            if (vendido >= 2000) {
+                tinta = (vendido - 2000)*0.30;
+                valores.vinteCinco = 2000*0.25;
             } else {
-                vinteCinco = consultor.totalVendido * 0.25;
+                valores.vinteCinco = vendido * 0.25;
             }
         } else {
-            if (consultor.totalVendido >= 4000) {
-                trinta = (consultor.totalVendido - 4000)*0.30;
-                vinteCinco = 2000*0.25;
-                vinte = 2000*0.20;
+            if (vendido >= 4000) {
+                valores.trinta = (vendido - 4000)*0.30;
+                valores.vinteCinco = 2000*0.25;
+                valores.vinte = 2000*0.20;
             }
-            if (consultor.totalVendido >= 2000) {
-                tinta = (consultor.totalVendido - 2000)*0.30;
-                vinteCinco = 2000*0.25;
+            if (vendido >= 2000) {
+                tinta = (vendido - 2000)*0.30;
+                valores.vinteCinco = 2000*0.25;
             } else {
-                vinteCinco = consultor.totalVendido * 0.25;
+                valores.vinteCinco = vendido * 0.25;
             }
         }
-        consultor.minhaParte = Math.ceil(trinta + vinteCinco +vinte);
-        consultor.devido = consultor.totalVendido - consultor.minhaParte;
+        valores.minhaParte = Math.ceil(valores.trinta + valores.vinteCinco +valores.vinte);
+        valores.devido = vendido - valores.minhaParte;
+        console.log(valores);
+        return valores;
     }
 
     
