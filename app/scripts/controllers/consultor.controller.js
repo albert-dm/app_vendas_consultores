@@ -118,8 +118,7 @@ angular.module('ambaya')
         $scope.estoqueTemp = [];
         $scope.pecasEnviadas = [];
         $scope.estoqueTemp = $scope.estoqueTemp.concat($scope.usuario.estoque);    
-        $scope.pecasEnviadas = $scope.pecasEnviadas.concat($scope.consultor.estoque);    
-        console.log($scope.usuario.estoque);            
+        $scope.pecasEnviadas = $scope.pecasEnviadas.concat($scope.consultor.estoque);        
         $('#enviar').modal('open');
     }
     $scope.enviar = function(){
@@ -308,18 +307,6 @@ angular.module('ambaya')
         );
     }
 
-    //recuperar senha
-    $scope.recoverPassword = function(){
-        userService.getRecoveryCode($scope.usuario._id).then(
-            function(res){
-                console.log(res);
-            },
-            function(error){
-                console.log(error);
-            }
-        )
-        
-    }
     //estorno
     $('#estorno').modal();
     $scope.modalEstorno = function(){
