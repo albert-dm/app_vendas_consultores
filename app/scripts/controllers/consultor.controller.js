@@ -222,18 +222,16 @@ angular.module('ambaya')
         $('#acerto').modal('open');
     };
     $scope.acerto = function(){
-        $scope.consultor.taxa = $scope.consultor.taxa - $scope.parcelaTaxa;
-        if($scope.consultor.taxa <1) $scope.consultor.taxa = 0;
         var info = {
                     "userNome": $scope.consultor.nome,
                     "userId": $scope.consultor._id,
                     "tipo": "Consultor",
                     "valor": $scope.consultor.totalVendido,
                     "pecas": $scope.consultor.vendido,
-                    "taxa": $scope.consultor.parcelaTaxa
+                    "pago": $scope.valores.devido
                 }
         $scope.consultor.vendido = [];
-        console.log(info);
+        //console.log(info);
         consultoresService.acerto($scope.consultor).then(
             function(response){
                 acertosService.acerto(info).then(
@@ -293,10 +291,12 @@ angular.module('ambaya')
         function(res){
             $scope.acertos = res.data;
             for(i=0; i< $scope.acertos.length; i++){
+                $scope.vendidoHistorico += $scope.acertos[i].valor;
                 dia = new Date($scope.acertos[i].createdAt);
                 if(hoje.getFullYear() === dia.getFullYear())
                     $scope.vendidoAno+=$scope.acertos[i].valor;
             }
+            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.consultor.totalVendido);
         },
         function(res){
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
