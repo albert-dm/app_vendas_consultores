@@ -80,20 +80,7 @@ angular.module('ambaya')
         );
     }
 
-    $scope.carregaBrinde = function(){
-        consultoresService.meuBrinde($scope.usuario._id).then(
-            function(res){
-                $scope.usuario.brindesEntregues = res.data.filter(function(brinde){
-                    return brinde.status=="Entregue";
-                });
-                $scope.usuario.brindesPendentes = res.data.filter(function(brinde){
-                    return brinde.status=="Pendente";
-                });
-                //verificar aqui o total de brindes do dia das mães pra dar mais um
-                //var brindesMaes = $scope.brinde.filter()
-            }
-        )
-    }
+    
 
     $scope.calculaValores = function(historico, vendido){
         var valores = {};

@@ -42,9 +42,26 @@ angular.module('ambaya')
         }
     );
 
+    carregaBrinde = function(){
+        consultoresService.meuBrinde($scope.usuario._id).then(
+            function(res){
+                console.log(res);
+                $scope.usuario.brindesEntregues = res.data.filter(function(brinde){
+                    return brinde.status=="Entregue";
+                });
+                $scope.usuario.brindesPendentes = res.data.filter(function(brinde){
+                    return brinde.status=="Pendente";
+                });
+                console.log('entrou', $scope.usuario.brindesEntregues);
+                //verificar aqui o total de brindes do dia das mães pra dar mais um
+                //var brindesMaes = $scope.brinde.filter()
+            }
+        )
+    }
+
     $scope.brinde = {};
     $scope.troca = {};
-    $scope.carregaBrinde();
+    carregaBrinde();
     $('.modal').modal();
     $scope.modalVenda = function(){
         console.log("venda");
@@ -59,7 +76,7 @@ angular.module('ambaya')
 
         }else if($scope.vendidoHistorico + $scope.usuario.totalVendido< 4000){
             $scope.maxAbsoluto = 4000;
-            $scope.nivelConsultor = "Consultora Prato - 25%";
+            $scope.nivelConsultor = "Consultora Prata - 25%";
         }
         else{
             $scope.maxAbsoluto = 0;
@@ -117,12 +134,12 @@ angular.module('ambaya')
         }else{
             consultoresService.atualizaEstoque($scope.usuario).then(
                 function(res){
-                    consultoresService.pegaBrinde($scope.brinde, cod).then(
+                    consultoresService.pegaBrinde($scope.usuario.brindesPendentes[0], cod).then(
                         function(res){
                             $scope.codigo = "";
                             $('#brinde').modal('close');
                             Materialize.toast("Brinde registrado com sucesso!", 5000, 'notificacaoBoa');
-                            $scope.carregaBrinde();
+                            carregaBrinde();
                         },
                         function(res){
                             Materialize.toast("Falha ao pegar o brinde!", 5000, 'notificacaoRuim');
@@ -142,7 +159,7 @@ angular.module('ambaya')
                 $scope.codigo = "";
                 $('#brinde').modal('close');
                 Materialize.toast("Maleta solicitada com sucesso!", 5000, 'notificacaoBoa');
-                $scope.carregaBrinde();
+                carregaBrinde();
             },
             function(res){
                 Materialize.toast("Falha ao solicitar maleta!", 5000, 'notificacaoRuim');
@@ -296,7 +313,7 @@ angular.module('ambaya')
         consultoresService.novoBrinde($scope.usuario, campanha, valorVenda, valorAbsoluto).then(
             function(res){
                 Materialize.toast("Novo brinde!", 5000, 'notificacaoBoa');
-                $scope.carregaBrinde();
+                carregaBrinde();
             },
             function(res){
                 console.log("Falha ao adicionar brinde de maes");
