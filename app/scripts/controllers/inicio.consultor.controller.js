@@ -72,15 +72,18 @@ angular.module('ambaya')
     refreshBar = function(){
         if($scope.vendidoHistorico + $scope.usuario.totalVendido < 2000){
             $scope.maxAbsoluto = 2000;
-            $scope.nivelConsultor = "Consultora Bronze - 20%";
+            $scope.nivelConsultor = "Bronze";
+            $scope.porcentagem = '20%';
 
         }else if($scope.vendidoHistorico + $scope.usuario.totalVendido< 4000){
             $scope.maxAbsoluto = 4000;
-            $scope.nivelConsultor = "Consultora Prata - 25%";
+            $scope.nivelConsultor = "Prata";
+            $scope.porcentagem = '25%';
         }
         else{
             $scope.maxAbsoluto = 0;
-            $scope.nivelConsultor = "Consultora Ouro - 30%";
+            $scope.nivelConsultor = "Ouro";
+            $scope.porcentagem = '30%';
         }
         //$scope.maxRelativo = Math.floor(($scope.usuario.totalVendido)/1000)*5000;
         var anterior = 1000;
@@ -154,7 +157,7 @@ angular.module('ambaya')
         }
     }
     $scope.pedeMaleta = function(){
-        consultoresService.pedeMaleta($scope.brinde).then(
+        consultoresService.pedeMaleta($scope.usuario.brindesPendentes[0]).then(
             function(res){
                 $scope.codigo = "";
                 $('#brinde').modal('close');
@@ -251,6 +254,20 @@ angular.module('ambaya')
             }
         }
         if (vendaok == true){
+            if($scope.vendidoHistorico<2000){
+                if($scope.usuario.totalVendido + $scope.vendidoHistorico>=4000){
+                    $('#avancoNivel').modal('open');
+                    //callModalNivel(ouro)
+                } else if($scope.usuario.totalVendido + $scope.vendidoHistorico>=2000){
+                    $('#avancoNivel').modal('open');
+                    //callModalNivel(prata)
+                }
+            }else if($scope.vendidoHistorico < 4000){
+                if($scope.usuario.totalVendido + $scope.vendidoHistorico>=4000){
+                    $('#avancoNivel').modal('open');
+                    //callModalNivel(ouro)
+                }
+            }
             valorAbsoluto =  $scope.usuario.totalVendido + $scope.vendidoHistorico;
             console.log(valorAbsoluto);
             consultoresService.venda($scope.usuario, $scope.adicionando, $scope.usuario._id).then(

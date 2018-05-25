@@ -74,7 +74,7 @@
 
   div#timeline .progresso{
     position: relative;
-    top: -35px;
+    top: -45px;
     font-weight: bolder;
   }
   
@@ -88,6 +88,7 @@
     div#timeline .dot date {
         font-size: 10px;
         top: -50px;
+        left: -10px;
     }
     .marker-container {
       margin-right: 10%;
