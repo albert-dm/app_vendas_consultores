@@ -254,7 +254,7 @@ angular.module('ambaya')
             }
         }
         if (vendaok == true){
-            if($scope.vendidoHistorico<2000){
+            if($scope.vendidoHistorico + totalVendidoTemp<2000){
                 if($scope.usuario.totalVendido + $scope.vendidoHistorico>=4000){
                     $('#avancoNivel').modal('open');
                     //callModalNivel(ouro)
@@ -262,7 +262,7 @@ angular.module('ambaya')
                     $('#avancoNivel').modal('open');
                     //callModalNivel(prata)
                 }
-            }else if($scope.vendidoHistorico < 4000){
+            }else if($scope.vendidoHistorico + totalVendidoTemp < 4000){
                 if($scope.usuario.totalVendido + $scope.vendidoHistorico>=4000){
                     $('#avancoNivel').modal('open');
                     //callModalNivel(ouro)

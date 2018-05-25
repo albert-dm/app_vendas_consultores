@@ -30,6 +30,9 @@ main {
 .fundoBranco{
     background-color: white !important;
 }
+.textoBranco{
+    color: white !important;
+}
 .textoAmarelo{
     color: #E6B000 !important;
 }
