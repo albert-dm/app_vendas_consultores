@@ -41,7 +41,9 @@
 
 .speech-bubble:hover label {
     display: block;
-    top: -27px;
+    top: 35px;
+    left: -10px;
+    color: black;
   }
 
   @media only screen and (max-device-width: 480px){
