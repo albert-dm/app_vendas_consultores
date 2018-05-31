@@ -52,6 +52,15 @@ angular.module('ambaya')
                 $scope.usuario.brindesPendentes = res.data.filter(function(brinde){
                     return brinde.status=="Pendente";
                 });
+                $scope.usuario.brindesMaes = res.data.filter(function(brinde){
+                    return brinde.status=="Entregue" && brinde.campanha=="maes";
+                });
+                $scope.usuario.brindesNatal = res.data.filter(function(brinde){
+                    return brinde.status=="Entregue" && brinde.campanha=="natal";
+                });
+                $scope.usuario.brindesMil = res.data.filter(function(brinde){
+                    return brinde.status=="Entregue" && brinde.campanha=="mil";
+                });
                 console.log('entrou', $scope.usuario.brindesEntregues);
                 //verificar aqui o total de brindes do dia das mães pra dar mais um
                 //var brindesMaes = $scope.brinde.filter()
