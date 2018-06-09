@@ -147,4 +147,7 @@ angular.module('ambaya')
         }
         );
     };
+    this.indicados = function(indicadorId){
+        return $http.get("/users/consultores/indicados/"+indicadorId);
+    }
 })
