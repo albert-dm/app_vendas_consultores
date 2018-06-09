@@ -11,6 +11,7 @@ angular.module('ambaya')
             "Consultor": [
                 {nome:"Início", icone:"home"},
                 {nome:"Estoque", icone:"business_center"},
+                {nome:"Indicações", icone:"people"},
                 {nome:"Histórico", icone:"history"},
             ],
             "Supervisor": [

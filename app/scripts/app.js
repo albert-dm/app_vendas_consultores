@@ -231,6 +231,17 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
             }
         },
     };
+
+    var indicacoes = {
+        name: 'Indicações',
+        url: '/indicacoes', 
+        views: {
+            'Consultor':{
+                templateUrl: 'views/consultor/indicacoes.html',
+                controller: "IndicacoesConsultorController"
+            }
+        },
+    };
     $stateProvider.state(inicio);
     $stateProvider.state(consultores);
     $stateProvider.state(consultor);
@@ -246,5 +257,6 @@ angular.module('ambaya', ['ui.router', 'ngStorage', 'angular-barcode', 'nvd3'])
     $stateProvider.state(esqueciSenha);
     $stateProvider.state(recuperarSenha);
     $stateProvider.state(kits);
+    $stateProvider.state(indicacoes);
 })
 ;
