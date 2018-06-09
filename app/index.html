@@ -17,6 +17,7 @@
 <body ng-app="ambaya" ng-controller="BaseController" class="fundoPreto">
     <ul id="navegacaoLateral" class="side-nav fundoAmarelo textoPreto" >
         <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
+        <li><a href="" ng-click="sair()" class="textoPreto "hide-on-med-and-down""><i class="material-icons left">exit_to_app</i> Sair</a></li>
     </ul>
     <div class="navbar-fixed">
         <nav class="fundoAmarelo black-text">
@@ -26,7 +27,7 @@
                 <a href="#" class="brand-logo"><img src="img/logo_barra.png" height="100%"></a>
                 <ul id="nav-mobile" class="right" ng-show="logado">
                     <li ng-repeat="link in rotas"><a ui-sref="{{link.nome}}" ui-sref-active="active" class="textoPreto hide-on-med-and-down"><i class="material-icons left">{{link.icone}}</i> {{link.nome}}</a></li>
-                    <li><a href="" ng-click="sair()" class="textoPreto"><i class="material-icons left">exit_to_app</i> <span class="hide-on-med-and-down">Sair</span></a></li>
+                    <li><a href="" ng-click="sair()" class="textoPreto hide-on-med-and-down"><i class="material-icons left">exit_to_app</i> Sair</a></li>
                 </ul>
             </div>
         </nav>
