@@ -85,28 +85,41 @@ angular.module('ambaya')
     $scope.calculaValores = function(historico, vendido){
         var valores = {};
         valores.trinta = 0;
+        valores.trintaBase = 0;
         valores.vinteCinco = 0;
+        valores.vinteCincoBase = 0;
         valores.vinte = 0;
+        valores.vinteBase = 0;
         if( historico >= 4000){
             valores.trinta = vendido * 0.30;
+            valores.trintaBase = vendido;
         } else if(historico >= 2000){
             if (vendido >= 2000) {
-                tinta = (vendido - 2000)*0.30;
+                valores.trinta = (vendido - 2000)*0.30;
+                valores.trintaBase = vendido - 2000;
                 valores.vinteCinco = 2000*0.25;
+                valores.vinteCincoBase = 2000;
             } else {
                 valores.vinteCinco = vendido * 0.25;
+                valores.vinteCincoBase = vendido;
             }
         } else {
             if (vendido >= 4000) {
                 valores.trinta = (vendido - 4000)*0.30;
+                valores.trintaBase = vendido - 4000;
                 valores.vinteCinco = 2000*0.25;
+                valores.vinteCincoBase = 2000;
                 valores.vinte = 2000*0.20;
+                valores.vinteBase = 2000;
             }
             if (vendido >= 2000) {
-                tinta = (vendido - 2000)*0.30;
+                valores.tirnta = (vendido - 2000)*0.30;
+                valores.tirntaBase = vendido - 2000;
                 valores.vinteCinco = 2000*0.25;
+                valores.vinteCincoBase = 2000;
             } else {
                 valores.vinteCinco = vendido * 0.25;
+                valores.vinteCincoBase = vendido;
             }
         }
         valores.minhaParte = Math.ceil(valores.trinta + valores.vinteCinco +valores.vinte);

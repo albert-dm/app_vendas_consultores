@@ -8,6 +8,14 @@
 				</div>
 				<div class="card center-align fundoAmarelo">
 					<div class="card-content">
+							<div class="medalha" style="position:relative">
+									<object ng-show="nivelConsultor == 'Ouro'" id="ouro" data="../../img/sol_ouro.svg" type="image/svg+xml"></object>
+									<object ng-show="nivelConsultor == 'Ouro' || nivelConsultor == 'Prata'" id="prata" data="../../img/sol_prata.svg" type="image/svg+xml"></object>
+									<object id="bronze" data="../../img/sol_bronze.svg" type="image/svg+xml"></object>
+			
+			
+								</div>
+								<br>
 					<span class="card-title">Próximo Acerto</span>
 						<h5>{{consultor.proxAcerto | date: "d/MM/yy"}}</h5>
 						<h5>Faltam {{ faltamDias(consultor.proxAcerto)}} dias</h5>
@@ -221,10 +229,12 @@
             <p class="red">Atenção! Essa ação não pode ser desfeita</p>
             <div class="row">
                 <div class="col s12">     
-                    <!-- <p>Valor a 20%: {{valores.vinte | currency: 'R$'}}</p>  
+                    <p>Valor a 20%: {{valores.vinte | currency: 'R$'}}</p>  
                     <p>Valor a 25%: {{valores.vinteCinco | currency: 'R$'}}</p>  
-                    <p>Valor a 30%: {{valores.trinta | currency: 'R$'}}</p>   -->
-                    <h5>Total: {{valores.devido | currency: 'R$'}}</h5>  
+					<p>Valor a 30%: {{valores.trinta | currency: 'R$'}}</p>  
+					<br>
+					<p>Valor ganho pela consultora: {{valores.minhaParte | currency: 'R$'}}</p>
+                    <h5>Total a ser pago: {{valores.devido | currency: 'R$'}}</h5>  
                 </div>        
             </div>
         </div>
