@@ -68,7 +68,7 @@ angular.module('ambaya')
     $scope.cadastro = function(){
         //TODO escolher o id do supervisor de acordo com a cidade
         $scope.form.username = $scope.form.cpf.replace(".", "").replace(".", "").replace("-", "");
-        if(['Ouro Preto', 'Mariana'].indexOf($scope.form.cidade)!=-1){
+        /* if(['Ouro Preto', 'Mariana'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Daniella'];
         } else if(['Barroso', 'Belo Horizonte', 'Betim', 'Contagem', 'Ibireté', 'Nova Lima', 'Ribeirão das Neves', 'Santa Cruz de Minas', 'São João del Rei'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Robert'];            
@@ -80,7 +80,8 @@ angular.module('ambaya')
             $scope.form.supervisor = supervisores['Fernanda'];
         }else if(['Lafaiete'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Gabi'];
-        }
+        } */
+        $scope.form.supervisor = supervisores['Robert']; 
         console.log($scope.form);
         apiService.cadastro($scope.form).then(
             function(response) {
