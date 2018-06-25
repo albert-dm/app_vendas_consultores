@@ -249,17 +249,30 @@ angular.module('ambaya')
     //histórico
     $scope.acertos = {};
     $scope.vendidoAno = 0;
+    $scope.vendidoHistorico = 0;
     hoje = new Date();
     consultoresService.historico(id).then(                
         function(res){
             $scope.acertos = res.data;
             for(i=0; i< $scope.acertos.length; i++){
-                $scope.vendidoHistorico += $scope.acertos[i].valor;
+                $scope.vendidoHistorico += Number($scope.acertos[i].valor);
                 dia = new Date($scope.acertos[i].createdAt);
                 if(hoje.getFullYear() === dia.getFullYear())
                     $scope.vendidoAno+=$scope.acertos[i].valor;
             }
             $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.consultor.totalVendido);
+            if($scope.vendidoHistorico + $scope.consultor.totalVendido < 2000){
+                $scope.nivelConsultor = "Bronze";
+                $scope.porcentagem = '20%';
+    
+            }else if($scope.vendidoHistorico + $scope.consultor.totalVendido< 4000){
+                $scope.nivelConsultor = "Prata";
+                $scope.porcentagem = '25%';
+            }
+            else{
+                $scope.nivelConsultor = "Ouro";
+                $scope.porcentagem = '30%';
+            }
         },
         function(res){
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');

@@ -86,31 +86,47 @@ angular.module('ambaya')
     $scope.calculaValores = function(historico, vendido){
         var valores = {};
         valores.trinta = 0;
+        valores.trintaBase = 0;
         valores.vinteCinco = 0;
+        valores.vinteCincoBase = 0;
         valores.vinte = 0;
+        valores.vinteBase = 0;
+        var remanescente = 0;
+        console.log('historico', historico, 'vendido', vendido )
         if( historico >= 4000){
             valores.trinta = vendido * 0.30;
+            valores.trintaBase = vendido;
         } else if(historico >= 2000){
-            if (vendido >= 2000) {
-                tinta = (vendido - 2000)*0.30;
-                valores.vinteCinco = 2000*0.25;
+            remanescente = historico - 2000;
+            if (vendido + remanescente >= 2000) {
+                valores.trinta = (vendido + remanescente - 2000)*0.30;
+                valores.trintaBase = vendido + remanescente - 2000;
+                valores.vinteCinco = (2000 - remanescente)*0.25;
+                valores.vinteCincoBase = 2000 - remanescente;
             } else {
                 valores.vinteCinco = vendido * 0.25;
+                valores.vinteCincoBase = vendido;
             }
         } else {
-            if (vendido >= 4000) {
-                valores.trinta = (vendido - 4000)*0.30;
+            if (vendido + historico >= 4000) {
+                valores.trinta = (vendido + historico - 4000)*0.30;
+                valores.trintaBase = vendido + historico - 4000;
                 valores.vinteCinco = 2000*0.25;
-                valores.vinte = 2000*0.20;
+                valores.vinteCincoBase = 2000;
+                valores.vinte = (2000 - historico)*0.20;
+                valores.vinteBase = 2000 - historico;
             }
-            if (vendido >= 2000) {
-                tinta = (vendido - 2000)*0.30;
-                valores.vinteCinco = 2000*0.25;
+            if (vendido + historico >= 2000) {
+                valores.vinteCinco = (vendido + historico - 2000)*0.30;
+                valores.vinteCincoBase = vendido + historico - 2000;
+                valores.vinte = (2000-historico)*0.25;
+                valores.vinteBase = 2000 - historico;
             } else {
-                valores.vinteCinco = vendido * 0.25;
+                valores.vinte = vendido * 0.20;
+                valores.vinteBase = vendido;
             }
         }
-        valores.minhaParte = Math.ceil(valores.trinta + valores.vinteCinco +valores.vinte);
+        valores.minhaParte = Number(valores.trinta + valores.vinteCinco +valores.vinte).toFixed(2);
         valores.devido = vendido - valores.minhaParte;
         console.log(valores);
         return valores;
