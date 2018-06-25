@@ -14,6 +14,14 @@ angular.module('ambaya')
         }
         );
     };
+    this.incrementaDesconto = function(id, valor){
+        return $http.post("/users/consultores/maisdesconto",
+        {
+            _id: id,
+            inc: {desconto: valor}
+        }
+        );
+    };
     this.indicadoPor = function(id, indicador){
         return $http.post("/users/atualizar/",
         {

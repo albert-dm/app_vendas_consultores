@@ -195,6 +195,17 @@ angular.module('ambaya')
                 }
         $scope.consultor.vendido = [];
         //console.log(info);
+        if($scope.consultor.indicador && $scope.acertos.length < 3){
+            consultoresService.incrementaDesconto($scope.consultor.indicador, 0.05*$scope.consultor.totalVendido).then(
+                function(){
+                            Materialize.toast('Prêmio por indicação computado!', 5000, 'notificacaoBoa');
+                },
+                function(){
+                    Materialize.toast('Falha ao computar prêmio por indicação', 5000, 'notificacaoRuim');
+                }
+            );
+        }
+        
         consultoresService.acerto($scope.consultor).then(
             function(response){
                 acertosService.acerto(info).then(
@@ -211,6 +222,8 @@ angular.module('ambaya')
                                         Materialize.toast('Acerto realizado com sucesso!', 5000, 'notificacaoBoa');
                                     }
                                 );
+                                
+
                             },
                             function(){
                                 Materialize.toast('Falha ao salvar historico!', 5000, 'notificacaoRuim');
