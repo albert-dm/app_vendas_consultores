@@ -14,6 +14,14 @@ angular.module('ambaya')
         }
         );
     };
+    this.indicadoPor = function(id, indicador){
+        return $http.post("/users/atualizar/",
+        {
+            _id: id,
+            update: {indicador: indicador}
+        }
+        );
+    };
     this.desaprovar = function(id){
         return $http.post("/users/atualizar/",
         {
@@ -149,5 +157,8 @@ angular.module('ambaya')
     };
     this.indicados = function(indicadorId){
         return $http.get("/users/consultores/indicados/"+indicadorId);
-    }
+    };
+    this.totalAcertos = function(userId){
+        return $http.get("/acertos/usuario/"+userId+"/total");
+    };
 })

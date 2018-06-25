@@ -6,6 +6,7 @@ angular.module('ambaya')
     '$state', 
     'userService', 
     'consultoresService', 
+    'supervisoresService', 
     'estoqueService', 
     '$stateParams', 
     'acertosService', 
@@ -15,6 +16,7 @@ angular.module('ambaya')
         $state,
         userService,
         consultoresService, 
+        supervisoresService, 
         estoqueService, 
         $stateParams, 
         acertosService,
@@ -86,6 +88,16 @@ angular.module('ambaya')
         );                
     };
     $scope.aprovar = function(){
+        if($scope.indicador){
+            consultoresService.indicadoPor(id, $scope.indicador).then(
+                function(response) {
+                    Materialize.toast("Indicação atualizada!", 5000, 'notificacaoBoa');
+                },
+                function(response) {
+                    Materialize.toast("Falha ao atualizar indicação", 5000, 'notificacaoRuim');
+                }
+            );
+        }
          consultoresService.aprovar(id).then(
             function(response) {
                 $scope.consultor.status = "Aprovado";
@@ -312,5 +324,31 @@ angular.module('ambaya')
     $scope.modalEstorno = function(){
         $('#estorno').modal('open');
     };
+
+    //indicacao
+    $('#indicacao').modal();
+    $scope.indicacao = function(){
+        $('#indicacao').modal('open');
+    };
+
+    supervisoresService.todos().then(
+        function(response){
+            $scope.supervisores = response.data;
+        },
+        function(response){
+            Materialize.toast("Falha ao carregar supervisores", 5000, 'notificacaoRuim');
+        }
+    );
+
+    $scope.carregaConsultores = function(){
+        consultoresService.porSupervisor($scope.selectedSupervisor).then(
+            function(response){
+                $scope.consultores = response.data;
+            },
+            function(response){
+                Materialize.toast("Falha ao carregar consultores", 5000, 'notificacaoRuim');
+            }
+        );
+    }
 
 }]);
