@@ -35,7 +35,7 @@ angular.module('ambaya')
                 $scope.vendidoHistorico += $scope.acertos[i].valor;
             }
             refreshBar();
-            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.usuario.totalVendido);
+            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.usuario.totalVendido, $scope.usuario.desconto);
         },
         function(res){
              Materialize.toast("Falha ao carregar histórico!", 5000, 'notificacaoRuim');
@@ -312,7 +312,7 @@ angular.module('ambaya')
                 }
             );
             refreshBar();
-            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.usuario.totalVendido);
+            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.usuario.totalVendido, $scope.usuario.desconto);
             $('#venda').modal('close');
             $scope.adicionando = [];
             return true;

@@ -83,7 +83,7 @@ angular.module('ambaya')
 
     
 
-    $scope.calculaValores = function(historico, vendido){
+    $scope.calculaValores = function(historico, vendido, desconto){
         var valores = {};
         valores.trinta = 0;
         valores.trintaBase = 0;
@@ -126,7 +126,8 @@ angular.module('ambaya')
                 valores.vinteBase = vendido;
             }
         }
-        valores.minhaParte = Number(valores.trinta + valores.vinteCinco +valores.vinte).toFixed(2);
+        console.log(typeof desconto);
+        valores.minhaParte = Number(valores.trinta + valores.vinteCinco +valores.vinte + desconto).toFixed(2);
         valores.devido = vendido - valores.minhaParte;
         console.log(valores);
         return valores;
