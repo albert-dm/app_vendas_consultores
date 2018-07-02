@@ -273,7 +273,7 @@ angular.module('ambaya')
                 if(hoje.getFullYear() === dia.getFullYear())
                     $scope.vendidoAno+=$scope.acertos[i].valor;
             }
-            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.consultor.totalVendido, scope.consultor.desconto);
+            $scope.valores = $scope.calculaValores($scope.vendidoHistorico, $scope.consultor.totalVendido, $scope.consultor.desconto);
             if($scope.vendidoHistorico + $scope.consultor.totalVendido < 2000){
                 $scope.nivelConsultor = "Bronze";
                 $scope.porcentagem = '20%';
