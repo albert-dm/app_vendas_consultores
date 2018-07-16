@@ -169,4 +169,15 @@ angular.module('ambaya')
     this.totalAcertos = function(userId){
         return $http.get("/acertos/usuario/"+userId+"/total");
     };
+    this.trocaSupervisor = function(consultorId, supervisorId){
+        return $http.post("/users/atualizar/",
+        {
+            _id: consultorId,
+            update: {
+                supervisor: supervisorId
+            }
+        }
+        );
+    }
+
 })

@@ -386,7 +386,14 @@ angular.module('ambaya')
     };
 
     $scope.salvar = function(){
-        console.log($scope.selectedSupervisor)
+        consultoresService.trocaSupervisor($scope.consultor._id, $scope.selectedSupervisor).then(
+            function(){
+                Materialize.toast("Supervisor atualizado!", 5000, 'notificacaoBoa');
+            },
+            function(){
+                Materialize.toast("Falha ao atualizar supervisor", 5000, 'notificacaoRuim');
+            }
+        );
     }
 
 }]);
