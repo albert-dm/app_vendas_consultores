@@ -47,6 +47,7 @@ angular.module('ambaya')
                 $scope.consultor = response.data;
                 $scope.pecas = $scope.processaPecas($scope.consultor.estoque);
                 $scope.vendidas = $scope.processaPecas($scope.consultor.vendido);
+                console.log($scope.consultor);
             },
             function(response) {
                     Materialize.toast("Falha ao carregar dados!", 5000, 'notificacaoRuim');
@@ -375,6 +376,17 @@ angular.module('ambaya')
                 Materialize.toast("Falha ao carregar consultores", 5000, 'notificacaoRuim');
             }
         );
+    }
+
+    //Edição de consultora
+    $('#editar').modal();
+    $scope.modalEditar = function(){
+        $scope.selectedSupervisor = $scope.consultor.supervisor;
+        $('#editar').modal('open');
+    };
+
+    $scope.salvar = function(){
+        console.log($scope.selectedSupervisor)
     }
 
 }]);
