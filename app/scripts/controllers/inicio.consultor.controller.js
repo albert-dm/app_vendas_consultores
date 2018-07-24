@@ -18,6 +18,8 @@ angular.module('ambaya')
                 Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
             }
         );
+
+    if($scope.usuario.supervisor)
     userService.carregaUm($scope.usuario.supervisor).then(
             function(response) {
                 $scope.supervisor = response.data;

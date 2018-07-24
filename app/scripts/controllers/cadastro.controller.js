@@ -35,7 +35,6 @@ angular.module('ambaya')
         "sobrenome":"",
         "email":"",
         "tipo":"Consultor",
-        "supervisor": '',
         "nascimento": '',
         "porcentagem": 30,
         "estoque": [],
@@ -81,18 +80,15 @@ angular.module('ambaya')
         }else if(['Lafaiete'].indexOf($scope.form.cidade)!=-1){
             $scope.form.supervisor = supervisores['Gabi'];
         } */
-        $scope.form.supervisor = supervisores['Robert']; 
-        console.log($scope.form);
         apiService.cadastro($scope.form).then(
             function(response) {
-                //console.log(response);
+                console.log($scope.form);
                 $('#adicionar').modal('close');
                 $scope.form = {
                     "nome":"",
                     "sobrenome":"",
                     "email":"email",
                     "tipo":"Consultor",
-                    "supervisor": '',
                     "nascimento": '',
                     "porcentagem": 30,
                     "estoque": [],

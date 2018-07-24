@@ -77,17 +77,7 @@ angular.module('ambaya')
     $scope.del = function(){
         $('#excluir').modal('open');
     }
-    $scope.excluir = function(){
-        userService.deletaUm($scope.consultor._id).then(
-            function(response) {
-                Materialize.toast("Excluído com sucesso", 5000, 'notificacaoBoa');
-                window.history.back();
-            },
-            function(response) {
-                Materialize.toast("Falha ao excluir", 5000, 'notificacaoRuim');
-            }
-        );                
-    };
+    
     $scope.aprovar = function(){
         if($scope.indicador){
             consultoresService.indicadoPor(id, $scope.indicador).then(
@@ -118,6 +108,8 @@ angular.module('ambaya')
             }
         );
     };
+
+    $scope.excluir =  $scope.desaprovar;
 
 
 
