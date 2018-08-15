@@ -85,7 +85,7 @@ angular.module('ambaya')
 				scope.saldo = function(){
 					if(!scope.troca.pecaNova || !scope.troca.pecaDefeito) return "";
 					var saldo = scope.extraiPreco(scope.troca.pecaNova) - scope.extraiPreco(scope.troca.pecaDefeito);
-					return saldo>0 ? saldo : "";
+					return saldo>0 ? saldo : 0;
 				} 
 			}
 		}
