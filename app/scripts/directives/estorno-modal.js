@@ -18,7 +18,7 @@ angular.module('ambaya')
                            ' <li class="collection-item">'+
                                 '<form  ng-submit="addPecas($event)" class="addPeca row">'+
                                     '<div class="input-field col m3 s12">'+
-                                        '<select style="display:block" ng-model="pecaEstornoTipo"  ng-change="carregaConsultores()" ng-options="item as item.label for item in opcoes" required>'+
+                                        '<select style="display:block" ng-model="pecaEstornoTipo" ng-options="item as item.label for item in opcoes" required>'+
                                                 '<option value="" disabled selected>Peça</option>'+
                                         '</select>'+
                                     '</div>'+

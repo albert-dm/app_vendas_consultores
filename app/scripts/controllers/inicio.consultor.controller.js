@@ -15,7 +15,7 @@ angular.module('ambaya')
                 $scope.encomendas = response.data;
             },
             function(response){
-                Materialize.toas("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
+                Materialize.toast("Falha ao cerregar dados!", 5000, 'notificacaoRuim');
             }
         );
 
