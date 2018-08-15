@@ -5,12 +5,12 @@
     height: 10px;
     position: relative;
     box-sizing: content-box;
-    border: solid #997500;
+    border: solid var(--primary-darker);
   }
   div#timeline .inside {
     position: absolute;
     height: 12px;
-    background-color: #997500;
+    background-color: var(--primary-darker);
     width: 0%;
     margin: -1px;
     top: 0;
@@ -30,7 +30,7 @@
     cursor: pointer;
     background-color: white;
     box-sizing: content-box;
-    border: solid #997500;
+    border: solid var(--primary-darker);
     margin-left: -2px;
   }
   div#timeline .dot:hover {
@@ -62,7 +62,7 @@
   div#timeline .dot.accomplished {
     width: 20px;
     height: 20px;
-    background-color: #997500;
+    background-color: var(--primary-darker);
     top: -8px;
     -webkit-transition: left 2s; /* Safari */
     transition: left 2s;

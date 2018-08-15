@@ -1,11 +1,11 @@
 .chip.score {
-    background-color: #997500;
+    background-color: var(--primary-darker);
     color: white;
 }
 
 .chip.score label{
     background-color: white;
-    color: #997500;
+    color: var(--primary-darker);
     padding: 3px 5px;
     border-radius: 5px;
 }

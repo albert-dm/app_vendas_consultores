@@ -1,3 +1,10 @@
+:root{
+    --primary-color: #999999;
+    --primary-darken: #777777;
+    --primary-darker: #505050;
+    --dark: #373435;
+}
+
 body {
     display: flex;
     min-height: 100vh;
@@ -13,10 +20,10 @@ main {
 }
 
 .fundoAmarelo{
-    background-color: #FFD44B !important;
+    background-color: var(--primary-color) !important;
 }
 .botaoAmarelo{
-    background-color: #E6B000 !important;
+    background-color: var(--primary-darken) !important;
 }
 .botaoVermelho{
     background-color: red !important;
@@ -25,7 +32,7 @@ main {
     background-color: green !important;
 }
 .fundoPreto{
-    background-color: #373435 !important;
+    background-color: var(--dark) !important;
 }
 .fundoBranco{
     background-color: white !important;
@@ -34,26 +41,26 @@ main {
     color: white !important;
 }
 .textoAmarelo{
-    color: #E6B000 !important;
+    color: var(--primary-darken) !important;
 }
 .textoPreto{
-    color: #373435 !important;
+    color: var(--dark) !important;
 }
 .textoVermelho{
     color: red !important;
 }
 .bordaAmarela{
-    border: solid #997500;
+    border: solid var(--primary-darker);
 }
 .bordaBranca{
     border: solid white;
 }
 .btn{
-    background-color: #e6b000;
+    background-color: var(--primary-darken);
     margin-bottom: 5px;
 }
 .btn:hover{
-    background-color: #997500;
+    background-color: var(--primary-darker);
 }
 .botaoAlto{
     bottom: auto !important;
@@ -61,10 +68,10 @@ main {
     right: 10%;
 }
 .notificacaoBoa{
-     color: #E6B000 !important;
+     color: var(--primary-darken) !important;
      background: white !important;
      font-weight: bold;
-     border: solid 3px #E6B000;
+     border: solid 3px var(--primary-darken);
 }
 .notificacaoRuim{
      color: red !important;
@@ -73,49 +80,49 @@ main {
      border: solid 3px red;
 }
 input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea{
-    border-bottom: 1px solid #997500;
+    border-bottom: 1px solid var(--primary-darker);
 }
 input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]){
-    border-bottom: 1px solid #e6b000;
-    box-shadow: 0 1px 0 0 #e6b000;
+    border-bottom: 1px solid var(--primary-darken);
+    box-shadow: 0 1px 0 0 var(--primary-darken);
 }
 
 .picker__weekday-display{
-    background-color: #997500;
+    background-color: var(--primary-darker);
 }
 .picker__date-display{
-    background-color: #e6b000;
+    background-color: var(--primary-darken);
 }
 
 .picker__day.picker__day--today, .picker__close, .picker__today, a{
-    color: #997500;
+    color: var(--primary-darker);
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-    color: #997500;
+    color: var(--primary-darker);
 }
 :-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-   color: #997500;
+   color: var(--primary-darker);
 }
 ::-moz-placeholder { /* Mozilla Firefox 19+ */
-   color: #997500;
+   color: var(--primary-darker);
 }
 :-ms-input-placeholder { /* Internet Explorer 10-11 */
-   color: #997500;
+   color: var(--primary-darker);
 }
   /* label color */
    .input-field label {
-     color: #997500;
+     color: var(--primary-darker);
    }
    /* label focus color */
    .input-field input:focus + label {
-     color: #997500;
-     border-bottom: 1px solid #997500;
+     color: var(--primary-darker);
+     border-bottom: 1px solid var(--primary-darker);
    }
    /* label underline focus color */
    .input-field input:focus {
-     border-bottom: 1px solid #997500;
-     box-shadow: 0 1px 0 0 #997500;
+     border-bottom: 1px solid var(--primary-darker);
+     box-shadow: 0 1px 0 0 var(--primary-darker);
    }
    /* valid color */
    .input-field input.valid {
@@ -129,7 +136,7 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
    }
    /* icon prefix focus color */
    .input-field .prefix.active {
-     color: #997500;
+     color: var(--primary-darker);
    }
 
 #toast-container {
@@ -138,34 +145,34 @@ input:not([type]):focus:not([readonly]), input[type=text]:focus:not([readonly]),
 }
 
 .tabs .tab a{
-    color:#e6b000;
+    color:var(--primary-darken);
 }
 .tabs .tab a:hover, .tabs .tab a.active{
-    color:#997500
+    color:var(--primary-darker)
 }
 
 .tabs .indicator{
-    background-color: #997500
+    background-color: var(--primary-darker)
 }
 [type=radio]:not(:checked)+label:after, [type=radio]:not(:checked)+label:before{
-    background-color: #997500;
+    background-color: var(--primary-darker);
     border: none;
 }
 [type=radio].with-gap:checked+label:after, [type=radio]:checked+label:after{
     background-color: white;
-    border-color: #e6b000;
+    border-color: var(--primary-darken);
 }
 label{
     color: black;
 }
 
 .dropdown-content li>a, .dropdown-content li>span, input:not([type]):focus:not([readonly])+label, input[type=date]:focus:not([readonly])+label, input[type=datetime-local]:focus:not([readonly])+label, input[type=datetime]:focus:not([readonly])+label, input[type=email]:focus:not([readonly])+label, input[type=number]:focus:not([readonly])+label, input[type=password]:focus:not([readonly])+label, input[type=search]:focus:not([readonly])+label, input[type=tel]:focus:not([readonly])+label, input[type=text]:focus:not([readonly])+label, input[type=time]:focus:not([readonly])+label, input[type=url]:focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label{
-    color: #997500;
+    color: var(--primary-darker);
     text-decoration: none;
 }
 
 thead{
-    border-color: #997500;
+    border-color: var(--primary-darker);
 }
 
 .venda{    
@@ -205,8 +212,8 @@ form.addPeca input[type='number']{
 }
 
 [type=checkbox].filled-in:checked+label:after{
-    border-color: #E6B000;
-    background-color: #E6B000;
+    border-color: var(--primary-darken);
+    background-color: var(--primary-darken);
 }
 
 /* Configuração de impressao de cod de barras */
@@ -232,7 +239,7 @@ ul{
 }
 select{
     display: block;
-    color: #997500;
+    color: var(--primary-darker);
     padding: 0;
 }
 
