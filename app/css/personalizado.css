@@ -1,8 +1,12 @@
 :root{
-    --primary-color: #999999;
-    --primary-darken: #777777;
-    --primary-darker: #505050;
+    --primary-color: rgb(109, 177, 241);
+    --primary-darken: #3c996e;
+    --primary-darker: #bdba31;
     --dark: #373435;
+}
+
+.invisible{
+    visibility: hidden;
 }
 
 body {
@@ -59,7 +63,7 @@ main {
     background-color: var(--primary-darken);
     margin-bottom: 5px;
 }
-.btn:hover{
+.btn:hover, .btn:focus{
     background-color: var(--primary-darker);
 }
 .botaoAlto{
