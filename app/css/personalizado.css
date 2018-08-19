@@ -1,7 +1,7 @@
 :root{
-    --primary-color: rgb(109, 177, 241);
-    --primary-darken: #3c996e;
-    --primary-darker: #bdba31;
+    --primary-color: white;
+    --primary-darken: #009cff;
+    --primary-darker: #008000;
     --dark: #373435;
 }
 
