@@ -51,9 +51,6 @@ typings/
 # Output of 'npm pack'
 *.tgz
 
-# Cores personalizadas
-app/css/cores.css
-
 # Yarn Integrity file
 .yarn-integrity
 
